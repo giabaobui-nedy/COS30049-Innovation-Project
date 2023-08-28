@@ -1,0 +1,20 @@
+.searchBar {
+    color: white;
+    padding: 0.5rem;
+    border: 0.01rem solid white;
+    border-radius: 5rem;
+}
+
+.icon {
+    color: white
+}
+
+/* styles.css */
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+  
