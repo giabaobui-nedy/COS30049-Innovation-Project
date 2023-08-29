@@ -1,3 +1,5 @@
+/* styles.css */
+
 .searchBar {
     color: white;
     padding: 0.5rem;
@@ -5,16 +7,25 @@
     border-radius: 5rem;
 }
 
+.tab {
+    border-radius: 2rem;
+}
+
 .icon {
     color: white
 }
 
-/* styles.css */
 
-.navbar-container {
+.navbarContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 0;
 }
+
+
+/* 
+.rounded {
+    border-radius: 2rem;
+} */
   
