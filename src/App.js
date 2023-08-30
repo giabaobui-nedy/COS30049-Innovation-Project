@@ -1,10 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./components/Header";
+import NavBar from "./components/NavBar";
+import Main from "./components/Main";
+import Footer from "./components/Footer";
+// Bootstrap CSS
+import "bootstrap/dist/css/bootstrap.min.css";
+// Bootstrap Bundle JS
+import "bootstrap/dist/js/bootstrap.bundle.min";
+// Custom CSS file
+import "./styles/styles.css"
+
 
 function App() {
   return (
-    <div className="App">
-      Hello world!
+    <div>
+      <Header></Header>
+      <NavBar></NavBar>
+      <Main></Main>
+      <Footer></Footer>
     </div>
   );
 }
