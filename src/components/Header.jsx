@@ -2,6 +2,7 @@ import { InputBase, IconButton } from "@mui/material";
 import BubbleChartIcon from '@mui/icons-material/BubbleChart';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 function Header() {
     return (
@@ -16,9 +17,14 @@ function Header() {
                         <SearchIcon className="icon" />
                     </IconButton>
                 </div>
-                <div className="col-2">
+                <div className="col-1">
                     <IconButton className="float-end">
                         <AccountCircleIcon/>
+                    </IconButton>
+                </div>
+                <div className = "col-1">
+                    <IconButton className="float-end">
+                        <ShoppingCartIcon/>
                     </IconButton>
                 </div>
             </div>
