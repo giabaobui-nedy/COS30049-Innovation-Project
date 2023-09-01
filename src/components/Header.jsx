@@ -7,7 +7,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 function Header() {
     return (
         // the start of the navbar
-        <nav className="navbar navbar-expand-sm ">
+        <nav className="navbar navbar-expand-sm">
             <div className="container border border-dark rounded-pill">
                 <div className="row flex-fill">
                     <div className="col-1">
