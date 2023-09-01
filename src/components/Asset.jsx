@@ -10,7 +10,7 @@ function Asset(props) {
                 <img src={props.nftInfo.media[0].thumbnail} className="card-img-top" alt="Not Available" />
                 <h5 className="card-title"><i>{props.nftInfo.title + props.id}</i></h5>
                 <div className="card-text"><PersonIcon />{props.nftInfo.contractMetadata.name}</div>
-                <div class="badge text-bg-dark">{props.category}</div>
+                <div class="badge text-bg-dark rounded-pill">{props.category}</div>
                 <IconButton>
                     <AddShoppingCartIcon />
                 </IconButton>

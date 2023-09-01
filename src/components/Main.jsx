@@ -34,7 +34,6 @@ function Main() {
                 })}
             </div>
         )
-
     } catch {
         return (
             <div className="container">
