@@ -24,7 +24,7 @@ function Asset(props) {
             <a href="#" className="container mt-3 col-3">
                 <div className="card">
                     <div className="card-body">
-                        <img className="card-img-top" src={imgsrc} alt="Not Available" />
+                        <img className="card-img-top" src={imgsrc} alt="Not Available"  />
                         <h3 className="card-title">{name}</h3>
                         <h5 className="card-text font-italic font-weight-light">#{ID}</h5>
                         <span className="card-text"><BookmarkIcon /> {cate}</span>
