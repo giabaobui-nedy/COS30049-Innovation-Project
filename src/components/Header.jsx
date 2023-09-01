@@ -12,8 +12,8 @@ function Header() {
                     <div><BubbleChartIcon />DTP</div>
                 </div>
                 <div className="collapse navber-collapse" id="#nav">
-                    <form class="d-flex" style="margin-right: 3vw">
-						<input class="form-control me-2" type="text" placeholder="Search" style="width:35vw"/>
+                    <form className="d-flex" style="margin-right: 3vw">
+						<input className="form-control me-2" type="text" placeholder="Search" style="width:35vw"/>
 						<IconButton className="float-end">
                             <SearchIcon className="icon" />
                         </IconButton>
