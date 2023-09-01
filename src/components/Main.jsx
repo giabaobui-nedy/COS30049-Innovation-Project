@@ -1,10 +1,13 @@
+import { useState } from "react";
 import Asset from "./Asset";
 import axios from 'axios';
 
 
-
 function Main() {
-    var nfts = []
+    const categories = ["Art", "Gaming", "Membership", "PFPs", "Photography", "Music"]
+    const [apiData, setApiData] = useState([]);
+
+
     const options = {
         method: 'GET',
         url: 'https://eth-mainnet.g.alchemy.com/nft/v2/4FqEYbTNdy1Q26cPt48ybNLFZ1FgK3Sv/getNFTsForCollection',
@@ -18,18 +21,16 @@ function Main() {
     axios
         .request(options)
         .then(function (response) {
-            nfts = response.data.nfts
-            console.log(nfts);
+            setApiData(response.data.nfts)
         })
         .catch(function (error) {
             console.error(error);
         });
 
-        
     return (
         <div className="container">
-            {nfts.map(nft => {
-                return <Asset nftInfo={nft} />
+            {apiData.map((nft, index) => {
+                return <Asset key={index} nftInfo={nft} category={categories[index % categories.length]} />
             })}
         </div>
     )

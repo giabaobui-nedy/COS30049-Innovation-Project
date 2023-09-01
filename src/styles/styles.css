@@ -23,3 +23,14 @@
     padding: 10px 0;
 }
 
+.card {
+    width: 100%;
+    /* Adjust the width as needed */
+    max-width: 25vw;
+    display: inline-block;
+    /* Set a maximum width for responsiveness */
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
