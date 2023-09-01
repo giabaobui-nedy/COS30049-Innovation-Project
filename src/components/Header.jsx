@@ -13,8 +13,8 @@ function Header() {
                     <div><BubbleChartIcon />DTP</div>
                 </div>
                 <div className="collapse navber-collapse" id="#nav">
-                    <form class="border">
-						<input class="form-control me-2" type="text" placeholder="Search"/>
+                    <form className="border">
+						<input className="form-control me-2" type="text" placeholder="Search"/>
 						<IconButton className="float-end">
                             <SearchIcon className="icon" />
                         </IconButton>
