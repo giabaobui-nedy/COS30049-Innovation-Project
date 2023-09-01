@@ -1,12 +1,36 @@
 import Asset from "./Asset";
+import axios from 'axios';
+
+
 
 function Main() {
-    
+    var nfts = []
+    const options = {
+        method: 'GET',
+        url: 'https://eth-mainnet.g.alchemy.com/nft/v2/4FqEYbTNdy1Q26cPt48ybNLFZ1FgK3Sv/getNFTsForCollection',
+        params: {
+            collectionSlug: 'boredapeyachtclub',
+            withMetadata: 'true'
+        },
+        headers: { accept: 'application/json' }
+    };
+
+    axios
+        .request(options)
+        .then(function (response) {
+            nfts = response.data.nfts
+            console.log(nfts);
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+
+        
     return (
         <div className="container">
-            <Asset/>
-            <h1>This is main component</h1>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestias animi quidem enim quibusdam alias ratione, quaerat quo quas eos hic harum nam sapiente aspernatur dolore non dolor sequi sit. Ratione.</p>
+            {nfts.map(nft => {
+                return <Asset nftInfo={nft} />
+            })}
         </div>
     )
 }
