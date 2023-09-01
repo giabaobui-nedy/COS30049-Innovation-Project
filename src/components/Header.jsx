@@ -6,21 +6,21 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 function Header() {
     return (
+        // the start of the navbar
         <nav className="navbar navbar-expand-sm rounded-pill fixed-top">
             <div className="container-fluid">
                 <div className="col-2 p-2">
                     <div><BubbleChartIcon />DTP</div>
                 </div>
                 <div className="collapse navber-collapse" id="#nav">
-                    <form class="d-flex" style="margin-right: 3vw">
-						<input class="form-control me-2" type="text" placeholder="Search" style="width:35vw"/>
+                    <form class="border">
+						<input class="form-control me-2" type="text" placeholder="Search"/>
 						<IconButton className="float-end">
                             <SearchIcon className="icon" />
                         </IconButton>
 					</form>
-                    
                 </div>
-                <div className="col-2 rounded-pill" style="vertical-aligh: middle">
+                <div className="col-2 rounded-pill">
                     <span>Username</span>
                     <IconButton className="float-end">
                         <AccountCircleIcon/>
