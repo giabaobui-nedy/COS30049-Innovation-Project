@@ -2,9 +2,8 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import PersonIcon from '@mui/icons-material/Person'
 import IconButton from '@mui/material/IconButton'
 
-
 function Asset(props) {
-    return (
+    return (props.isChosen &&
         <div className="card m-2">
             <div className="card-body">
                 <img src={props.nftInfo.media[0].thumbnail} className="card-img-top" alt="Not Available" />

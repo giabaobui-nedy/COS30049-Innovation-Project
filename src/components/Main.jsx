@@ -1,13 +1,18 @@
 import { useState } from "react";
+import NavBar from "./NavBar";
 import Asset from "./Asset";
 import axios from 'axios';
 
-
 function Main() {
+    //categories for assets
     const categories = ["Art", "Gaming", "Membership", "PFPs", "Photography", "Music"]
+
+    const [chosenCategory, setChosenCategory] = useState("All")
+
+    const [apiData, setApiData] = useState([]);
+
     try {
-        
-        const [apiData, setApiData] = useState([]);
+        //fetch data from alchemy
         const options = {
             method: 'GET',
             url: 'https://eth-mainnet.g.alchemy.com/nft/v2/4FqEYbTNdy1Q26cPt48ybNLFZ1FgK3Sv/getNFTsForCollection',
@@ -16,7 +21,7 @@ function Main() {
                 withMetadata: 'true'
             },
             headers: { accept: 'application/json' }
-        };
+        }
 
         axios
             .request(options)
@@ -24,20 +29,21 @@ function Main() {
                 setApiData(response.data.nfts)
             })
             .catch(function (error) {
-                console.error(error);
+                console.error(error)
             });
 
         return (
             <div className="container">
+                <NavBar chosenCategory={chosenCategory} setChosenCategory={setChosenCategory}></NavBar>
                 {apiData.map((nft, index) => {
-                    return <Asset key={index} id={"#00" + index} nftInfo={nft} category={categories[index % categories.length]} />
+                    return <Asset isChosen={(chosenCategory === categories[index % categories.length]) || (chosenCategory === "All")} key={index} id={"#00" + index} nftInfo={nft} category={categories[index % categories.length]} />
                 })}
             </div>
         )
     } catch {
         return (
             <div className="container">
-                Data not available
+                No data available!
             </div>
         )
     }
