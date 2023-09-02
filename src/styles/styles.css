@@ -1,5 +1,4 @@
 /* styles.css */
-
 .searchBar {
     color: white;
     padding: 0.5rem;
@@ -42,29 +41,28 @@ nav {
     margin-bottom: 2vw;
 }
 
-/*The pill that contains the cart and ava btn*/
-.ava_pill{
-    background-color: white;
-    border: none;
-    padding: 5px 5px;
-    justify-content: flex-end;
-    display: flex;
-    width: 100px;
+.custom-bg-color {
+    background-color: #DEE2E6;
+    /* Replace with your desired color value */
 }
 
 /*List of assets*/
-.assets_area{
+.assets_area {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
 @media (max-width: 900px) {
-    .assets_area {  grid-template-columns: 1fr 1fr;}
-}  
+    .assets_area {
+        grid-template-columns: 1fr 1fr;
+    }
+}
 
 @media (max-width: 600px) {
-    .assets_area {  grid-template-columns: 1fr;}
-}  
+    .assets_area {
+        grid-template-columns: 1fr;
+    }
+}
 
 .sidebar {
     height: 100%;
@@ -75,4 +73,8 @@ nav {
     left: 0;
     overflow-x: hidden;
     padding-top: 20px;
-  }
+}
+
+.Logo {
+    max-width: 80%;
+}

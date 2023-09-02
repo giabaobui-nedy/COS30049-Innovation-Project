@@ -4,7 +4,10 @@ import logo from "../res/img/logo.png";
 
 function Logo() {
     return (
-        <IconButton><Link to="/" ><img src={logo} alt="Not Available" height="60px" className="rounded-3" /></Link></IconButton>
+        <IconButton>
+            <Link to="/"><img width={95} src={logo} alt="Not Available" className="img-fluid rounded" />
+            </Link>
+        </IconButton>
     )
 }
 
