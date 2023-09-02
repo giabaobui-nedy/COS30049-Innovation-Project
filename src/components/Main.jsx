@@ -48,10 +48,10 @@ function Main(props) {
         }, [])
 
         return (
-            <div className="container">
+            <div className="container-fluid">
                 <Header isSearching={isSearching} setIsSearching={setIsSearching} searchInput={searchInput} setSearchInput={setSearchInput} numberOfItems={props.cartItems.length} />
                 <NavBar chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} />
-                <div className="assets_area">
+                <div className="container assets_area">
                     {
                     (!isSearching) ? 
                     apiData.map((nft) => {
