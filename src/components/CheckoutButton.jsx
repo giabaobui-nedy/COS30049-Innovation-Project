@@ -8,17 +8,16 @@ function CheckoutButton(props) {
     const handleCheckout = () => {
         // Simulate a loading state
         setIsLoading(true);
+        // Delete all the cart items
         props.checkout();
         // Simulate a successful checkout
-        // In a real scenario, you would replace this with your checkout logic
-        const success = true; // Set to true for success, false for failure
+        const success = true;
 
         setTimeout(() => {
             setIsLoading(false);
             if (success) {
                 setButtonText('Success!');
                 setCheckoutSuccess(true);
-
                 // Optionally, you can add a delay and revert back to the original state
                 setTimeout(() => {
                     setButtonText('Checkout');
@@ -29,10 +28,12 @@ function CheckoutButton(props) {
             }
         }, 2000);
     };
-    
-    // Determine the button's class based on the checkout success state
+
     return (
-        <button className={(checkoutSuccess) ? 'btn btn-success' : 'btn btn-primary'} onClick={handleCheckout} disabled={isLoading}>
+        <button 
+        className={(checkoutSuccess) ? 'btn btn-success' : 'btn btn-primary'} 
+        onClick={handleCheckout} 
+        disabled={isLoading}>
             {isLoading ? 'Loading...' : buttonText}
         </button>
     );

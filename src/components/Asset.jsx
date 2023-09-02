@@ -7,7 +7,6 @@ function Asset(props) {
 
     function addItem() {
         props.addItemToCart(
-            
             //if number of items is not 0
             (props.cartItems.length !== 0) ? 
             //check whether the item is yet in the cart and add if that is false
@@ -27,9 +26,7 @@ function Asset(props) {
                 itemImg: props.nftInfo.media[0].thumbnail,
                 itemPrice: props.price
              }]
-        )
-        console.log(props.cartItems)
-            
+        )  
     }
 
     return (props.isChosen &&
