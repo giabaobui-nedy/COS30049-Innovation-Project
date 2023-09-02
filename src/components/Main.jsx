@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./Header";
 import NavBar from "./NavBar";
 import Asset from "./Asset";
@@ -42,9 +42,11 @@ function Main(props) {
     }
 
     try {
-
-        fetchApiData();
         
+        useEffect(() => {
+            fetchApiData();
+        }, [])
+
         return (
             <div className="container">
                 <Header isSearching={isSearching} setIsSearching={setIsSearching} searchInput={searchInput} setSearchInput={setSearchInput} numberOfItems={props.cartItems.length} />
