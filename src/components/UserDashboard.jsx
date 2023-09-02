@@ -16,9 +16,10 @@ function UserDashBoard() {
 
             <div class="offcanvas offcanvas-start" id="dashboard">
                 <div class="offcanvas-header">
-                    <Logo/>
+                    <Logo size="70vw"/>
                 </div>
                 <div class="offcanvas-body">
+                    <h3 className="">Menu</h3>
                     <button className="btn btn-outline-dark sidebar_opt">Account Details</button>
                     <button className="btn btn-outline-dark sidebar_opt">My Assets</button>
                     <Link to="transaction-history">

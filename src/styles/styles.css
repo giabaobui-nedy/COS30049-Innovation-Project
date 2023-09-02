@@ -1,4 +1,5 @@
 /* styles.css */
+
 .searchBar {
     color: white;
     padding: 0.5rem;
@@ -41,12 +42,14 @@ nav {
     margin-bottom: 2vw;
 }
 
-
 /*The pill that contains the cart and ava btn*/
-
-.custom-bg-color {
-    background-color: #DEE2E6;
-    /* Replace with your desired color value */
+.ava_pill {
+    background-color: white;
+    border: none;
+    padding: 5px 5px;
+    justify-content: flex-end;
+    display: flex;
+    width: 100px;
 }
 
 .nav_head {
@@ -65,13 +68,7 @@ nav {
     }
 }
 
-@media (max-width: 600px) {
-    .assets_area {
-        grid-template-columns: 1fr;
-    }
-}
-
-
+/*User sidebar*/
 .sidebar {
     height: 100%;
     width: 35px;
@@ -83,9 +80,8 @@ nav {
     padding-top: 20px;
 }
 
-
 .offcanvas {
-    max-width: 20vw;
+    width: 20vw;
 }
 
 .sidebar_opt {
@@ -97,10 +93,10 @@ nav {
 .sidebar_opt:hover {
     background-color: black;
     color: white;
-    transform: scale(1.15);
+    transform: scale(1.05);
 }
 
-tr:nth-child(even) {
+.tran_tb tr:nth-child(even) {
     background-color: rgba(71, 65, 65, 0.192);
 }
 
@@ -108,8 +104,20 @@ tr:nth-child(even) {
     overflow-x: scroll;
     overflow-y: scroll;
     max-height: 90vh;
+}
 
-.Logo {
-    max-width: 80%;
+th,td{
+    padding: 10px;
+}
 
+.trans_tb{
+    margin-left: 3vw;
+}
+
+.logo_cont{
+    margin: 0.75rem 0 0 0.125rem
+}
+
+.checkout_btn{
+    margin: 20px;
 }
