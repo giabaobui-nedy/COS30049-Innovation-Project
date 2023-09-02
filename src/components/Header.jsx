@@ -5,7 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-function Header() {
+function Header(props) {
     return (
         // the start of the navbar
         <nav className="navbar navbar-expand-sm">
@@ -33,6 +33,7 @@ function Header() {
                         <Link to="cart">
                             <IconButton className="float-end">
                                 <ShoppingCartIcon />
+                                <span className="badge rounded-pill text-bg-danger">{props.numberOfItems}</span>
                             </IconButton>
                         </Link>
                     </div>
