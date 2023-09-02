@@ -4,6 +4,7 @@ import Logo from "./Logo";
 import SearchIcon from '@mui/icons-material/SearchTwoTone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircleTwoTone';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCartTwoTone';
+import SearchBar from "./SearchBar";
 
 function Header() {
     return (
@@ -17,12 +18,9 @@ function Header() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse bg-dark rounded-4" id="nav">
-                    <form class="d-inline-flex container-fluid col-9">
-                        <input className="form-control me-2" type="text" placeholder="Search" />
-                        <IconButton className="float-end text-white border border-2 border-white">
-                            <SearchIcon />
-                        </IconButton>
-                    </form>
+                    <div class="d-inline-flex container-fluid col-9">
+                        <SearchBar />
+                    </div>
                     <div className="container-fluid">
                         <span className="container-fluid bg-white ava_pill rounded-pill">
                         <Link to="cart">
