@@ -34,3 +34,25 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
+
+/*The header*/
+nav{
+    height: 80px;
+    vertical-align: middle;
+    margin-bottom: 2vw;
+}
+
+/*The pill that contains the cart and ava btn*/
+.ava_pill{
+    background-color: white;
+    border: none;
+    padding: 5px 5px;
+    justify-content: flex-end;
+    display: flex;
+    width: 100px;
+}
+
+.nav_head{
+    padding: 7px 20px;
+}
+
