@@ -1,12 +1,11 @@
-import { InputBase, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
-import SearchIcon from '@mui/icons-material/SearchTwoTone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircleTwoTone';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import SearchBar from "./SearchBar";
 
-function Header() {
+function Header(props) {
     return (
         // the start of the navbar
         <nav className="navbar navbar-expand-md container-fluid rounded-pill bg-dark mt-2 sticky-top">
@@ -18,28 +17,23 @@ function Header() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse bg-dark rounded-4" id="nav">
-                    <div class="d-inline-flex container-fluid col-9">
-                        <SearchBar />
-                    </div>
+                    <SearchBar isSearching={props.isSearching} setIsSearching={props.setIsSearching} searchInput={props.searchInput} setSearchInput={props.setSearchInput} />
                     <div className="container-fluid">
                         <span className="container-fluid bg-white ava_pill rounded-pill">
-                        <Link to="cart">
-                            <IconButton className="float-end">
-                                <ShoppingCartIcon />
-                            </IconButton>
-                        </Link>
-                        <Link to="user-dashboard">
-                            <IconButton className="float-end bg-secondary">
-                                <AccountCircleIcon />
-                            </IconButton>
-                        </Link>
+                            <Link to="cart">
+                                <IconButton className="float-end">
+                                    <ShoppingCartIcon />
+                                </IconButton>
+                            </Link>
+                            <Link to="user-dashboard">
+                                <IconButton className="float-end bg-secondary">
+                                    <AccountCircleIcon />
+                                </IconButton>
+                            </Link>
                         </span>
                     </div>
                 </div>
-                
-                    
             </div>
-                
         </nav>
     )
 }

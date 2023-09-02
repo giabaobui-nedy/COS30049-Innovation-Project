@@ -51,32 +51,34 @@ function Main(props) {
             <div className="container">
                 <Header isSearching={isSearching} setIsSearching={setIsSearching} searchInput={searchInput} setSearchInput={setSearchInput} numberOfItems={props.cartItems.length} />
                 <NavBar chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} />
-                {
-                (!isSearching) ? 
-                apiData.map((nft) => {
-                    return <Asset 
-                    price={randomPrices[shortenHexadecimal(nft.id.tokenId)]} 
-                    cartItems={props.cartItems} 
-                    addItemToCart={props.addItemToCart} 
-                    isChosen={(chosenCategory === categories[shortenHexadecimal(nft.id.tokenId) % categories.length]) || (chosenCategory === "All")} 
-                    key={shortenHexadecimal(nft.id.tokenId)} 
-                    id={shortenHexadecimal(nft.id.tokenId)} 
-                    nftInfo={nft} 
-                    category={categories[shortenHexadecimal(nft.id.tokenId) % categories.length]} />
-                }) : 
-                (!isNaN(parseInt(searchInput))) &&
-                apiData.map((nft) => {
-                    return <Asset 
-                    price={randomPrices[shortenHexadecimal(nft.id.tokenId)]} 
-                    cartItems={props.cartItems} 
-                    addItemToCart={props.addItemToCart} 
-                    isChosen={((chosenCategory === categories[shortenHexadecimal(nft.id.tokenId) % categories.length]) || (chosenCategory === "All")) && (shortenHexadecimal(nft.id.tokenId) === parseInt(searchInput))} 
-                    key={shortenHexadecimal(nft.id.tokenId)} 
-                    id={shortenHexadecimal(nft.id.tokenId)} 
-                    nftInfo={nft} 
-                    category={categories[shortenHexadecimal(nft.id.tokenId) % categories.length]} />
-                })
-                }
+                <div className="assets_area">
+                    {
+                    (!isSearching) ? 
+                    apiData.map((nft) => {
+                        return <Asset 
+                        price={randomPrices[shortenHexadecimal(nft.id.tokenId)]} 
+                        cartItems={props.cartItems} 
+                        addItemToCart={props.addItemToCart} 
+                        isChosen={(chosenCategory === categories[shortenHexadecimal(nft.id.tokenId) % categories.length]) || (chosenCategory === "All")} 
+                        key={shortenHexadecimal(nft.id.tokenId)} 
+                        id={shortenHexadecimal(nft.id.tokenId)} 
+                        nftInfo={nft} 
+                        category={categories[shortenHexadecimal(nft.id.tokenId) % categories.length]} />
+                    }) : 
+                    (!isNaN(parseInt(searchInput))) &&
+                    apiData.map((nft) => {
+                        return <Asset 
+                        price={randomPrices[shortenHexadecimal(nft.id.tokenId)]} 
+                        cartItems={props.cartItems} 
+                        addItemToCart={props.addItemToCart} 
+                        isChosen={((chosenCategory === categories[shortenHexadecimal(nft.id.tokenId) % categories.length]) || (chosenCategory === "All")) && (shortenHexadecimal(nft.id.tokenId) === parseInt(searchInput))} 
+                        key={shortenHexadecimal(nft.id.tokenId)} 
+                        id={shortenHexadecimal(nft.id.tokenId)} 
+                        nftInfo={nft} 
+                        category={categories[shortenHexadecimal(nft.id.tokenId) % categories.length]} />
+                    })
+                    }
+                </div>
                 <Footer />
             </div>
         )

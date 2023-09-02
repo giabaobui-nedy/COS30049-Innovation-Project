@@ -36,7 +36,8 @@
 }
 
 /*The header*/
-nav{
+nav {
+
     height: 80px;
     vertical-align: middle;
     margin-bottom: 2vw;
@@ -52,10 +53,6 @@ nav{
     width: 100px;
 }
 
-.nav_head{
-    padding: 7px 20px;
-}
-
 /*List of assets*/
 .assets_area{
     display: grid;
@@ -66,14 +63,17 @@ nav{
     .assets_area {  grid-template-columns: 1fr 1fr;}
 }  
 
+@media (max-width: 600px) {
+    .assets_area {  grid-template-columns: 1fr;}
+}  
+
 .sidebar {
     height: 100%;
-    width: 160px;
+    width: 30px;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
     overflow-x: hidden;
     padding-top: 20px;
   }
