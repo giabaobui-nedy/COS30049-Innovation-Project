@@ -13,7 +13,7 @@ function SearchBar(props) {
                 }}
                 value={props.searchInput}
                 type="text"
-                placeholder="Search"
+                placeholder="Search by Token ID..."
             />
             <IconButton onClick={() => { (props.searchInput !== "") && props.setIsSearching(true) }} className="float-end bg-white">
                 <SearchIcon />

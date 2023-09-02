@@ -17,8 +17,7 @@ function Header(props) {
                         className="navbar-toggler"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#nav"
-                    >
+                        data-bs-target="#nav">
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse custom-bg-color p-4 rounded-2" id="nav">

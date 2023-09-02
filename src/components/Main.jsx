@@ -11,10 +11,12 @@ function Main(props) {
     //categories for assets
     const categories = ["Art", "Gaming", "Membership", "PFPs", "Photography", "Music"]
 
+    //chosen category can be modified
     const [chosenCategory, setChosenCategory] = useState("All")
 
     const [apiData, setApiData] = useState([])
 
+    //search input  (initial value = "")
     const [searchInput, setSearchInput] = useState("")
 
     const [isSearching, setIsSearching] = useState(false)
@@ -42,7 +44,8 @@ function Main(props) {
     }
 
     try {
-        
+
+        //render the API data once
         useEffect(() => {
             fetchApiData();
         }, [])
@@ -53,36 +56,35 @@ function Main(props) {
                 <NavBar chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} />
                 <div className="container assets_area">
                     {
-                    (!isSearching) ? 
-                    apiData.map((nft) => {
-                        return <Asset 
-                        price={randomPrices[shortenHexadecimal(nft.id.tokenId)]} 
-                        cartItems={props.cartItems} 
-                        addItemToCart={props.addItemToCart} 
-                        isChosen={(chosenCategory === categories[shortenHexadecimal(nft.id.tokenId) % categories.length]) || (chosenCategory === "All")} 
-                        key={shortenHexadecimal(nft.id.tokenId)} 
-                        id={shortenHexadecimal(nft.id.tokenId)} 
-                        nftInfo={nft} 
-                        category={categories[shortenHexadecimal(nft.id.tokenId) % categories.length]} />
-                    }) : 
-                    (!isNaN(parseInt(searchInput))) &&
-                    apiData.map((nft) => {
-                        return <Asset 
-                        price={randomPrices[shortenHexadecimal(nft.id.tokenId)]} 
-                        cartItems={props.cartItems} 
-                        addItemToCart={props.addItemToCart} 
-                        isChosen={((chosenCategory === categories[shortenHexadecimal(nft.id.tokenId) % categories.length]) || (chosenCategory === "All")) && (shortenHexadecimal(nft.id.tokenId) === parseInt(searchInput))} 
-                        key={shortenHexadecimal(nft.id.tokenId)} 
-                        id={shortenHexadecimal(nft.id.tokenId)} 
-                        nftInfo={nft} 
-                        category={categories[shortenHexadecimal(nft.id.tokenId) % categories.length]} />
-                    })
+                        (!isSearching) ?
+                            apiData.map((nft) => {
+                                return <Asset
+                                    price={randomPrices[shortenHexadecimal(nft.id.tokenId)]}
+                                    cartItems={props.cartItems}
+                                    addItemToCart={props.addItemToCart}
+                                    isChosen={(chosenCategory === categories[shortenHexadecimal(nft.id.tokenId) % categories.length]) || (chosenCategory === "All")}
+                                    key={shortenHexadecimal(nft.id.tokenId)}
+                                    id={shortenHexadecimal(nft.id.tokenId)}
+                                    nftInfo={nft}
+                                    category={categories[shortenHexadecimal(nft.id.tokenId) % categories.length]} />
+                            }) :
+                            (!isNaN(parseInt(searchInput))) &&
+                            apiData.map((nft) => {
+                                return <Asset
+                                    price={randomPrices[shortenHexadecimal(nft.id.tokenId)]}
+                                    cartItems={props.cartItems}
+                                    addItemToCart={props.addItemToCart}
+                                    isChosen={((chosenCategory === categories[shortenHexadecimal(nft.id.tokenId) % categories.length]) || (chosenCategory === "All")) && (shortenHexadecimal(nft.id.tokenId) === parseInt(searchInput))}
+                                    key={shortenHexadecimal(nft.id.tokenId)}
+                                    id={shortenHexadecimal(nft.id.tokenId)}
+                                    nftInfo={nft}
+                                    category={categories[shortenHexadecimal(nft.id.tokenId) % categories.length]} />
+                            })
                     }
                 </div>
                 <Footer />
             </div>
         )
-
     } catch {
         return (
             <div className="container">

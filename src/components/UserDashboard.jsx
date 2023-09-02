@@ -1,4 +1,4 @@
-import { Link, Outlet} from "react-router-dom"
+import { Link, Outlet } from "react-router-dom"
 import Logo from "./Logo"
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu';
@@ -8,15 +8,13 @@ function UserDashBoard() {
         <div className="container">
             <div className="sidebar">
                 <IconButton data-bs-toggle="offcanvas" data-bs-target="#dashboard">
-                    <MenuIcon/>
+                    <MenuIcon />
                 </IconButton>
-                
-                
             </div>
 
             <div class="offcanvas offcanvas-start" id="dashboard">
                 <div class="offcanvas-header">
-                    <Logo size="70vw"/>
+                    <Logo size="70vw" />
                 </div>
                 <div class="offcanvas-body">
                     <h3 className="">Menu</h3>
@@ -28,8 +26,7 @@ function UserDashBoard() {
                     <button className="btn btn-outline-dark sidebar_opt">...</button>
                 </div>
             </div>
-            
-            <Outlet/>
+            <Outlet />
         </div>
     )
 }

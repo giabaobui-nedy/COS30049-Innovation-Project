@@ -29,6 +29,7 @@ function Asset(props) {
         )  
     }
 
+    //enable filtering
     return (props.isChosen &&
         <div className="card m-2">
             <div className="card-body">
