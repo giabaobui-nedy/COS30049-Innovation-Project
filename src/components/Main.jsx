@@ -5,14 +5,15 @@ import Asset from "./Asset";
 import axios from 'axios';
 import Footer from "./Footer";
 
-
 function Main() {
     //categories for assets
     const categories = ["Art", "Gaming", "Membership", "PFPs", "Photography", "Music"]
 
     const [chosenCategory, setChosenCategory] = useState("All")
 
-    const [apiData, setApiData] = useState([]);
+    const [apiData, setApiData] = useState([])
+
+    const [cartItems, setCartItems] = useState([])
 
     try {
         //fetch data from alchemy
@@ -37,10 +38,10 @@ function Main() {
 
         return (
             <div className="container">
-                <Header/>
-                <NavBar chosenCategory={chosenCategory} setChosenCategory={setChosenCategory}></NavBar>
+                <Header numberOfItems={cartItems.length}/>
+                <NavBar chosenCategory={chosenCategory} setChosenCategory={setChosenCategory}/>
                 {apiData.map((nft, index) => {
-                    return <Asset isChosen={(chosenCategory === categories[index % categories.length]) || (chosenCategory === "All")} key={index} id={"#00" + index} nftInfo={nft} category={categories[index % categories.length]} />
+                    return <Asset setCartItems={setCartItems} isChosen={(chosenCategory === categories[index % categories.length]) || (chosenCategory === "All")} key={index} id={"#00" + index} nftInfo={nft} category={categories[index % categories.length]} />
                 })}
                 <Footer/>
             </div>

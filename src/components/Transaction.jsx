@@ -1,54 +1,17 @@
-import transactions from './json_file/transaction_by_an_account.json';
-import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
+// import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import React from "react";
 
 function Transaction(props) {
     return (
-        <div className="container">
-            {transactions.map((tran, i) => {
-                if (tran.transaction_hash == hash) {
-                    <table className="text-uppercase">
-                        <tr>
-                            <th>Transaction Hash:</th>
-                            <td>{tran.transaction_hash}</td>
-                        </tr>
-                        <tr>
-                            <th>Status:</th>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>Block:</th>
-                            <td>{tran.block_number}</td>
-                        </tr>
-                        <tr>
-                            <th>Timstamp:</th>
-                            <td>{tran.transaction_date}</td>
-                        </tr>
-                        <tr>
-                            <th>Transaction Action:</th>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>From:</th>
-                            <td>{tran.transfer_from}</td>
-                        </tr>
-                        <tr>
-                            <th>To:</th>
-                            <td>{tran.transfer_to}</td>
-                        </tr>
-                        <tr>
-                            <th>Value:</th>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>Transaction Fee:</th>
-                            <td></td>
-                        </tr>
-                    </table>
-                }
-            })}
-            <a href="TransactionHistory.jsx" className="btn btn-white rounded-pill"><ArrowLeftIcon /> Back</a>
-        </div>
+        <tr>
+            <td>{props.transaction.transaction_hash}</td>
+            <td><span className="badge text-bg-light">{props.transaction.type}</span></td>
+            <td>{props.transaction.block_number}</td>
+            <td>{props.transaction.transaction_date}</td>
+            <td>{props.transaction.transfer_from}</td>
+            <td>{props.transaction.transfer_to}</td>
+        </tr>
     )
-
 }
+
+export default Transaction

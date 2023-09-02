@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 // Custom CSS file
 import "./styles/styles.css"
+import TransactionHistory from "./components/TransactionHistory";
 
 
 function App() {
@@ -15,7 +16,9 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={ <Main/> } />
-        <Route path="/user-dashboard" element={ <UserDashBoard/> } />
+        <Route path="/user-dashboard" element={ <UserDashBoard/> } >
+          <Route path="transaction-history" element={<TransactionHistory/>}></Route>
+        </Route>
         <Route path="/cart" element={ <ShoppingCart/> } />
       </Routes>
     </div>

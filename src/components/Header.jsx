@@ -1,6 +1,6 @@
 import { InputBase, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
-import BubbleChartIcon from '@mui/icons-material/BubbleChart';
+import Logo from "./Logo";
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -12,7 +12,7 @@ function Header() {
             <div className="container border border-dark rounded-pill">
                 <div className="row flex-fill">
                     <div className="col-1">
-                        <span><BubbleChartIcon />DTP</span>
+                        <Logo />
                     </div>
                     <div className="col-9">
                         <span>
