@@ -4,7 +4,6 @@ function TransactionHistory() {
     const transactions = require('../res/transaction_by_an_account.json').transactions;
     return (
         <div className="container">
-            This is transaction history!
             <table className="table table-striped">
                 <thead>
                     <tr>
