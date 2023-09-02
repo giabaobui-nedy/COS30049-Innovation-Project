@@ -1,9 +1,25 @@
-import FormGroup from '@mui/material/FormGroup';
+import Logo from "./Logo"
 
-export default function ShoppingCart(cart){
+function ShoppingCart(props){
     return(
-        <form>
-            <FormGroup></FormGroup>
-        </form>
+        <div className="container">
+            <Logo/>
+            <div>Shopping Cart:</div>
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Item description</th>
+                        <th>Price</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
     )
 }
+
+export default ShoppingCart
