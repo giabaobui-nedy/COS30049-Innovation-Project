@@ -1,7 +1,10 @@
 import { useState } from "react";
+import Header from "./Header";
 import NavBar from "./NavBar";
 import Asset from "./Asset";
 import axios from 'axios';
+import Footer from "./Footer";
+
 
 function Main() {
     //categories for assets
@@ -34,10 +37,12 @@ function Main() {
 
         return (
             <div className="container">
+                <Header/>
                 <NavBar chosenCategory={chosenCategory} setChosenCategory={setChosenCategory}></NavBar>
                 {apiData.map((nft, index) => {
                     return <Asset isChosen={(chosenCategory === categories[index % categories.length]) || (chosenCategory === "All")} key={index} id={"#00" + index} nftInfo={nft} category={categories[index % categories.length]} />
                 })}
+                <Footer/>
             </div>
         )
     } catch {

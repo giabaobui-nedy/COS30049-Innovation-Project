@@ -1,4 +1,5 @@
 import { InputBase, IconButton } from "@mui/material";
+import { Link } from "react-router-dom";
 import BubbleChartIcon from '@mui/icons-material/BubbleChart';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -22,18 +23,19 @@ function Header() {
                         </span>
                     </div>
                     <div className="col-1">
-                        <IconButton className="float-end">
-                            <AccountCircleIcon />
-                        </IconButton>
+                        <Link to="user-dashboard">
+                            <IconButton className="float-end">
+                                <AccountCircleIcon />
+                            </IconButton>
+                        </Link>
                     </div>
                     <div className="col-1">
-                        <IconButton className="float-end">
-                            <ShoppingCartIcon />
-                        </IconButton>
+                        <Link to="cart">
+                            <IconButton className="float-end">
+                                <ShoppingCartIcon />
+                            </IconButton>
+                        </Link>
                     </div>
-                    {/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
-                        <span className="navbar-toggler-icon"></span>
-                    </button> */}
                 </div>
             </div>
         </nav>

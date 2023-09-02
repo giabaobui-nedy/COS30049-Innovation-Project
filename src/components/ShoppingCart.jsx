@@ -1,9 +1,12 @@
-import FormGroup from '@mui/material/FormGroup';
 
-export default function ShoppingCart(cart){
+
+function ShoppingCart(cart){
     return(
-        <form>
-            <FormGroup></FormGroup>
-        </form>
+        <div>
+            this is shopping cart!
+        </div>
     )
 }
+
+
+export default ShoppingCart
