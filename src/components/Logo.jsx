@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom"
-import BubbleChartIcon from '@mui/icons-material/BubbleChart';
 import { IconButton } from "@mui/material";
 import logo from "../res/img/logo.png";
 
