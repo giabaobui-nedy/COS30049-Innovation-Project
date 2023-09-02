@@ -1,9 +1,9 @@
-import { InputBase, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
-import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import SearchBar from "./SearchBar";
 
 function Header(props) {
     return (
@@ -15,12 +15,7 @@ function Header(props) {
                         <Logo />
                     </div>
                     <div className="col-9">
-                        <span>
-                            <InputBase type="text" placeholder="Search"></InputBase>
-                            <IconButton className="float-end">
-                                <SearchIcon />
-                            </IconButton>
-                        </span>
+                        <SearchBar isSearching={props.isSearching} setIsSearching={props.setIsSearching} searchInput={props.searchInput} setSearchInput={props.setSearchInput} />
                     </div>
                     <div className="col-1">
                         <Link to="user-dashboard">
