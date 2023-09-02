@@ -4,6 +4,7 @@ import NavBar from "./NavBar";
 import Asset from "./Asset";
 import axios from 'axios';
 import Footer from "./Footer";
+import randomPrices from "../res/randomPrice";
 
 function Main(props) {
     //categories for assets
@@ -39,7 +40,7 @@ function Main(props) {
                 <Header numberOfItems={props.cartItems.length}/>
                 <NavBar chosenCategory={chosenCategory} setChosenCategory={setChosenCategory}/>
                 {apiData.map((nft, index) => {
-                    return <Asset cartItems={props.cartItems} addItemToCart={props.addItemToCart} isChosen={(chosenCategory === categories[index % categories.length]) || (chosenCategory === "All")} key={index} id={index} nftInfo={nft} category={categories[index % categories.length]} />
+                    return <Asset price={randomPrices[index]} cartItems={props.cartItems} addItemToCart={props.addItemToCart} isChosen={(chosenCategory === categories[index % categories.length]) || (chosenCategory === "All")} key={index} id={index} nftInfo={nft} category={categories[index % categories.length]} />
                 })}
                 <Footer/>
             </div>

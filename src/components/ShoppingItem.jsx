@@ -23,7 +23,7 @@ function ShoppingItem(props) {
                     </div>
                 </td>
                 <td>
-                    <div>rand</div>
+                    <div>{props.price}ETH</div>
                 </td>
                 <td>
                     <IconButton onClick={props.deleteItem}>

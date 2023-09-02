@@ -18,7 +18,7 @@ function ShoppingCart(props){
                 <tbody>
                     {
                         props.cartItems.map((item) => {
-                            return <ShoppingItem key={item.itemId} cartItems={props.cartItems} item={item} 
+                            return <ShoppingItem key={item.itemId} item={item} price={item.itemPrice}
                             deleteItem={() => 
                                 {
                                     props.setCartItems(props.cartItems.length === 1 ?
