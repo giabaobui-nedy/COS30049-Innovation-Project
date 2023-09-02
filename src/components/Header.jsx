@@ -5,7 +5,7 @@ import SearchIcon from '@mui/icons-material/SearchTwoTone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircleTwoTone';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCartTwoTone';
 
-function Header() {
+function Header(props) {
     return (
         // the start of the navbar
         <nav className="navbar navbar-expand-md container-fluid rounded-pill bg-dark mt-2 sticky-top">
@@ -28,6 +28,7 @@ function Header() {
                         <Link to="cart">
                             <IconButton className="float-end">
                                 <ShoppingCartIcon />
+                                <span className="badge rounded-pill text-bg-danger">{props.numberOfItems}</span>
                             </IconButton>
                         </Link>
                         <Link to="user-dashboard">
