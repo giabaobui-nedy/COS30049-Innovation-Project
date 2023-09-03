@@ -1,4 +1,4 @@
-import { useState } from 'react';
+
 import CheckoutButton from './CheckoutButton';
 import Logo from './Logo';
 import ShoppingItem from './ShoppingItem';
@@ -7,7 +7,7 @@ function ShoppingCart(props) {
 
   return (
     <div className="container-fluid">
-      <div className="logo_cont"><Logo size="50px"/></div>
+      <div className="logo_cont"><Logo size="50px" /></div>
       <div className="container">
         {props.cartItems.length === 0 ? (
           <center className="h1">No Item in your cart!</center>
@@ -31,8 +31,8 @@ function ShoppingCart(props) {
                       props.cartItems.length === 1
                         ? []
                         : props.cartItems.filter(
-                            (eachItem) => eachItem.itemId !== item.itemId
-                          )
+                          (eachItem) => eachItem.itemId !== item.itemId
+                        )
                     );
                   }}
                 />

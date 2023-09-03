@@ -23,11 +23,11 @@ function Header(props) {
                             <Link to="cart">
                                 <IconButton className="float-end">
                                     <ShoppingCartIcon />
+                                    <div className="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill small-badge">
+                                        {props.numberOfItems}
+                                        <span className="visually-hidden">unread messages</span>
+                                    </div>
                                 </IconButton>
-                                <span className="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill">
-                                    {props.numberOfItems}
-                                    <span className="visually-hidden">unread messages</span>
-                                </span>
                             </Link>
                             <Link to="user-dashboard">
                                 <IconButton className="float-end bg-secondary">
