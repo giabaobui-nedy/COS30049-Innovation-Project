@@ -49,7 +49,7 @@ nav {
     padding: 5px 5px;
     justify-content: flex-end;
     display: flex;
-    width: 100px;
+    width: 110px;
 }
 
 .nav_head {
@@ -122,6 +122,12 @@ th,td{
 .checkout_btn{
     margin: 20px;
 }
+
+
+.price_btn{
+    float:right;
+}
+
 
 .small-badge {
     max-width: 3em;
