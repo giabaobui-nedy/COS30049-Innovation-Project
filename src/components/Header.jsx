@@ -7,44 +7,34 @@ import SearchBar from "./SearchBar";
 
 function Header(props) {
     return (
-        <div className="container-fluid">
-            <nav className="navbar navbar-expand-md custom-bg-color rounded-pill mt-2 d-flex align-items-center">
-                <div className="container-fluid">
-                    <div className="navbar-brand">
-                        <Logo />
-                    </div>
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#nav">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse custom-bg-color p-4 rounded-2" id="nav">
-                        <SearchBar
-                            isSearching={props.isSearching}
-                            setIsSearching={props.setIsSearching}
-                            searchInput={props.searchInput}
-                            setSearchInput={props.setSearchInput}
-                        />
-                        <Link to="cart" className="text-decoration-none position-relative">
-                            <IconButton className="bg-white ms-auto">
-                                <ShoppingCartIcon />
-                            </IconButton>
-                            <span className="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill">
-                                {props.numberOfItems}
-                                <span className="visually-hidden">unread messages</span>
-                            </span>
-                        </Link>
-                        <Link to="user-dashboard" className="text-decoration-none">
-                            <IconButton className="bg-white ms-2">
-                                <AccountCircleIcon />
-                            </IconButton>
-                        </Link>
+        // the start of the navbar
+        <nav className="navbar navbar-expand-md container-fluid rounded-pill bg-dark mt-2 sticky-top">
+            <div className="container-fluid">
+                <div className="navbar-brand">
+                    <Logo size="50px" />
+                </div>
+                <button className="navbar-toggler bg-white rounded-pill" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse bg-dark rounded-4" id="nav">
+                    <SearchBar isSearching={props.isSearching} setIsSearching={props.setIsSearching} searchInput={props.searchInput} setSearchInput={props.setSearchInput} />
+                    <div className="container-fluid">
+                        <span className="container-fluid bg-white ava_pill rounded-pill">
+                            <Link to="cart">
+                                <IconButton className="float-end">
+                                    <ShoppingCartIcon />
+                                </IconButton>
+                            </Link>
+                            <Link to="user-dashboard">
+                                <IconButton className="float-end bg-secondary">
+                                    <AccountCircleIcon />
+                                </IconButton>
+                            </Link>
+                        </span>
                     </div>
                 </div>
-            </nav>
-        </div>
+            </div>
+        </nav>
     )
 }
 

@@ -11,15 +11,15 @@ function Main(props) {
     //categories for assets
     const categories = ["Art", "Gaming", "Membership", "PFPs", "Photography", "Music"]
 
-    //chosen category can be modified
     const [chosenCategory, setChosenCategory] = useState("All")
 
     const [apiData, setApiData] = useState([])
 
-    //search input  (initial value = "")
     const [searchInput, setSearchInput] = useState("")
 
     const [isSearching, setIsSearching] = useState(false)
+
+    const [sortByPrice, setSortByPrice] = useState(true);
 
     const fetchApiData = () => {
         //fetch data from alchemy
@@ -43,21 +43,33 @@ function Main(props) {
             });
     }
 
+    
+
     try {
 
-        //render the API data once
         useEffect(() => {
             fetchApiData();
         }, [])
 
+        const sortedData = [...apiData].sort((a, b) => {
+            const priceA = randomPrices[shortenHexadecimal(a.id.tokenId)];
+            const priceB = randomPrices[shortenHexadecimal(b.id.tokenId)];
+    
+            return sortByPrice ? priceA - priceB : priceB - priceA;
+        });
+
+        const changeSortOrder = () => {
+            setSortByPrice(!sortByPrice);
+        };
+
         return (
-            <div className="container-fluid">
+            <div className="container">
                 <Header isSearching={isSearching} setIsSearching={setIsSearching} searchInput={searchInput} setSearchInput={setSearchInput} numberOfItems={props.cartItems.length} />
-                <NavBar chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} />
-                <div className="container assets_area">
+                <NavBar chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} changeSortOrder={changeSortOrder} sortByPrice={sortByPrice} cartItems={props.cartItems} />
+                <div className="assets_area">
                     {
                         (!isSearching) ?
-                            apiData.map((nft) => {
+                            sortedData.map((nft) => {
                                 return <Asset
                                     price={randomPrices[shortenHexadecimal(nft.id.tokenId)]}
                                     cartItems={props.cartItems}
@@ -69,7 +81,7 @@ function Main(props) {
                                     category={categories[shortenHexadecimal(nft.id.tokenId) % categories.length]} />
                             }) :
                             (!isNaN(parseInt(searchInput))) &&
-                            apiData.map((nft) => {
+                            sortedData.map((nft) => {
                                 return <Asset
                                     price={randomPrices[shortenHexadecimal(nft.id.tokenId)]}
                                     cartItems={props.cartItems}
@@ -85,6 +97,7 @@ function Main(props) {
                 <Footer />
             </div>
         )
+
     } catch {
         return (
             <div className="container">
