@@ -47,9 +47,9 @@ nav {
     background-color: white;
     border: none;
     padding: 5px 5px;
-    justify-content: flex-end;
+    justify-content: space-between;
     display: flex;
-    width: 110px;
+    width: 95px;
 }
 
 .nav_head {
