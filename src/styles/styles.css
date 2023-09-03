@@ -68,6 +68,12 @@ nav {
     }
 }
 
+@media (max-width: 600px) {
+    .assets_area {
+        grid-template-columns: 1fr;
+    }
+}
+
 /*User sidebar*/
 .sidebar {
     height: 100%;
