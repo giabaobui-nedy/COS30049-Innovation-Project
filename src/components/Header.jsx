@@ -1,36 +1,40 @@
 import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AccountCircleIcon from '@mui/icons-material/AccountCircleTwoTone';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import SearchBar from "./SearchBar";
 
 function Header(props) {
     return (
         // the start of the navbar
-        <nav className="navbar navbar-expand-sm">
-            <div className="container border border-dark rounded-pill">
-                <div className="row flex-fill">
-                    <div className="col-1">
-                        <Logo />
-                    </div>
-                    <div className="col-9">
-                        <SearchBar isSearching={props.isSearching} setIsSearching={props.setIsSearching} searchInput={props.searchInput} setSearchInput={props.setSearchInput} />
-                    </div>
-                    <div className="col-1">
-                        <Link to="user-dashboard">
-                            <IconButton className="float-end">
-                                <AccountCircleIcon />
-                            </IconButton>
-                        </Link>
-                    </div>
-                    <div className="col-1">
-                        <Link to="cart">
-                            <IconButton className="float-end">
-                                <ShoppingCartIcon />
-                                <span className="badge rounded-pill text-bg-danger">{props.numberOfItems}</span>
-                            </IconButton>
-                        </Link>
+        <nav className="navbar navbar-expand-md container-fluid rounded-pill bg-dark mt-2 sticky-top">
+            <div className="container-fluid">
+                <div className="navbar-brand">
+                    <Logo size="50px" />
+                </div>
+                <button className="navbar-toggler bg-white rounded-pill" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse bg-dark rounded-4" id="nav">
+                    <SearchBar isSearching={props.isSearching} setIsSearching={props.setIsSearching} searchInput={props.searchInput} setSearchInput={props.setSearchInput} />
+                    <div className="container-fluid">
+                        <span className="container-fluid bg-white ava_pill rounded-pill">
+                            <Link to="cart">
+                                <IconButton className="float-end">
+                                    <ShoppingCartIcon />
+                                    <div className="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill small-badge">
+                                        {props.numberOfItems}
+                                        <span className="visually-hidden">unread messages</span>
+                                    </div>
+                                </IconButton>
+                            </Link>
+                            <Link to="user-dashboard">
+                                <IconButton className="float-end bg-secondary">
+                                    <AccountCircleIcon />
+                                </IconButton>
+                            </Link>
+                        </span>
                     </div>
                 </div>
             </div>

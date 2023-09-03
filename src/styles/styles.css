@@ -36,44 +36,101 @@
 }
 
 /*The header*/
-nav{
+nav {
     height: 80px;
     vertical-align: middle;
     margin-bottom: 2vw;
 }
 
 /*The pill that contains the cart and ava btn*/
-.ava_pill{
+.ava_pill {
     background-color: white;
     border: none;
     padding: 5px 5px;
-    justify-content: flex-end;
+    justify-content: space-between;
     display: flex;
-    width: 100px;
+    width: 95px;
 }
 
-.nav_head{
+.nav_head {
     padding: 7px 20px;
 }
 
 /*List of assets*/
-.assets_area{
+.assets_area {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
 @media (max-width: 900px) {
-    .assets_area {  grid-template-columns: 1fr 1fr;}
-}  
+    .assets_area {
+        grid-template-columns: 1fr 1fr;
+    }
+}
 
+/*User sidebar*/
 .sidebar {
     height: 100%;
-    width: 160px;
+    width: 35px;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
     overflow-x: hidden;
     padding-top: 20px;
-  }
+}
+
+.offcanvas {
+    width: 20vw;
+}
+
+.sidebar_opt {
+    width: 100%;
+    margin: 10px 0px;
+    padding: 10px;
+}
+
+.sidebar_opt:hover {
+    background-color: black;
+    color: white;
+    transform: scale(1.05);
+}
+
+.tran_tb tr:nth-child(even) {
+    background-color: rgba(71, 65, 65, 0.192);
+}
+
+.tb_overflow{
+    overflow-x: scroll;
+    overflow-y: scroll;
+    max-height: 90vh;
+}
+
+th,td{
+    padding: 10px;
+}
+
+.trans_tb{
+    margin-left: 3vw;
+    text-transform: uppercase;
+}
+
+.logo_cont{
+    margin: 0.75rem 0 0 0.125rem
+}
+
+.checkout_btn{
+    margin: 20px;
+}
+
+
+.price_btn{
+    float:right;
+}
+
+
+.small-badge {
+    max-width: 3em;
+    max-height: 3em;
+    font-size: x-small;
+}
