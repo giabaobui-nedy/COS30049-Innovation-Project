@@ -1,6 +1,5 @@
 # This is the project source code for COS30049 - Computing Technology Innovation Project
 
-components - create component files in this directory!
 styles - css file here!
 
 1. Users can view digital assets available for trading.
