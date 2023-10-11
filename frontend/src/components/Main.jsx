@@ -63,10 +63,10 @@ function Main(props) {
         };
 
         return (
-            <div className="container">
-                <Header isSearching={isSearching} setIsSearching={setIsSearching} searchInput={searchInput} setSearchInput={setSearchInput} numberOfItems={props.cartItems.length} />
-                <NavBar chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} changeSortOrder={changeSortOrder} sortByPrice={sortByPrice} cartItems={props.cartItems} />
-                <div className="assets_area">
+            <div className="container-fluid">
+                <Header className="container-fluid" isSearching={isSearching} setIsSearching={setIsSearching} searchInput={searchInput} setSearchInput={setSearchInput} numberOfItems={props.cartItems.length} />
+                <NavBar className="container" chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} changeSortOrder={changeSortOrder} sortByPrice={sortByPrice} cartItems={props.cartItems} />
+                <div className="assets_area container">
                     {
                         (!isSearching) ?
                             sortedData.map((nft) => {
@@ -94,7 +94,7 @@ function Main(props) {
                             })
                     }
                 </div>
-                <Footer />
+                <Footer className="container-fluid" />
             </div>
         )
 

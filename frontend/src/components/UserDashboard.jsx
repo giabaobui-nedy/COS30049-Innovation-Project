@@ -2,6 +2,8 @@ import { Link, Outlet } from "react-router-dom"
 import Logo from "./Logo"
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu';
+import SignUp from "./SignUp";
+import SignIn from "./SignIn";
 
 function UserDashBoard() {
     return (
@@ -26,6 +28,7 @@ function UserDashBoard() {
                     <button className="btn btn-outline-dark sidebar_opt">...</button>
                 </div>
             </div>
+            <SignUp/>
             <Outlet />
         </div>
     )
