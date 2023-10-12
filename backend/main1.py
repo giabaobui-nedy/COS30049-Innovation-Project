@@ -172,3 +172,22 @@ def approve(my_address, private_key, tokenID):
     tx_receipt = w3.eth.wait_for_transaction_receipt(send_store_tx)
 
     return "Approved!"
+
+def get_transactions_of_an_address(my_address):
+
+    # Connect to your Ganache instance
+    web3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
+
+    # Fetch all transactions
+    latest_block = web3.eth.block_number
+    for block_number in range(latest_block + 1):
+        block = web3.eth.get_block(block_number, full_transactions=True)
+        if block and "transactions" in block:
+            for tx in block["transactions"]:
+                if tx['from'] == my_address:
+                    print(f"Transaction Hash: {tx['hash'].hex()}")
+                    print(f"From: {tx['from']}")
+                    print(f"To: {tx['to']}")
+                    print(f"Value: {tx['value']} Wei")
+                    print('-----------------------------------')
+

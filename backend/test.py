@@ -15,7 +15,6 @@ w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
 # Default is 1337 or with the PORT in your Gaanche
 chain_id = 1337
 
-
 @app.get("/")
 async def deployAsset():
     # Find in you account
@@ -234,18 +233,35 @@ async def approve():
 
     return "Approved!"
 
+
 @app.get("/getTransaction")
-def get_transactions():
-    latest_block = w3.eth.block_number
+def get_transactions_of_an_address():
+
+    # Connect to your Ganache instance
+    web3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
+
+    # Fetch all transactions
+    latest_block = web3.eth.block_number
     for block_number in range(latest_block + 1):
-        block = w3.eth.get_block(block_number, full_transactions=True)
+        block = web3.eth.get_block(block_number, full_transactions=True)
         if block and "transactions" in block:
             for tx in block["transactions"]:
-                print(f"Transaction Hash: {tx['hash'].hex()}")
-                print(f"From: {tx['from']}")
-                print(f"To: {tx['to']}")
-                print(f"Value: {w3.fromWei(tx['value'], 'ether')} Ether")
-                print('-----------------------------------')
-    return "success"
+                if tx['from'] == "0x7D0967D987284654d9495138154F8722f970f6CD":
+                    print(f"Transaction Hash: {tx['hash'].hex()}")
+                    print(f"From: {tx['from']}")
+                    print(f"To: {tx['to']}")
+                    print(f"Value: {tx['value']} Wei")
+                    print('-----------------------------------')
+
+    return "!"
+
+
+
+
+
+
+
+
+
 
 
