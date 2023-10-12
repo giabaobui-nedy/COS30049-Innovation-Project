@@ -71,18 +71,27 @@ async def deployAsset():
     tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
     tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
+    # Load the existing JSON data from the file
+    with open("data.json", "r") as file:
+        data = json.load(file)
+
+    # Add the new asset to the existing data
+    new_asset = [{"contractAddress": tx_receipt.contractAddress
+        , "abi": abi
+        , "tokenID": tokenID}]
+
+    data["item"].extend(new_asset)
+
+    # store contract's details to json file
     with open("data.json", "w") as file:
-        json.dump({"contractAddress": tx_receipt.contractAddress
-                   , "abi": abi
-                   , "tokenID": tokenID}, file)
+        json.dump(data, file, indent=4)
 
-
-    return "Deploy succeed"
+    return "deploy"
 
 @app.get("/buy1")
 async def requestToBuy():
     with open("./data.json", "r") as file:
-        data_file = json.load(file)
+        data_file = json.load(file)["item"][0]
 
     my_address = "0x7D0967D987284654d9495138154F8722f970f6CD"
     private_key ="0xd3573873a3d929716929ebc346da11255ff8c57f7a925a4929e317847defef81"
@@ -110,7 +119,7 @@ async def requestToBuy():
 @app.get("/buy2")
 async def requestToBuy():
     with open("./data.json", "r") as file:
-        data_file = json.load(file)
+        data_file = json.load(file)["item"][0]
 
 
     my_address = "0xf202751077760d15db7a24f8f150C863252b7F17"
@@ -142,10 +151,15 @@ async def getArray():
     with open("./data.json", "r") as file:
         data_file = json.load(file)
 
+    for item in data_file["item"]:
+        if item["tokenID"] == 1:
+            data = item
+            break
+
     #my_address = "0x7D0967D987284654d9495138154F8722f970f6CD"
     #private_key ="0xd3573873a3d929716929ebc346da11255ff8c57f7a925a4929e317847defef81"
 
-    simple_storage = w3.eth.contract(address=data_file["contractAddress"], abi=data_file["abi"])
+    simple_storage = w3.eth.contract(address=data["contractAddress"], abi=data["abi"])
 
     #nonce = w3.eth.get_transaction_count(my_address)
 
@@ -157,7 +171,7 @@ async def getArray():
 @app.get("/owner")
 async def getOwner():
     with open("./data.json", "r") as file:
-        data_file = json.load(file)
+        data_file = json.load(file)["item"][0]
 
     #my_address = "0x7D0967D987284654d9495138154F8722f970f6CD"
     #private_key ="0xd3573873a3d929716929ebc346da11255ff8c57f7a925a4929e317847defef81"
@@ -174,7 +188,7 @@ async def getOwner():
 @app.get("/balance")
 async def getBalance():
     with open("./data.json", "r") as file:
-        data_file = json.load(file)
+        data_file = json.load(file)["item"][0]
 
     #my_address = "0x7D0967D987284654d9495138154F8722f970f6CD"
     #private_key ="0xd3573873a3d929716929ebc346da11255ff8c57f7a925a4929e317847defef81"
@@ -193,10 +207,15 @@ async def approve():
     with open("./data.json", "r") as file:
         data_file = json.load(file)
 
+    for item in data_file["item"]:
+        if item["tokenID"] == 1:
+            data = item
+            break
+
     my_address = "0x48a6586996313C9cB25B6945f94212C5C91c8732"
     private_key = "0x80fa94d9941be505fff0136842abd44d80869b786128426cf9b28e1c88f9ec7f"
 
-    simple_storage = w3.eth.contract(address=data_file["contractAddress"], abi=data_file["abi"])
+    simple_storage = w3.eth.contract(address=data["contractAddress"], abi=data["abi"])
 
     nonce = w3.eth.get_transaction_count(my_address)
 

@@ -58,9 +58,7 @@ contract AssetSC {
         return currentOwnerAddress;
     }
 
-     function getCurrentOwnerBalance(address _address) view external returns (uint){
-        return _address.balance;
-    }
+
 
 
 }
