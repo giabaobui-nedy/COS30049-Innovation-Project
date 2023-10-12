@@ -12,7 +12,7 @@ app = FastAPI()
 # global variable
 # type your address here
 w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
-# Default is 1337 or with the PORT in your Gaanche
+# Default is 1337 or with the PORT in your Ganache
 chain_id = 1337
 
 @app.get("/")
