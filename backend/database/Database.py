@@ -1,6 +1,5 @@
 import MySQLdb;
 import json;
-from User import User;
 
 class Database:
     def __init__(self, host, user, password, database):

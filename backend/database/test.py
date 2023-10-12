@@ -11,5 +11,7 @@ print(address)
 contAdd = dtb.getContractAddress(con, 6)
 print(contAdd)
 user = User("Someone", "pwd", "479d58d7EA5DA499f7Baf6EAB5B54A6D8c014F15", "flkjasdflkjwo")
-#dtb.addUser(con, user)
+dtb.addUser(con, user)
 dtb.disconnect(con)
+
+#USE s103843994_db;
