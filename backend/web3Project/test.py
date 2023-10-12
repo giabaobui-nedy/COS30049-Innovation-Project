@@ -1,5 +1,4 @@
 from fastapi import FastAPI, Depends
-
 from web3 import Web3
 import os
 from solcx import compile_standard, install_solc
@@ -16,7 +15,7 @@ w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
 chain_id = 1337
 
 
-@app.get("/")
+@app.get("/deployAsset")
 async def deployAsset():
     # Find in you account
     my_address = "0x48a6586996313C9cB25B6945f94212C5C91c8732"

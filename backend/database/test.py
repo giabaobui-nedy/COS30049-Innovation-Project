@@ -1,5 +1,5 @@
 from User import User;
-from Database import Database;
+from DatabaseForMac import Database;
 
 dtb = Database("feenix-mariadb.swin.edu.au", "s103843994", "120203", "s103843994_db")
 con = dtb.connect()

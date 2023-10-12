@@ -8,14 +8,14 @@ w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
 # Default is 1337 or with the PORT in your Gaanche
 chain_id = 1337
 
-#function called to deploy smart contract associated with an asset
-#pass in owner address, private key and asset's token ID
-def deploy_smart_contract(my_address, private_key, tokenID):
 
+# function called to deploy smart contract associated with an asset
+# pass in owner address, private key and asset's token ID
+def deploy_smart_contract(my_address, private_key, tokenID):
     with open("./AssetSC.sol", "r") as file:
         storage_file = file.read()
 
-    #compile the smart contract
+    # compile the smart contract
     install_solc("0.8.11")
     compiled_sol = compile_standard(
         {
@@ -30,7 +30,7 @@ def deploy_smart_contract(my_address, private_key, tokenID):
         solc_version="0.8.11",
     )
 
-    #write compile info to the json file
+    # write compile info to the json file
     with open("compiled_code.json", "w") as file:
         json.dump(compiled_sol, file)
 
@@ -42,11 +42,11 @@ def deploy_smart_contract(my_address, private_key, tokenID):
     # get abi
     abi = compiled_sol["contracts"]["AssetSC.sol"]["AssetSC"]["abi"]
 
-    #get number of transactions of the address
+    # get number of transactions of the address
     nonce = w3.eth.get_transaction_count(my_address)
 
-    #deploy the smart contract
-    #contract creation transaction
+    # deploy the smart contract
+    # contract creation transaction
     AssetSC = w3.eth.contract(abi=abi, bytecode=bytecode)
 
     transaction = AssetSC.constructor(tokenID).build_transaction(
@@ -59,7 +59,7 @@ def deploy_smart_contract(my_address, private_key, tokenID):
     )
     transaction.pop('to')
 
-    #signed contract
+    # signed contract
     signed_txn = w3.eth.account.sign_transaction(transaction, private_key=private_key)
     tx_hash = w3.eth.send_raw_transaction(signed_txn.rawTransaction)
     tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
@@ -70,19 +70,19 @@ def deploy_smart_contract(my_address, private_key, tokenID):
 
     # Add the new employees to the existing data
     new_asset = {"contractAddress": tx_receipt.contractAddress
-                   , "abi": abi
-                   , "tokenID": tokenID}
+        , "abi": abi
+        , "tokenID": tokenID}
     data.extend(new_asset)
 
-    #store contract's details to json file
+    # store contract's details to json file
     with open("data.json", "w") as file:
         json.dump(data, file)
 
     return "Deploy succeed"
 
 
-#function called by an account to register to buy an asset
-#pass in user's address, private key and asset's token ID
+# function called by an account to register to buy an asset
+# pass in user's address, private key and asset's token ID
 def registerToBuy(my_address, private_key, tokenID, amount):
     with open("./data.json", "r") as file:
         data_file = json.load(file)
@@ -106,7 +106,6 @@ def registerToBuy(my_address, private_key, tokenID, amount):
         }
     )
 
-
     signed_store_txn = w3.eth.account.sign_transaction(store_transaction, private_key=private_key)
     send_store_tx = w3.eth.send_raw_transaction(signed_store_txn.rawTransaction)
     tx_receipt = w3.eth.wait_for_transaction_receipt(send_store_tx)
@@ -123,14 +122,13 @@ def getArray(tokenID):
             data = item
             break
 
-
     simple_storage = w3.eth.contract(address=data["contractAddress"], abi=data["abi"])
-
 
     result = simple_storage.functions.getParticipants().call()
     print(result)
 
     return result
+
 
 def getOwner(tokenID):
     with open("./data.json", "r") as file:
@@ -145,6 +143,7 @@ def getOwner(tokenID):
 
     result = simple_storage.functions.getCurrentOwner().call()
     return result
+
 
 def approve(my_address, private_key, tokenID):
     with open("./data.json", "r") as file:

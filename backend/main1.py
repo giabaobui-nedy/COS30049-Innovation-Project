@@ -8,7 +8,6 @@ w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
 # Default is 1337 or with the PORT in your Gaanche
 chain_id = 1337
 
-
 # function called to deploy smart contract associated with an asset
 # pass in owner address, private key and asset's token ID
 def deploy_smart_contract(my_address, private_key, tokenID):
@@ -190,4 +189,3 @@ def get_transactions_of_an_address(my_address):
                     print(f"To: {tx['to']}")
                     print(f"Value: {tx['value']} Wei")
                     print('-----------------------------------')
-
