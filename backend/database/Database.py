@@ -138,9 +138,9 @@ class Database:
         ''', (user.username, user.password, user.address, user.privateKey))
         con.commit()
         if query > 0:
-            print("Asset added successfully.")
+            print("User added successfully.")
         else:
-            print("Failed to add asset.")
+            print("Failed to add user.")
 
     
 
