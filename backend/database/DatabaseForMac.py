@@ -3,10 +3,8 @@ import json
 
 
 class Database:
+    con = None
 
-    def __init__(self):
-        pass
-    
     def __init__(self, host, user, password, database):
         self.host = host
         self.user = user
@@ -14,19 +12,23 @@ class Database:
         self.database = database
 
     def connect(self):
-        con = mysql.connector.connect(
-            host=self.host,
-            user=self.user,
-            password=self.password,
-            database=self.database
-        )
-        return con
+        if self.con is not None:
+            print("-- A new database connection is created")
+            con = mysql.connector.connect(
+                host=self.host,
+                user=self.user,
+                password=self.password,
+                database=self.database
+            )
+            print("-- Return the created connection")
 
-    def disconnect(self, con):
-        return con.close()
+    def disconnect(self):
+        if self.con is not None:
+            print("-- Close the opened connection")
+            self.con.close()
 
-    def getAllAssets(self, con, sortBy=None, sortOrder="ASC"):
-        cur = con.cursor()
+    def getAllAssets(self, sortBy=None, sortOrder="ASC"):
+        cur = self.con.cursor()
         if sortBy is None:
             query = '''
             SELECT * FROM Asset;
@@ -54,11 +56,11 @@ class Database:
         jsonAssets = json.dumps(assets, indent=2)
         return jsonAssets
 
-    def getAssetBySearch(self, con, pattern):
-        cur = con.cursor()
+    def getAssetBySearch(self, keyword):
+        cur = self.con.cursor()
         query = f'''
         SELECT * FROM Asset
-        WHERE name LIKE '%{pattern}%' OR description LIKE '%{pattern}%';
+        WHERE name LIKE '%{keyword}%' OR description LIKE '%{keyword}%';
         '''
         cur.execute(query)
         rows = cur.fetchall()
@@ -125,7 +127,7 @@ class Database:
         else:
             return None
 
-    #add asset to the local database
+    # add asset to the local database
     def addAsset(self, con, asset):
         cur = con.cursor()
         query = cur.execute('''

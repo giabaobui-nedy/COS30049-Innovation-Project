@@ -1,5 +1,5 @@
-import MySQLdb;
-import json;
+import json
+import MySQLdb
 
 class Database:
     def __init__(self, host, user, password, database):
@@ -10,17 +10,17 @@ class Database:
 
     def connect(self):
         con = MySQLdb.connect(
-            host = self.host,
-            user = self.user,
-            password = self.password,
-            database = self.database
+            host=self.host,
+            user=self.user,
+            password=self.password,
+            database=self.database
         )
         return con
 
     def disconnect(self, con):
         return con.close()
-    
-    def getAllAssets(self, con, sortBy = None, sortOrder = "ASC"):
+
+    def getAllAssets(self, con, sortBy=None, sortOrder="ASC"):
         cur = con.cursor()
         if sortBy is None:
             query = '''
@@ -42,13 +42,13 @@ class Database:
                 'category': row[4],
                 'currentOwner': row[5],
                 'contractAddress': row[6],
-                'imgUrl': row[7]     
+                'imgUrl': row[7]
             }
             for row in rows
         ]
         jsonAssets = json.dumps(assets, indent=2)
         return jsonAssets
-    
+
     def getAssetBySearch(self, con, pattern):
         cur = con.cursor()
         query = f'''
@@ -66,12 +66,12 @@ class Database:
                 'category': row[4],
                 'currentOwner': row[5],
                 'contractAddress': row[6],
-                'imgUrl': row[7]     
+                'imgUrl': row[7]
             }
             for row in rows
         ]
         jsonMatchedAssets = json.dumps(matchedAssets, indent=2)
-        return  jsonMatchedAssets      
+        return jsonMatchedAssets
 
     def getAssetByCategory(self, con, cat):
         cur = con.cursor()
@@ -89,7 +89,7 @@ class Database:
                 'description': row[4],
                 'currentOwner': row[5],
                 'contractAddress': row[6],
-                'imgUrl': row[7]     
+                'imgUrl': row[7]
             }
             for row in rows
         ]
@@ -107,7 +107,7 @@ class Database:
             return contractAdd[0]
         else:
             return None
-    
+
     def getAddressOfUser(self, con, username):
         cur = con.cursor()
         query = f'''
@@ -119,13 +119,14 @@ class Database:
             return userAdd[0]
         else:
             return None
-        
+
     def addAsset(self, con, asset):
         cur = con.cursor()
         query = cur.execute('''
         INSERT INTO Asset
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s);                    
-        ''', (asset.tokenID, asset.name, asset.category, asset.price, asset.description, asset.currentOwner, asset.contractAddress, asset.imgUrl))
+        ''', (asset.tokenID, asset.name, asset.category, asset.price, asset.description, asset.currentOwner,
+              asset.contractAddress, asset.imgUrl))
         con.commit()
         if query > 0:
             print("Asset added successfully.")
