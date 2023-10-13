@@ -12,17 +12,6 @@ class Web3Instance:
 
 
     def compileSmartContract(self):
-        pass
-
-    def getAbi(self):
-        pass
-
-    def deployAssetToBlockChain(self, ownerAddress, privateKey, tokenId):
-        # 1. getAbi() getBytecode() from local file (as it has one version)
-        # 2. get the smart contract
-        # 3. provide the token ID to the constructor
-        # 4. get the nonce of the address
-        # 5. provide the owner address & nonce to the contract
         print("The code goes here!")
         # read the system smart contract
         with open("./AssetSC.sol", "r") as file:
@@ -44,12 +33,33 @@ class Web3Instance:
         # write compile info to the json file
         with open("compiled_code.json", "w") as file:
             json.dump(compiled_sol, file)
-        # get bytecode
-        bytecode = compiled_sol["contracts"]["AssetSC.sol"]["AssetSC"]["evm"]["bytecode"]["object"]
+        pass
+
+    def getAbi(self):
         # get abi
+        with open("compiled_code.json", "r") as file:
+            compiled_sol = json.load(file)
         abi = compiled_sol["contracts"]["AssetSC.sol"]["AssetSC"]["abi"]
-        # get number of transactions of the address
+        return abi
+
+    def getBytecode(self):
+        # get bytecode
+        with open("compiled_code.json", "r") as file:
+            compiled_sol = json.load(file)
+        bytecode = compiled_sol["contracts"]["AssetSC.sol"]["AssetSC"]["evm"]["bytecode"]["object"]
+        return bytecode
+
+    def deployAssetToBlockChain(self, ownerAddress, privateKey, tokenId):
+        # 1. getAbi() getBytecode() from local file (as it has one version)
+        # 2. get the smart contract
+        # 3. provide the token ID to the constructor
+        # 4. get the nonce of the address
+        # 5. provide the owner address & nonce to the contract
+        print("The code goes here!")
         nonce = self.w3.eth.get_transaction_count(ownerAddress)
+
+        abi = self.getAbi()
+        bytecode = self.getBytecode()
         # deploy the smart contract
         # create transaction (get the smart contract from the Blockchain)
         AssetSC = self.w3.eth.contract(abi=abi, bytecode=bytecode)
