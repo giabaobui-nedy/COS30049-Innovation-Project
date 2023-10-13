@@ -27,6 +27,7 @@ app.add_middleware(
 
 dtb = Database("feenix-mariadb.swin.edu.au", "s103843994", "120203", "s103843994_db")
 
+
 class AssetResponse(BaseModel):
     tokenID: int
     name: str
@@ -36,7 +37,7 @@ class AssetResponse(BaseModel):
     currentOwner: str
     contractAddress: str
     imgUrl: str
-    
+
 
 @app.get("/", response_model=list[AssetResponse])
 def get_all_assets():
@@ -49,6 +50,7 @@ def get_all_assets():
     finally:
         dtb.disconnect()
 
+
 @app.get("/search/{pattern}", response_model=list[AssetResponse])
 async def get_assets_by_search(pattern: str):
     con = dtb.connect()
@@ -59,6 +61,7 @@ async def get_assets_by_search(pattern: str):
         return {"error": f"Error: {err}"}
     finally:
         dtb.disconnect(con)
+
 
 @app.get("/category/{category}", response_model=list[AssetResponse])
 async def get_assets_by_category(category: str):

@@ -24,7 +24,7 @@ def compileSmartContract():
             solc_version="0.8.11",
         )
         # write compile info to the json file
-        with open("compiled_code.json", "w") as file:
+        with open("./compiled_code.json", "w") as file:
             json.dump(compiled_sol, file)
     except:
         print("Error when compiling the smart contract")
@@ -49,14 +49,16 @@ def getBytecode():
 
 
 class Web3Instance:
-    w3 = Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))
+    w3 = None
     chainId = 1337
 
-    def __init__(self):
-        print("Web3 is ready!")
+    def __init__(self, w3):
+        if self.w3 is None:
+            self.w3 = w3
+            print("Web3 is ready!")
 
     def deployAssetToBlockChain(self, ownerAddress, privateKey, tokenId):
-        print("Start deploying asset")
+        print("Start deploying asset!")
         # 1. getAbi() getBytecode() from local file (as it has one version)
         abi = getAbi()
         bytecode = getBytecode()
@@ -78,7 +80,7 @@ class Web3Instance:
         signed_txn = self.w3.eth.account.sign_transaction(transaction, private_key=privateKey)
         tx_hash = self.w3.eth.send_raw_transaction(signed_txn.rawTransaction)
         tx_receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash)
-        print("deploy successfully")
+        print("Deploy asset successfully")
         return tx_receipt.contractAddress
 
     def registerToBuy(self, my_address, private_key, contractAddress, amount):
@@ -103,14 +105,14 @@ class Web3Instance:
 
         return "Registered!"
 
-    def getParticipants (self, contractAddress):
+    def getParticipants(self, contractAddress):
         simple_storage = self.w3.eth.contract(address=contractAddress, abi=getAbi())
 
         result = simple_storage.functions.getParticipants().call()
 
         return result
 
-    #get address of asset's owner
+    # get address of asset's owner
     def getOwnerAddress(self, contractAddress):
         simple_storage = self.w3.eth.contract(address=contractAddress, abi=getAbi())
         result = simple_storage.functions.getCurrentOwner().call()
@@ -147,26 +149,9 @@ class Web3Instance:
                         print(f"Transaction Hash: {tx['hash'].hex()}")
                         print(f"From: {tx['from']}")
                         print(f"To: {tx['to']}")
-                        print(f"Value: {tx['value']/1000000000000000000} Ether")
+                        print(f"Value: {tx['value'] / 1000000000000000000} Ether")
                         print('-----------------------------------')
-
 
     def getBalanceOf(self, address):
         balance = self.w3.eth.get_balance(address)
-        return balance/1000000000000000000
-
-
-def Main():
-    w3Instance = Web3Instance()
-    #compileSmartContract()
-    #print(w3Instance.deployAssetToBlockChain("0x48a6586996313C9cB25B6945f94212C5C91c8732","0x80fa94d9941be505fff0136842abd44d80869b786128426cf9b28e1c88f9ec7f", 1))
-    #print(w3Instance.registerToBuy("0x7D0967D987284654d9495138154F8722f970f6CD","0xd3573873a3d929716929ebc346da11255ff8c57f7a925a4929e317847defef81", "0xc112e9E7A5a28AaC3F16239455FA54E7F2D29d9d", 100))
-    #print(w3Instance.getParticipants("0xc112e9E7A5a28AaC3F16239455FA54E7F2D29d9d"))
-    #get owner's address of an asset by contract address of smart contract
-    #print(w3Instance.getOwnerAddress("0xc112e9E7A5a28AaC3F16239455FA54E7F2D29d9d"))
-    #print(w3Instance.approve("0x48a6586996313C9cB25B6945f94212C5C91c8732","0x80fa94d9941be505fff0136842abd44d80869b786128426cf9b28e1c88f9ec7f","0xc112e9E7A5a28AaC3F16239455FA54E7F2D29d9d", 0))
-    #print(w3Instance.getOwnerAddress("0xc112e9E7A5a28AaC3F16239455FA54E7F2D29d9d"))
-    #w3Instance.get_transactions("0x7D0967D987284654d9495138154F8722f970f6CD")
-    print(w3Instance.getBalanceOf("0x7D0967D987284654d9495138154F8722f970f6CD"))
-
-Main()
+        return balance / 1000000000000000000

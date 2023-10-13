@@ -1,4 +1,5 @@
 import mysql.connector
+from database.User import User
 import json
 
 
@@ -12,14 +13,17 @@ class Database:
         self.database = database
 
     def connect(self):
-        if self.con is not None:
+        if self.con is None:
             print("-- A new database connection is created")
             self.con = mysql.connector.connect(
                 host=self.host,
                 user=self.user,
                 password=self.password,
-                database=self.database
+                database=self.database,
+                port=8889
             )
+        else:
+            self.con.connect()
             print("-- Return the created connection")
 
     def disconnect(self):
@@ -61,7 +65,7 @@ class Database:
         ]
 
         # return json assets
-        jsonAssets = json.dumps(assets, indent=2)
+        jsonAssets = json.dumps(assets)
 
         # close the connection
         self.disconnect()
@@ -138,54 +142,74 @@ class Database:
         else:
             return None
 
-    def getAddressOfUser(self, username):
-        self.connect()
-        cur = self.con.cursor()
-        query = f'''
-        SELECT address FROM User WHERE username = '{username}';                    
-        '''
-        # execute the query
-        print("Query to be executed: " + query)
-        cur.execute(query)
-        # get the result
-        userAddress = cur.fetchone()
-        self.disconnect()
-        if userAddress:
-            return userAddress[0]
-        else:
-            return None
+    # def getAddressOfUser(self, username):
+    #     self.connect()
+    #     cur = self.con.cursor()
+    #     query = f'''
+    #     SELECT address FROM User WHERE username = '{username}';
+    #     '''
+    #     # execute the query
+    #     print("Query to be executed: " + query)
+    #     cur.execute(query)
+    #     # get the result
+    #     userAddress = cur.fetchone()
+    #     self.disconnect()
+    #     if userAddress:
+    #         return userAddress[0]
+    #     else:
+    #         return None
 
     # add asset to the local database
     def addAsset(self, asset):
         self.connect()
         cur = self.con.cursor()
-        rowCount = cur.execute('''
+        cur.execute('''
         INSERT INTO Asset
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s);                    
         ''', (asset.tokenID, asset.name, asset.category, asset.price, asset.description, asset.currentOwner,
               asset.contractAddress, asset.imgUrl))
         self.con.commit()
-        if rowCount > 0:
-            print("Asset added successfully.")
-        else:
-            print("Failed to add asset.")
+        print("Asset added successfully.")
         self.disconnect()
 
     # add user to the local database
     def addUser(self, user):
         self.connect()
         cur = self.con.cursor()
-        rowCount = cur.execute('''
+        cur.execute('''
         INSERT INTO User
         VALUES (%s, %s, %s, %s);                    
         ''', (user.username, user.password, user.address, user.privateKey))
         self.con.commit()
-        if rowCount > 0:
-            print("User added successfully.")
-        else:
-            print("Failed to add user.")
+        print("User added successfully.")
         self.disconnect()
 
     # get the next available token id
     def getTokenId(self):
-        pass
+        self.connect()
+        cur = self.con.cursor()
+        cur.execute('''
+                SELECT COUNT(*) FROM ASSET                  
+                ''')
+        currentNumberOfAssets = cur.fetchone()
+        print("The next token id is: " + str(currentNumberOfAssets[0]))
+        self.disconnect()
+        return currentNumberOfAssets[0] + 1
+
+    def getUserInfo(self, username):
+        self.connect()
+        cur = self.con.cursor()
+        query = f'''
+                SELECT address, privateKey FROM User WHERE username = '{username}';                    
+                '''
+        # execute the query
+        print("Query to be executed: " + query)
+        cur.execute(query)
+        # get the result
+        result = cur.fetchone()
+        user = None
+        if result:
+            user = User(username, None, result[0], result[1])
+        self.disconnect()
+        return user
+
