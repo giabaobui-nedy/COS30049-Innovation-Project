@@ -14,7 +14,7 @@ class Database:
     def connect(self):
         if self.con is not None:
             print("-- A new database connection is created")
-            con = mysql.connector.connect(
+            self.con = mysql.connector.connect(
                 host=self.host,
                 user=self.user,
                 password=self.password,
@@ -28,6 +28,9 @@ class Database:
             self.con.close()
 
     def getAllAssets(self, sortBy=None, sortOrder="ASC"):
+        # connect to the db
+        self.connect()
+        # take the cursor
         cur = self.con.cursor()
         if sortBy is None:
             query = '''
@@ -38,7 +41,10 @@ class Database:
             SELECT * FROM Asset
             ORDER BY {sortBy} {sortOrder};
             '''
+        # execute the query
+        print("Query to be executed: " + query)
         cur.execute(query)
+        # fetch all rows
         rows = cur.fetchall()
         assets = [
             {
@@ -53,16 +59,25 @@ class Database:
             }
             for row in rows
         ]
+
+        # return json assets
         jsonAssets = json.dumps(assets, indent=2)
+
+        # close the connection
+        self.disconnect()
         return jsonAssets
 
     def getAssetBySearch(self, keyword):
+        self.connect()
         cur = self.con.cursor()
         query = f'''
         SELECT * FROM Asset
         WHERE name LIKE '%{keyword}%' OR description LIKE '%{keyword}%';
         '''
+        # execute the query
+        print("Query to be executed: " + query)
         cur.execute(query)
+        # fetch all rows
         rows = cur.fetchall()
         matchedAssets = [
             {
@@ -78,9 +93,11 @@ class Database:
             for row in rows
         ]
         jsonMatchedAssets = json.dumps(matchedAssets, indent=2)
+        self.disconnect()
         return jsonMatchedAssets
 
     def getAssetByCategory(self, con, cat):
+        self.connect()
         cur = con.cursor()
         query = f'''
         SELECT * FROM Asset WHERE category = '{cat}';
@@ -101,58 +118,73 @@ class Database:
             for row in rows
         ]
         jsonFilteredAssets = json.dumps(filteredAssets, indent=2)
+        self.disconnect()
         return jsonFilteredAssets
 
-    def getContractAddress(self, con, tokenID):
-        cur = con.cursor()
+    def getContractAddress(self, tokenID):
+        self.connect()
+        cur = self.con.cursor()
         query = f'''
         SELECT contractAddress FROM Asset WHERE tokenID = '{tokenID}';                    
         '''
+        # execute the query
+        print("Query to be executed: " + query)
         cur.execute(query)
-        contractAdd = cur.fetchone()
-        if contractAdd:
-            return contractAdd[0]
+        # get the result
+        contractAddress = cur.fetchone()
+        self.disconnect()
+        if contractAddress:
+            return contractAddress[0]
         else:
             return None
 
-    def getAddressOfUser(self, con, username):
-        cur = con.cursor()
+    def getAddressOfUser(self, username):
+        self.connect()
+        cur = self.con.cursor()
         query = f'''
         SELECT address FROM User WHERE username = '{username}';                    
         '''
+        # execute the query
+        print("Query to be executed: " + query)
         cur.execute(query)
-        userAdd = cur.fetchone()
-        if userAdd:
-            return userAdd[0]
+        # get the result
+        userAddress = cur.fetchone()
+        self.disconnect()
+        if userAddress:
+            return userAddress[0]
         else:
             return None
 
     # add asset to the local database
-    def addAsset(self, con, asset):
-        cur = con.cursor()
-        query = cur.execute('''
+    def addAsset(self, asset):
+        self.connect()
+        cur = self.con.cursor()
+        rowCount = cur.execute('''
         INSERT INTO Asset
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s);                    
         ''', (asset.tokenID, asset.name, asset.category, asset.price, asset.description, asset.currentOwner,
               asset.contractAddress, asset.imgUrl))
-        con.commit()
-        if query > 0:
+        self.con.commit()
+        if rowCount > 0:
             print("Asset added successfully.")
         else:
             print("Failed to add asset.")
+        self.disconnect()
 
     # add user to the local database
-    def addUser(self, con, user):
-        cur = con.cursor()
-        query = cur.execute('''
+    def addUser(self, user):
+        self.connect()
+        cur = self.con.cursor()
+        rowCount = cur.execute('''
         INSERT INTO User
         VALUES (%s, %s, %s, %s);                    
         ''', (user.username, user.password, user.address, user.privateKey))
-        con.commit()
-        if query > 0:
+        self.con.commit()
+        if rowCount > 0:
             print("User added successfully.")
         else:
             print("Failed to add user.")
+        self.disconnect()
 
     # get the next available token id
     def getTokenId(self):

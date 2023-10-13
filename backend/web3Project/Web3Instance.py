@@ -66,5 +66,4 @@ class Web3Instance:
         signed_txn = self.w3.eth.account.sign_transaction(transaction, private_key=privateKey)
         tx_hash = self.w3.eth.send_raw_transaction(signed_txn.rawTransaction)
         tx_receipt = self.w3.eth.wait_for_transaction_receipt(tx_hash)
-
         return tx_receipt.contractAddress
