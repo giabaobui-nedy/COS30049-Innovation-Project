@@ -21,6 +21,33 @@ function Main(props) {
 
     const [sortByPrice, setSortByPrice] = useState(true);
 
+    const [assets, setAssets] = useState([]);
+    
+    useEffect(() => {
+        axios.get('http://127.0.0.1:8000/assets')
+            .then(response => {
+                console.log(response.data);
+                setAssets(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching assets:', error);
+            });
+    }, []);
+
+    return (
+        <div>
+            <h2>All Assets</h2>
+            <ul>
+                {assets.map(asset => (
+                    <li key={asset.tokenID}>
+                        <p>Name: {asset.name}</p>
+                        <p>Category: {asset.category}</p>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+    
     const fetchApiData = () => {
         //fetch data from alchemy
         const options = {
@@ -43,7 +70,6 @@ function Main(props) {
             });
     }
 
-    
 
     try {
 
@@ -54,7 +80,7 @@ function Main(props) {
         const sortedData = [...apiData].sort((a, b) => {
             const priceA = randomPrices[shortenHexadecimal(a.id.tokenId)];
             const priceB = randomPrices[shortenHexadecimal(b.id.tokenId)];
-    
+
             return sortByPrice ? priceA - priceB : priceB - priceA;
         });
 
