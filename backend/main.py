@@ -49,7 +49,7 @@ def get_all_assets():
     finally:
         dtb.disconnect()
 
-@app.get("/assets/search/{pattern}", response_model=list[AssetResponse])
+@app.get("/search/{pattern}", response_model=list[AssetResponse])
 async def get_assets_by_search(pattern: str):
     con = dtb.connect()
     try:
@@ -60,7 +60,7 @@ async def get_assets_by_search(pattern: str):
     finally:
         dtb.disconnect(con)
 
-@app.get("/assets/category/{category}", response_model=list[AssetResponse])
+@app.get("/category/{category}", response_model=list[AssetResponse])
 async def get_assets_by_category(category: str):
     con = dtb.connect()
     try:
