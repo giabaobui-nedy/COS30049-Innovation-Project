@@ -147,8 +147,15 @@ class Web3Instance:
                         print(f"Transaction Hash: {tx['hash'].hex()}")
                         print(f"From: {tx['from']}")
                         print(f"To: {tx['to']}")
-                        print(f"Value: {tx['value']} Wei")
+                        print(f"Value: {tx['value']/1000000000000000000} Ether")
                         print('-----------------------------------')
+
+
+    def getBalanceOf(self, address):
+        balance = self.w3.eth.get_balance(address)
+        return balance/1000000000000000000
+
+
 def Main():
     w3Instance = Web3Instance()
     #compileSmartContract()
@@ -159,7 +166,7 @@ def Main():
     #print(w3Instance.getOwnerAddress("0xc112e9E7A5a28AaC3F16239455FA54E7F2D29d9d"))
     #print(w3Instance.approve("0x48a6586996313C9cB25B6945f94212C5C91c8732","0x80fa94d9941be505fff0136842abd44d80869b786128426cf9b28e1c88f9ec7f","0xc112e9E7A5a28AaC3F16239455FA54E7F2D29d9d", 0))
     #print(w3Instance.getOwnerAddress("0xc112e9E7A5a28AaC3F16239455FA54E7F2D29d9d"))
-    w3Instance.get_transactions("0x7D0967D987284654d9495138154F8722f970f6CD")
-
+    #w3Instance.get_transactions("0x7D0967D987284654d9495138154F8722f970f6CD")
+    print(w3Instance.getBalanceOf("0x7D0967D987284654d9495138154F8722f970f6CD"))
 
 Main()
