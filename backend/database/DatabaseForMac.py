@@ -1,6 +1,6 @@
 import mysql.connector
+
 from database.User import User
-import json
 
 
 class Database:
@@ -32,108 +32,57 @@ class Database:
             print("-- Close the opened connection")
             self.con.close()
 
+    # get all the available assets for trading
     def getAllAssets(self, sortBy=None, sortOrder="ASC"):
         # connect to the db
         self.connect()
         # take the cursor
         cur = self.con.cursor()
         if sortBy is None:
-            query = '''
-            SELECT * FROM Asset;
-            '''
+            query = '''SELECT * FROM Asset;'''
         else:
-            query = f'''
-            SELECT * FROM Asset
-            ORDER BY {sortBy} {sortOrder};
-            '''
+            query = f'''SELECT * FROM Asset ORDER BY {sortBy} {sortOrder};'''
         # execute the query
         print("Query to be executed: " + query)
         cur.execute(query)
         # fetch all rows
         rows = cur.fetchall()
-        # assets = [
-        #     {
-        #         'tokenID': row[0],
-        #         'name': row[1],
-        #         'description': row[2],
-        #         'price': row[3],
-        #         'category': row[4],
-        #         'currentOwner': row[5],
-        #         'contractAddress': row[6],
-        #         'imgUrl': row[7]
-        #     }
-        #     for row in rows
-        # ]
-
-        # return json assets
-        # jsonAssets = json.dumps(assets)
-
         assets = [dict(zip(cur.column_names, row)) for row in rows]
-
         # close the connection
         self.disconnect()
         return assets
 
+    # get the asset by search keyword
     def getAssetBySearch(self, keyword):
         self.connect()
         cur = self.con.cursor()
-        query = f'''
-        SELECT * FROM Asset
-        WHERE name LIKE '%{keyword}%' OR description LIKE '%{keyword}%';
-        '''
+        query = f''' SELECT * FROM Asset WHERE name LIKE '%{keyword}%' OR description LIKE '%{keyword}%';'''
         # execute the query
         print("Query to be executed: " + query)
         cur.execute(query)
         # fetch all rows
         rows = cur.fetchall()
-        matchedAssets = [
-            {
-                'tokenID': row[0],
-                'name': row[1],
-                'description': row[2],
-                'price': row[3],
-                'category': row[4],
-                'currentOwner': row[5],
-                'contractAddress': row[6],
-                'imgUrl': row[7]
-            }
-            for row in rows
-        ]
-        jsonMatchedAssets = json.dumps(matchedAssets, indent=2)
+        assetsBySearch = [dict(zip(cur.column_names, row)) for row in rows]
         self.disconnect()
-        return jsonMatchedAssets
+        return assetsBySearch
 
-    def getAssetByCategory(self, con, cat):
+    # get the asset by their category
+    def getAssetByCategory(self, cat):
         self.connect()
-        cur = con.cursor()
-        query = f'''
-        SELECT * FROM Asset WHERE category = '{cat}';
-        '''
+        cur = self.con.cursor()
+        query = f'''SELECT * FROM ASSET WHERE category = '{cat}';'''
+        print("Query to be executed: " + query)
         cur.execute(query)
         rows = cur.fetchall()
-        filteredAssets = [
-            {
-                'tokenID': row[0],
-                'name': row[1],
-                'category': row[2],
-                'price': row[3],
-                'description': row[4],
-                'currentOwner': row[5],
-                'contractAddress': row[6],
-                'imgUrl': row[7]
-            }
-            for row in rows
-        ]
-        jsonFilteredAssets = json.dumps(filteredAssets, indent=2)
+        assetsByCategory = [dict(zip(cur.column_names, row)) for row in rows]
         self.disconnect()
-        return jsonFilteredAssets
+        return assetsByCategory
 
+    # get the contract address of an asset
     def getContractAddress(self, tokenID):
         self.connect()
         cur = self.con.cursor()
-        query = f'''
-        SELECT contractAddress FROM Asset WHERE tokenID = '{tokenID}';                    
-        '''
+        query = f'''SELECT contractAddress FROM Asset WHERE tokenID = '{tokenID}';'''
         # execute the query
         print("Query to be executed: " + query)
         cur.execute(query)
@@ -145,32 +94,14 @@ class Database:
         else:
             return None
 
-    # def getAddressOfUser(self, username):
-    #     self.connect()
-    #     cur = self.con.cursor()
-    #     query = f'''
-    #     SELECT address FROM User WHERE username = '{username}';
-    #     '''
-    #     # execute the query
-    #     print("Query to be executed: " + query)
-    #     cur.execute(query)
-    #     # get the result
-    #     userAddress = cur.fetchone()
-    #     self.disconnect()
-    #     if userAddress:
-    #         return userAddress[0]
-    #     else:
-    #         return None
-
     # add asset to the local database
     def addAsset(self, asset):
         self.connect()
         cur = self.con.cursor()
-        cur.execute('''
-        INSERT INTO Asset
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s);                    
-        ''', (asset.tokenID, asset.name, asset.category, asset.price, asset.description, asset.currentOwner,
-              asset.contractAddress, asset.imgUrl))
+        cur.execute('''INSERT INTO Asset VALUES (%s, %s, %s, %s, %s, %s, %s, %s);''',
+                    (asset.tokenID, asset.name, asset.category,
+                     asset.price, asset.description, asset.currentOwner,
+                     asset.contractAddress, asset.imgUrl))
         self.con.commit()
         print("Asset added successfully.")
         self.disconnect()
@@ -179,10 +110,8 @@ class Database:
     def addUser(self, user):
         self.connect()
         cur = self.con.cursor()
-        cur.execute('''
-        INSERT INTO User
-        VALUES (%s, %s, %s, %s);                    
-        ''', (user.username, user.password, user.address, user.privateKey))
+        cur.execute('''INSERT INTO UserVALUES (%s, %s, %s, %s);''',
+                    (user.username, user.password, user.address, user.privateKey))
         self.con.commit()
         print("User added successfully.")
         self.disconnect()
@@ -191,20 +120,17 @@ class Database:
     def getTokenId(self):
         self.connect()
         cur = self.con.cursor()
-        cur.execute('''
-                SELECT COUNT(*) FROM ASSET                  
-                ''')
+        cur.execute('''SELECT COUNT(*) FROM ASSET''')
         currentNumberOfAssets = cur.fetchone()
         print("The next token id is: " + str(currentNumberOfAssets[0]))
         self.disconnect()
         return currentNumberOfAssets[0] + 1
 
+    # get user private key and address
     def getUserInfo(self, username):
         self.connect()
         cur = self.con.cursor()
-        query = f'''
-                SELECT address, privateKey FROM User WHERE username = '{username}';                    
-                '''
+        query = f'''SELECT address, privateKey FROM User WHERE username = '{username}';'''
         # execute the query
         print("Query to be executed: " + query)
         cur.execute(query)
@@ -216,3 +142,21 @@ class Database:
         self.disconnect()
         return user
 
+    # update the current user in the local database
+    def updateOwnerOfAsset(self, tokenId, newOwner):
+        self.connect()
+        cur = self.con.cursor()
+        query = f'''UPDATE ASSET SET currentOwner = '{newOwner}' WHERE tokenId = '{tokenId}';'''
+        print("Query to be executed: " + query)
+        cur.execute(query)
+        self.con.commit()
+        print("Asset has been updated added successfully.")
+        self.disconnect()
+
+
+# def Main():
+#     dtb = Database("localhost", "root", "root", "COS30049")
+#     print(dtb.getAssetBySearch("a sample"))
+#
+#
+# Main()

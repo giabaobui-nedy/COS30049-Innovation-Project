@@ -30,10 +30,10 @@ function CheckoutButton(props) {
     };
 
     return (
-        <button 
-        className={(checkoutSuccess) ? 'btn btn-success ' : 'btn btn-primary checkout_btn'} 
-        onClick={handleCheckout} 
-        disabled={isLoading}>
+        <button
+            className={(checkoutSuccess) ? 'btn btn-success ' : 'btn btn-primary checkout_btn'}
+            onClick={handleCheckout}
+            disabled={isLoading}>
             {isLoading ? 'Loading...' : buttonText}
         </button>
     );

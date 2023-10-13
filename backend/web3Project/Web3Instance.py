@@ -1,6 +1,6 @@
-from web3 import Web3
-from solcx import compile_standard, install_solc
 import json
+
+from solcx import compile_standard, install_solc
 
 
 def compileSmartContract():
@@ -106,11 +106,12 @@ class Web3Instance:
         return "Registered!"
 
     def getParticipants(self, contractAddress):
+        my_dict = {}
         simple_storage = self.w3.eth.contract(address=contractAddress, abi=getAbi())
 
         result = simple_storage.functions.getParticipants().call()
-
-        return result
+        my_dict["Requests"] = result
+        return my_dict
 
     # get address of asset's owner
     def getOwnerAddress(self, contractAddress):
@@ -140,17 +141,29 @@ class Web3Instance:
         return "Approved!"
 
     def get_transactions(self, address):
+        my_dict = {}
+        my_list = []
+
         latest_block = self.w3.eth.block_number
+
         for block_number in range(latest_block + 1):
             block = self.w3.eth.get_block(block_number, full_transactions=True)
+
             if block and "transactions" in block:
                 for tx in block["transactions"]:
                     if tx['from'] == address:
-                        print(f"Transaction Hash: {tx['hash'].hex()}")
-                        print(f"From: {tx['from']}")
-                        print(f"To: {tx['to']}")
-                        print(f"Value: {tx['value'] / 1000000000000000000} Ether")
-                        print('-----------------------------------')
+                        transaction_data = {
+                            "TxHash": tx['hash'].hex(),
+                            "From": tx['from'],
+                            "To": tx['to'],
+                            "Value": tx['value'] / 1000000000000000000,
+                            "BlockNumber": tx["blockNumber"],
+                        }
+                        my_list.append(transaction_data)
+
+        my_dict["Transactions"] = my_list
+
+        return my_dict
 
     def getBalanceOf(self, address):
         balance = self.w3.eth.get_balance(address)
