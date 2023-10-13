@@ -3,6 +3,7 @@ from web3 import Web3
 from database.DatabaseForMac import Database
 from web3Project.Web3Instance import Web3Instance
 from fastapi.middleware.cors import CORSMiddleware
+import json
 
 app = FastAPI()
 dtb = Database("localhost", "root", "root", "COS30049")
@@ -19,6 +20,5 @@ app.add_middleware(
 
 @app.get("/getAllAssets")
 async def getAllAssets():
-    con = dtb.connect()
     data = dtb.getAllAssets()
     return data

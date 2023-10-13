@@ -7,6 +7,7 @@ class Database:
     con = None
 
     def __init__(self, host, user, password, database):
+        print("Database is ready!")
         self.host = host
         self.user = user
         self.password = password
@@ -50,26 +51,28 @@ class Database:
         cur.execute(query)
         # fetch all rows
         rows = cur.fetchall()
-        assets = [
-            {
-                'tokenID': row[0],
-                'name': row[1],
-                'description': row[2],
-                'price': row[3],
-                'category': row[4],
-                'currentOwner': row[5],
-                'contractAddress': row[6],
-                'imgUrl': row[7]
-            }
-            for row in rows
-        ]
+        # assets = [
+        #     {
+        #         'tokenID': row[0],
+        #         'name': row[1],
+        #         'description': row[2],
+        #         'price': row[3],
+        #         'category': row[4],
+        #         'currentOwner': row[5],
+        #         'contractAddress': row[6],
+        #         'imgUrl': row[7]
+        #     }
+        #     for row in rows
+        # ]
 
         # return json assets
-        jsonAssets = json.dumps(assets)
+        # jsonAssets = json.dumps(assets)
+
+        assets = [dict(zip(cur.column_names, row)) for row in rows]
 
         # close the connection
         self.disconnect()
-        return jsonAssets
+        return assets
 
     def getAssetBySearch(self, keyword):
         self.connect()

@@ -20,68 +20,33 @@ function Main(props) {
     const [isSearching, setIsSearching] = useState(false)
 
     const [sortByPrice, setSortByPrice] = useState(true);
-
-    const [assets, setAssets] = useState([]);
-    
-    useEffect(() => {
-        axios.get('http://127.0.0.1:8000/assets')
-            .then(response => {
-                console.log(response.data);
-                setAssets(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching assets:', error);
-            });
-    }, []);
-
-    return (
-        <div>
-            <h2>All Assets</h2>
-            <ul>
-                {assets.map(asset => (
-                    <li key={asset.tokenID}>
-                        <p>Name: {asset.name}</p>
-                        <p>Category: {asset.category}</p>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
     
     const fetchApiData = () => {
         //fetch data from alchemy
         const options = {
             method: 'GET',
-            url: 'https://eth-mainnet.g.alchemy.com/nft/v2/4FqEYbTNdy1Q26cPt48ybNLFZ1FgK3Sv/getNFTsForCollection',
-            params: {
-                collectionSlug: 'boredapeyachtclub',
-                withMetadata: 'true'
-            },
+            url: 'http://127.0.0.1:8000/getAllAssets',
             headers: { accept: 'application/json' }
         }
 
         axios
             .request(options)
-            .then(function (response) {
-                setApiData(response.data.nfts)
+            .then(response => {
+                console.log(response.data)
+                setApiData(response.data)
             })
-            .catch(function (error) {
+            .catch(error => {
                 console.error(error)
             });
     }
 
-
     try {
-
         useEffect(() => {
             fetchApiData();
         }, [])
 
         const sortedData = [...apiData].sort((a, b) => {
-            const priceA = randomPrices[shortenHexadecimal(a.id.tokenId)];
-            const priceB = randomPrices[shortenHexadecimal(b.id.tokenId)];
-
-            return sortByPrice ? priceA - priceB : priceB - priceA;
+            return sortByPrice ? a.price - b.price : b.price - a.price;
         });
 
         const changeSortOrder = () => {
@@ -93,37 +58,27 @@ function Main(props) {
                 <Header className="container-fluid" isSearching={isSearching} setIsSearching={setIsSearching} searchInput={searchInput} setSearchInput={setSearchInput} numberOfItems={props.cartItems.length} />
                 <NavBar className="container" chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} changeSortOrder={changeSortOrder} sortByPrice={sortByPrice} cartItems={props.cartItems} />
                 <div className="assets_area container">
-                    {
-                        (!isSearching) ?
-                            sortedData.map((nft) => {
-                                return <Asset
-                                    price={randomPrices[shortenHexadecimal(nft.id.tokenId)]}
-                                    cartItems={props.cartItems}
-                                    addItemToCart={props.addItemToCart}
-                                    isChosen={(chosenCategory === categories[shortenHexadecimal(nft.id.tokenId) % categories.length]) || (chosenCategory === "All")}
-                                    key={shortenHexadecimal(nft.id.tokenId)}
-                                    id={shortenHexadecimal(nft.id.tokenId)}
-                                    nftInfo={nft}
-                                    category={categories[shortenHexadecimal(nft.id.tokenId) % categories.length]} />
-                            }) :
-                            (!isNaN(parseInt(searchInput))) &&
-                            sortedData.map((nft) => {
-                                return <Asset
-                                    price={randomPrices[shortenHexadecimal(nft.id.tokenId)]}
-                                    cartItems={props.cartItems}
-                                    addItemToCart={props.addItemToCart}
-                                    isChosen={((chosenCategory === categories[shortenHexadecimal(nft.id.tokenId) % categories.length]) || (chosenCategory === "All")) && (shortenHexadecimal(nft.id.tokenId) === parseInt(searchInput))}
-                                    key={shortenHexadecimal(nft.id.tokenId)}
-                                    id={shortenHexadecimal(nft.id.tokenId)}
-                                    nftInfo={nft}
-                                    category={categories[shortenHexadecimal(nft.id.tokenId) % categories.length]} />
-                            })
+                    { 
+                        apiData.map((asset) => {
+                            return <Asset
+                                cartItems={props.cartItems}
+                                addItemToCart={props.addItemToCart}
+                                isChosen={(chosenCategory === asset.category) || (chosenCategory === "All")}
+                                key={asset.tokenId}
+                                assetTokenId={asset.tokenID}
+                                assetName={asset.name}
+                                assetCategory={asset.category}
+                                assetPrice={asset.price} 
+                                assetDescription={asset.description}
+                                assetOwner={asset.currentOwner}
+                                assetAddress={asset.contractAddress}
+                                assetUrl={asset.imgUrl}/>
+                        })
                     }
                 </div>
                 <Footer className="container-fluid" />
             </div>
         )
-
     } catch {
         return (
             <div className="container">

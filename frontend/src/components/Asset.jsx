@@ -12,19 +12,19 @@ function Asset(props) {
             //check whether the item is yet in the cart and add if that is false
             ((props.cartItems.every(item => { return item.itemId !== props.id }))?
             [...props.cartItems, { 
-                itemId: props.id, 
-                itemDes: props.nftInfo.title + props.nftInfo.contractMetadata.name, 
-                itemImg: props.nftInfo.media[0].thumbnail,
-                itemPrice: props.price
+                itemId: props.assetTokenId, 
+                itemDes: props.assetDescription, 
+                itemImg: props.assetUrl,
+                itemPrice: props.assetPrice
              }]
             //if it is true, update the array to the old one
             : [...props.cartItems])
             //else if the number of items is 0, add it directly
             : [{ 
-                itemId: props.id, 
-                itemDes: props.nftInfo.title + props.nftInfo.contractMetadata.name, 
-                itemImg: props.nftInfo.media[0].thumbnail,
-                itemPrice: props.price
+                itemId: props.assetTokenId, 
+                itemDes: props.assetDescription, 
+                itemImg: props.assetUrl,
+                itemPrice: props.assetPrice
              }]
         )  
     }
@@ -33,11 +33,11 @@ function Asset(props) {
     return (props.isChosen &&
         <div className="card m-2">
             <div className="card-body">
-                <img src={props.nftInfo.media[0].thumbnail} className="card-img-top" alt="Not Available" />
-                <h5 className="card-title"><i>{props.nftInfo.title + " #00" + props.id}</i></h5>
-                <div className="card-text"><PersonIcon />{props.nftInfo.contractMetadata.name}</div>
-                <div>{props.price} ETH</div>
-                <div className="badge text-bg-dark rounded-pill">{props.category}</div>
+                <img src={props.assetUrl} className="card-img-top" alt="Not Available" />
+                <h5 className="card-title"><i>{props.assetName + props.assetTokenId}</i></h5>
+                <div className="card-text"><PersonIcon />{props.assetOwner}</div>
+                <div>{props.assetPrice} Wei</div>
+                <div className="badge text-bg-dark rounded-pill">{props.assetCategory}</div>
                 <IconButton onClick={addItem}>
                     <AddShoppingCartIcon />
                 </IconButton>
