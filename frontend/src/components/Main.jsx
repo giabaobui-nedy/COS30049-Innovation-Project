@@ -21,11 +21,12 @@ function Main(props) {
 
     const [sortByPrice, setSortByPrice] = useState(true);
 
-    //const [assets, setAssets] = useState([]);
+    const [assets, setAssets] = useState([]);
     
-    /*useEffect(() => {
+    useEffect(() => {
         axios.get('http://127.0.0.1:8000/assets')
             .then(response => {
+                console.log(response.data);
                 setAssets(response.data);
             })
             .catch(error => {
@@ -46,7 +47,7 @@ function Main(props) {
             </ul>
         </div>
     );
-    */
+    
     const fetchApiData = () => {
         //fetch data from alchemy
         const options = {
