@@ -153,6 +153,19 @@ class Database:
         userCredentials = [dict(zip(cur.column_names, row)) for row in rows]
         self.disconnect()
         return userCredentials
+    
+    #get all details of user for display in the Account Detail page
+    def getAllUserDetails(self, username):
+        self.connect()
+        cur = self.con.cursor()
+        query = f'''SELECT * FROM User WHERE username = '{username}';'''
+        print("Query to be executed: " + query)
+        cur.execute(query)
+        rows = cur.fetchall()
+        userCredentials = [dict(zip(cur.column_names, row)) for row in rows]
+        self.disconnect()
+        return userCredentials
+    
 
     # update the current user in the local database
     def updateOwnerOfAsset(self, tokenId, newOwner):
