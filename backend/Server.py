@@ -43,6 +43,16 @@ async def getAllAssetsOfUser(username: str):
     data = dtb.getAssetOfAUser(username)
     return data
 
+@app.get("/getUserCredentials")
+async def getUserCredentials():
+        userCredentials = dtb.getUserCredentials()
+        return userCredentials
+
+@app.get("/getUserDetails/{username}")
+async def getUserDetails(username: str):
+        userCredentials = dtb.getUserDetails(username)
+        return userCredentials
+
 # F5: Users should have access to a transaction history to view their past trades.
 @app.get("/getTransactions/{username}")
 async def getUserTransactions(username):
