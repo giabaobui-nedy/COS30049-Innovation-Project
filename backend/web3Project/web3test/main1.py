@@ -1,5 +1,5 @@
 from web3 import Web3
-from solcx import compile_standard, install_solc
+from solc import compile_standard, install_solc
 import json
 
 # global variable
