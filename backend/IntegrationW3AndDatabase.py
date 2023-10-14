@@ -29,10 +29,10 @@ class BackendController:
         [self.addAssetToPlatform(asset.currentOwner, asset.name, asset.category,
                                  asset.price, asset.description, asset.imgUrl) for asset in assets]
 
+    # current owner gets a list of requests to buy their assets
     def getAllCurrentRequestsForAUser(self, username):
         assets = self.dtb.getAssetOfAUser(username)
         result = []
-
         for asset in assets:
             token_id = asset['tokenID']
             participants = self.w3.getParticipants(asset['contractAddress'])
@@ -40,6 +40,7 @@ class BackendController:
             result.extend(requests_with_token_id)
         return result
 
+    # current owner approves a request of another owner to buy their asset
     def approve(self, currentOwnerUsername, newOwnerAddress, tokenId):
         assetAddress = self.dtb.getContractAddress(tokenId)
         currentOwner = self.dtb.getUserInfo(currentOwnerUsername)
@@ -57,7 +58,6 @@ def testApprove():
                                      3))
 
 # testApprove()
-
 
 def testGetAllRequests():
     dtb = Database("localhost", "root", "root", "COS30049")

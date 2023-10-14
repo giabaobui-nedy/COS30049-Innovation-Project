@@ -16,7 +16,7 @@ function Main(props) {
     const [isSearching, setIsSearching] = useState(false)
 
     const [sortByPrice, setSortByPrice] = useState(true);
-    
+
     const fetchApiData = () => {
         // fetch data from the local server
         const options = {
@@ -54,7 +54,7 @@ function Main(props) {
                 <Header className="container-fluid" isSearching={isSearching} setIsSearching={setIsSearching} searchInput={searchInput} setSearchInput={setSearchInput} numberOfItems={props.cartItems.length} />
                 <NavBar className="container" chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} changeSortOrder={changeSortOrder} sortByPrice={sortByPrice} cartItems={props.cartItems} />
                 <div className="assets_area container">
-                    { 
+                    {
                         sortedData.map((asset) => {
                             return <Asset
                                 cartItems={props.cartItems}
@@ -64,11 +64,11 @@ function Main(props) {
                                 assetTokenId={asset.tokenID}
                                 assetName={asset.name}
                                 assetCategory={asset.category}
-                                assetPrice={asset.price} 
+                                assetPrice={asset.price}
                                 assetDescription={asset.description}
                                 assetOwner={asset.currentOwner}
                                 assetAddress={asset.contractAddress}
-                                assetUrl={asset.imgUrl}/>
+                                assetUrl={asset.imgUrl} />
                         })
                     }
                 </div>

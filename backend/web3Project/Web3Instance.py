@@ -2,7 +2,7 @@ import json
 
 from solcx import compile_standard, install_solc
 
-
+# static method to compile the smart contract
 def compileSmartContract():
     try:
         print("Start to compile!")
@@ -113,7 +113,6 @@ class Web3Instance:
             return "Failed to register!"
 
     def getParticipants(self, contractAddress):
-        my_dict = {}
         simple_storage = self.w3.eth.contract(address=contractAddress, abi=getAbi())
         result = simple_storage.functions.getParticipants().call()
         return result
