@@ -5,30 +5,35 @@ import IconButton from '@mui/material/IconButton'
 function Asset(props) {
 
     function addItem() {
-        props.addItemToCart(
-            // if number of items is not 0
-            (props.cartItems.length !== 0) ?
-                // check whether the item is yet in the cart and add if that is false
-                ((props.cartItems.every(item => { return item.itemId !== props.id })) ?
-                    [...props.cartItems, {
+        if (props.loggedIn.state) {
+            props.addItemToCart(
+                // if number of items is not 0
+                (props.cartItems.length !== 0) ?
+                    // check whether the item is yet in the cart and add if that is false
+                    (props.cartItems.every(item => item.itemId !== props.id) ?
+                        [...props.cartItems, {
+                            itemId: props.assetTokenId,
+                            itemName: props.assetName,
+                            itemOwner: props.assetOwner,
+                            itemImg: props.assetUrl,
+                            itemPrice: props.assetPrice
+                        }]
+                        // if it is true, update the array to the old one
+                    : [...props.cartItems])
+                    // else if the number of items is 0, add it directly
+                    : [{
                         itemId: props.assetTokenId,
                         itemName: props.assetName,
                         itemOwner: props.assetOwner,
                         itemImg: props.assetUrl,
                         itemPrice: props.assetPrice
                     }]
-                    // if it is true, update the array to the old one
-                    : [...props.cartItems])
-                // else if the number of items is 0, add it directly
-                : [{
-                    itemId: props.assetTokenId,
-                    itemName: props.assetName,
-                    itemOwner: props.assetOwner,
-                    itemImg: props.assetUrl,
-                    itemPrice: props.assetPrice
-                }]
-        )
+            );
+        } else {
+            alert("Please sign in first to add the item to your cart!");
+        }
     }
+
 
     // enable filtering
     return (props.isChosen &&

@@ -19,16 +19,16 @@ function AccountDetails(props) {
 
     return (
         <div>
-            <h2>Account Details for {userDetails.username}</h2>
+            <h2><span className="bg-dark text-white rounded-2">Account Details for {userDetails.username}</span></h2>
             {userDetails ? (
-                <ul>
-                    <li>
+                <ul className="list-group">
+                    <li className="list-group-item m-2">
                         <strong>Username:</strong> {userDetails.username}
                     </li>
-                    <li>
+                    <li className="list-group-item m-2">
                         <strong>Address</strong> {userDetails.address}
                     </li>
-                    <li>
+                    <li className="list-group-item m-2">
                         <strong>Private Key</strong> {userDetails.privateKey}
                     </li>
                 </ul>
