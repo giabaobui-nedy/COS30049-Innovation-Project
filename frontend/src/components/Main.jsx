@@ -18,6 +18,11 @@ function Main(props) {
     const [isSearching, setIsSearching] = useState(false)
 
     const [sortByPrice, setSortByPrice] = useState(true);
+
+    const[loggedIn, setLoggedIn] = useState({
+        state: false,
+        currentLoggedIn: ""
+    })
     
     const fetchApiData = () => {
         //fetch data from alchemy
@@ -53,8 +58,8 @@ function Main(props) {
 
         return (
             <div className="container-fluid">
-                <Header className="container-fluid" isSearching={isSearching} setIsSearching={setIsSearching} searchInput={searchInput} setSearchInput={setSearchInput} numberOfItems={props.cartItems.length} />
-                <NavBar className="container" chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} changeSortOrder={changeSortOrder} sortByPrice={sortByPrice} cartItems={props.cartItems} />
+                <Header className="container-fluid" loggedIn = {loggedIn} setLoggedIn={setLoggedIn} isSearching={isSearching} setIsSearching={setIsSearching} searchInput={searchInput} setSearchInput={setSearchInput} numberOfItems={props.cartItems.length} />
+                <NavBar className="container" loggedIn = {loggedIn} setLoggedIn={setLoggedIn} chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} changeSortOrder={changeSortOrder} sortByPrice={sortByPrice} cartItems={props.cartItems} />
                 <div className="assets_area container">
                     { 
                         apiData.map((asset) => {

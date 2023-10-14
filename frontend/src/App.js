@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom" 
 import Main from "./components/Main";
+import Header from "./components/Header"
 import UserDashBoard from "./components/UserDashboard";
 import ShoppingCart from "./components/ShoppingCart";
 // Bootstrap CSS
@@ -17,8 +18,8 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={ <Main cartItems={cartItems} addItemToCart={setCartItems}/> } />
-        <Route path="/user-dashboard" element={ <UserDashBoard/> } >
+        <Route path="/" render={(props) => <Header {...props}/>} element={ <Main cartItems={cartItems} addItemToCart={setCartItems}/>} />
+        <Route path="/user-dashboard" render={(props) => <UserDashBoard {...props}/>} element={ <UserDashBoard/> } >
           <Route path="transaction-history" element={<TransactionHistory/>}></Route>
         </Route>
         <Route path="/cart" element={ <ShoppingCart cartItems={cartItems} setCartItems={setCartItems}/> } />
