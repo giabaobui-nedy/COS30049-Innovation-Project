@@ -13,7 +13,8 @@ function Asset(props) {
             ((props.cartItems.every(item => { return item.itemId !== props.id }))?
             [...props.cartItems, { 
                 itemId: props.assetTokenId, 
-                itemDes: props.assetDescription, 
+                itemName: props.assetName,
+                itemOwner: props.assetOwner,
                 itemImg: props.assetUrl,
                 itemPrice: props.assetPrice
              }]
@@ -22,7 +23,8 @@ function Asset(props) {
             //else if the number of items is 0, add it directly
             : [{ 
                 itemId: props.assetTokenId, 
-                itemDes: props.assetDescription, 
+                itemName: props.assetName,
+                itemOwner: props.assetOwner,
                 itemImg: props.assetUrl,
                 itemPrice: props.assetPrice
              }]
@@ -34,7 +36,7 @@ function Asset(props) {
         <div className="card m-2">
             <div className="card-body">
                 <img src={props.assetUrl} className="card-img-top" alt="Not Available" />
-                <h5 className="card-title"><i>{props.assetName + props.assetTokenId}</i></h5>
+                <h5 className="card-title"><i>{props.assetName}</i></h5>
                 <div className="card-text"><PersonIcon />{props.assetOwner}</div>
                 <div>{props.assetPrice} Wei</div>
                 <div className="badge text-bg-dark rounded-pill">{props.assetCategory}</div>

@@ -24,7 +24,7 @@ async def deployAsset():
     # Asset's token id
     tokenID = 1
 
-    with open("./AssetSC.sol", "r") as file:
+    with open("../AssetSC.sol", "r") as file:
         simple_storage_file = file.read()
 
     install_solc("0.8.11")

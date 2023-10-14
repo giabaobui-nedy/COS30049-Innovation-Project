@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+//not used in assignment 2
 function CheckoutButton(props) {
     const [checkoutSuccess, setCheckoutSuccess] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -12,7 +13,6 @@ function CheckoutButton(props) {
         props.checkout();
         // Simulate a successful checkout
         const success = true;
-
         setTimeout(() => {
             setIsLoading(false);
             if (success) {

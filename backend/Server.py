@@ -63,7 +63,7 @@ async def registerToBuy(username, tokenID, amount: int):
     userInfo = dtb.getUserInfo(username)
     contractAddress = dtb.getContractAddress(tokenID)
     data = w3.registerToBuy(userInfo.address, userInfo.privateKey, contractAddress, amount)
-    return data
+    return {"result": data}
 
 
 @app.get("/getBalanceOf/{username}")

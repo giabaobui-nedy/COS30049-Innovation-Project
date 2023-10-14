@@ -4,8 +4,6 @@ import NavBar from "./NavBar";
 import Asset from "./Asset";
 import axios from 'axios';
 import Footer from "./Footer";
-import randomPrices from "../res/randomPrice";
-import shortenHexadecimal from "../res/shortenHexadecimal";
 
 function Main(props) {
     //categories for assets

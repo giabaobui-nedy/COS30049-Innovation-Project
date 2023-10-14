@@ -84,31 +84,32 @@ class Web3Instance:
         return tx_receipt.contractAddress
 
     def registerToBuy(self, my_address, private_key, contractAddress, amount):
-        abi = getAbi()
-        simple_storage = self.w3.eth.contract(address=contractAddress, abi=abi)
+        try:
+            abi = getAbi()
+            simple_storage = self.w3.eth.contract(address=contractAddress, abi=abi)
 
-        nonce = self.w3.eth.get_transaction_count(my_address)
+            nonce = self.w3.eth.get_transaction_count(my_address)
 
-        store_transaction = simple_storage.functions.registerToBuy().build_transaction(
-            {
-                "chainId": self.chainId,
-                "gasPrice": self.w3.eth.gas_price,
-                "from": my_address,
-                "value": amount,
-                "nonce": nonce
-            }
-        )
+            store_transaction = simple_storage.functions.registerToBuy().build_transaction(
+                {
+                    "chainId": self.chainId,
+                    "gasPrice": self.w3.eth.gas_price,
+                    "from": my_address,
+                    "value": amount,
+                    "nonce": nonce
+                }
+            )
 
-        signed_store_txn = self.w3.eth.account.sign_transaction(store_transaction, private_key=private_key)
-        send_store_tx = self.w3.eth.send_raw_transaction(signed_store_txn.rawTransaction)
-        tx_receipt = self.w3.eth.wait_for_transaction_receipt(send_store_tx)
-
-        return "Registered!"
+            signed_store_txn = self.w3.eth.account.sign_transaction(store_transaction, private_key=private_key)
+            send_store_tx = self.w3.eth.send_raw_transaction(signed_store_txn.rawTransaction)
+            tx_receipt = self.w3.eth.wait_for_transaction_receipt(send_store_tx)
+            return "Registered Successfully!"
+        except:
+            return "Failed to register!"
 
     def getParticipants(self, contractAddress):
         my_dict = {}
         simple_storage = self.w3.eth.contract(address=contractAddress, abi=getAbi())
-
         result = simple_storage.functions.getParticipants().call()
         my_dict["Requests"] = result
         return my_dict
