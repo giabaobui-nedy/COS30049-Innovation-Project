@@ -141,6 +141,18 @@ class Database:
             user = User(username, None, result[0], result[1])
         self.disconnect()
         return user
+    
+    #get username and password for authentication
+    def getUserCredentials(self):
+        self.connect()
+        cur = self.con.cursor()
+        query = f'''SELECT username, password FROM User;'''
+        print("Query to be executed: " + query)
+        cur.execute(query)
+        rows = cur.fetchall()
+        userCredentials = [dict(zip(cur.column_names, row)) for row in rows]
+        self.disconnect()
+        return userCredentials
 
     # update the current user in the local database
     def updateOwnerOfAsset(self, tokenId, newOwner):

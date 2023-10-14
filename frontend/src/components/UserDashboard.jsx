@@ -1,16 +1,18 @@
-import { Link, Outlet } from "react-router-dom"
-import Logo from "./Logo"
-import IconButton from '@mui/material/IconButton'
+import { Link, Outlet } from "react-router-dom";
+import { useState } from "react";
+import Logo from "./Logo";
+import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SignIn from "./SignIn";
+import AccountDetails from "./AccountDetails";
 
 function UserDashBoard(props) {
-    const { loggedIn } = props;
+    const { loggedIn, setLoggedIn } = props;
+    const [currentView, setCurrentView] = useState('SignIn');
 
-    return (
-        <div className="container">
-            {loggedIn.state ? (
-                <>
+    const switchView = () => {
+        if(loggedIn.state){
+            <>
                     <div className="sidebar">
                         <IconButton data-bs-toggle="offcanvas" data-bs-target="#dashboard">
                             <MenuIcon />
@@ -30,10 +32,15 @@ function UserDashBoard(props) {
                             <button className="btn btn-outline-dark sidebar_opt">Log out</button>
                         </div>
                     </div>
+                    <AccountDetails/>
                 </>
-            ) : (
-                <SignIn setLoggedIn={props.setLoggedIn} />
-            )}
+        }else{
+            return <SignIn setLoggedIn={setLoggedIn} />
+        }
+    }
+
+    return (
+        <div className="container">
             <Outlet />
         </div>
     )
