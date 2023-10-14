@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom" 
+import { Routes, Route } from "react-router-dom"
 import Main from "./components/Main";
 import UserDashBoard from "./components/UserDashboard";
 import ShoppingCart from "./components/ShoppingCart";
@@ -17,11 +17,11 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={ <Main cartItems={cartItems} addItemToCart={setCartItems}/> } />
-        <Route path="/user-dashboard" element={ <UserDashBoard/> } >
-          <Route path="transaction-history" element={<TransactionHistory/>}></Route>
+        <Route path="/" element={<Main cartItems={cartItems} addItemToCart={setCartItems} />} />
+        <Route path="/user-dashboard" element={<UserDashBoard />} >
+          <Route path="transaction-history" element={<TransactionHistory />}></Route>
         </Route>
-        <Route path="/cart" element={ <ShoppingCart cartItems={cartItems} setCartItems={setCartItems}/> } />
+        <Route path="/cart" element={<ShoppingCart cartItems={cartItems} setCartItems={setCartItems} />} />
       </Routes>
     </div>
   );

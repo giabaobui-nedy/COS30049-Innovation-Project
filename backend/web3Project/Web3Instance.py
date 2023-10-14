@@ -2,7 +2,7 @@ import json
 
 from solcx import compile_standard, install_solc
 
-
+# static method to compile the smart contract
 def compileSmartContract():
     try:
         print("Start to compile!")
@@ -26,6 +26,7 @@ def compileSmartContract():
         # write compile info to the json file
         with open("./compiled_code.json", "w") as file:
             json.dump(compiled_sol, file)
+        print("Compile OK!")
     except:
         print("Error when compiling the smart contract")
     finally:
@@ -47,6 +48,10 @@ def getBytecode():
     bytecode = compiled_sol["contracts"]["AssetSC.sol"]["AssetSC"]["evm"]["bytecode"]["object"]
     return bytecode
 
+# def Main():
+#     compileSmartContract()
+#
+# Main()
 
 class Web3Instance:
     w3 = None
@@ -108,11 +113,9 @@ class Web3Instance:
             return "Failed to register!"
 
     def getParticipants(self, contractAddress):
-        my_dict = {}
         simple_storage = self.w3.eth.contract(address=contractAddress, abi=getAbi())
         result = simple_storage.functions.getParticipants().call()
-        my_dict["Requests"] = result
-        return my_dict
+        return result
 
     # get address of asset's owner
     def getOwnerAddress(self, contractAddress):
@@ -120,26 +123,21 @@ class Web3Instance:
         result = simple_storage.functions.getCurrentOwner().call()
         return result
 
-    def approve(self, my_address, private_key, contract_address, index):
-
-        simple_storage = self.w3.eth.contract(address=contract_address, abi=getAbi())
-
-        nonce = self.w3.eth.get_transaction_count(my_address)
-
-        store_transaction = simple_storage.functions.approve(index).build_transaction(
+    def approve(self, currentOwnerAddress, currentOwnerPrivateKey, contractAddressOfAsset, newOwnerAddress):
+        simple_storage = self.w3.eth.contract(address=contractAddressOfAsset, abi=getAbi())
+        nonce = self.w3.eth.get_transaction_count(currentOwnerAddress)
+        store_transaction = simple_storage.functions.approve(newOwnerAddress).build_transaction(
             {
                 "chainId": self.chainId,
                 "gasPrice": self.w3.eth.gas_price,
-                "from": my_address,
+                "from": currentOwnerAddress,
                 "nonce": nonce
             }
         )
-
-        signed_store_txn = self.w3.eth.account.sign_transaction(store_transaction, private_key=private_key)
+        signed_store_txn = self.w3.eth.account.sign_transaction(store_transaction, private_key=currentOwnerPrivateKey)
         send_store_tx = self.w3.eth.send_raw_transaction(signed_store_txn.rawTransaction)
         tx_receipt = self.w3.eth.wait_for_transaction_receipt(send_store_tx)
-
-        return "Approved!"
+        return True
 
     def get_transactions(self, address):
         my_dict = {}
@@ -163,7 +161,6 @@ class Web3Instance:
                         my_list.append(transaction_data)
 
         my_dict["Transactions"] = my_list
-
         return my_dict
 
     def getBalanceOf(self, address):
