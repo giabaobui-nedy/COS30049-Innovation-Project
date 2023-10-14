@@ -16,8 +16,10 @@ function ShoppingCart(props) {
             <thead>
               <tr>
                 <th className="h4">Item description</th>
-                <th className="h4">Price</th>
-                <th></th>
+                <th className="h4">Item Price</th>
+                <th className='h4'>Bidding amount</th>
+                <th className='h4'></th>
+                <th className='h4'></th>
               </tr>
             </thead>
             <tbody>
@@ -40,7 +42,6 @@ function ShoppingCart(props) {
             </tbody>
           </table>
         )}
-        <center><CheckoutButton checkout={() => { props.setCartItems([]) }} /></center>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+# DAO
 class Asset:
     def __init__(self, tokenID, name, category, price, description, currentOwner, contractAddress, imgUrl):
         self.tokenID = tokenID

@@ -13,7 +13,6 @@ function UserDashBoard() {
                     <MenuIcon />
                 </IconButton>
             </div>
-
             <div class="offcanvas offcanvas-start" id="dashboard">
                 <div class="offcanvas-header">
                     <Logo size="70vw" />
@@ -25,7 +24,7 @@ function UserDashBoard() {
                     <Link to="transaction-history">
                         <button className="btn btn-outline-dark sidebar_opt">Transaction History</button>
                     </Link>
-                    <button className="btn btn-outline-dark sidebar_opt">...</button>
+                    <button className="btn btn-outline-dark sidebar_opt">Log out</button>
                 </div>
             </div>
             <SignUp/>
