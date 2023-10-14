@@ -4,6 +4,7 @@ import Header from "./components/Header"
 import UserDashBoard from "./components/UserDashboard";
 import ShoppingCart from "./components/ShoppingCart";
 import SignUp from "./components/SignUp";
+import SignIn from "./components/SignIn";
 // Bootstrap CSS
 import "bootstrap/dist/css/bootstrap.min.css";
 // Bootstrap Bundle JS
@@ -28,6 +29,7 @@ function App() {
           <Route path="transaction-history" element={<TransactionHistory />} />
         </Route>
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/cart" element={<ShoppingCart cartItems={cartItems} setCartItems={setCartItems} />} />
       </Routes>
     </div>

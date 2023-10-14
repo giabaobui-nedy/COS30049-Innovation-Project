@@ -11,8 +11,9 @@ function UserDashBoard(props) {
     const [currentView, setCurrentView] = useState('SignIn');
 
     const switchView = () => {
-        if(loggedIn.state){
-            <>
+        if (loggedIn.state) {
+            return (
+                <>
                     <div className="sidebar">
                         <IconButton data-bs-toggle="offcanvas" data-bs-target="#dashboard">
                             <MenuIcon />
@@ -32,16 +33,17 @@ function UserDashBoard(props) {
                             <button className="btn btn-outline-dark sidebar_opt">Log out</button>
                         </div>
                     </div>
-                    <AccountDetails/>
+                    <AccountDetails />
                 </>
-        }else{
-            return <SignIn setLoggedIn={setLoggedIn} />
+            );
+        } else {
+            return <SignIn setLoggedIn={setLoggedIn} />;
         }
-    }
+    };
 
     return (
         <div className="container">
-            <Outlet />
+            {switchView()}
         </div>
     )
 }

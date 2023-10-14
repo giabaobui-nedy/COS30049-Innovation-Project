@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 function SignIn(props) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -41,7 +41,7 @@ function SignIn(props) {
                     <label for="pwd">Password</label>
                 </div>
                 <button type="submit" className="btn btn-danger m-2">Submit</button>
-                <Link to="/signup" className="btn btn-success m-2">Signup</Link>
+                <Link to="/signup" className="btn btn-dark m-2">Signup</Link>
             </form>
         </div>
     )

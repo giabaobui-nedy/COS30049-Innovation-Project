@@ -1,6 +1,7 @@
 // RegistrationForm.js
 // from: https://www.educative.io/answers/how-to-handle-authentication-and-authorization-in-react-js
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import PersonIcon from '@mui/icons-material/Person';
 
@@ -72,7 +73,8 @@ const SignUp = (props) => {
                         onChange={(e) => setPrivateKey(e.target.value)}
                     /><label for="priKey">Private Key</label>
                 </div>
-                <button className="btn btn-primary" type="submit">Register</button>
+                <button className="btn btn-danger" type="submit">Register</button>
+                <Link to="/signin" className="btn btn-dark m-2">Back to Sign In</Link>
             </form>
         </div>
     );
