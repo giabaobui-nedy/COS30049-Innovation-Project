@@ -17,7 +17,7 @@ function Header(props) {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse bg-dark rounded-4 text-center p-1" id="nav">
-                    <SearchBar className="mt-2 mb-1" isSearching={props.isSearching} setIsSearching={props.setIsSearching} searchInput={props.searchInput} setSearchInput={props.setSearchInput} />
+                    <SearchBar className="mt-2 mb-1" getAssetsBySearch={props.getAssetsBySearch} getAllAssets={props.getAllAssets} searchInput={props.searchInput} setSearchInput={props.setSearchInput} />
                     <div className="container-fluid mt-2 mb-2">
                         <span className="container-fluid bg-white ava_pill rounded-pill">
                             <Link to="cart">
