@@ -8,13 +8,15 @@ function SearchBar(props) {
                 className="form-control me-2 border-0"
                 onChange={(e) => {
                     props.setSearchInput(e.target.value);
-                    (e.target.value === "") && props.setIsSearching(false);
+                    (e.target.value === "") && props.getAllAssets();
                 }}
                 value={props.searchInput}
                 type="text"
                 placeholder="Search by name..."
             />
-            <IconButton className="rounded-pill bg-danger text-white" onClick={() => { (props.searchInput !== "") && props.setIsSearching(true) }}>
+            {/* if search input is not empty => set isSearching to true */}
+            <IconButton className="rounded-pill bg-danger text-white"
+                onClick={() => { (props.searchInput !== "") && props.getAssetsBySearch() }}>
                 <SearchIcon />
             </IconButton>
         </form>

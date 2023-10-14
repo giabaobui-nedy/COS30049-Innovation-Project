@@ -13,11 +13,28 @@ function Main(props) {
 
     const [searchInput, setSearchInput] = useState("")
 
-    const [isSearching, setIsSearching] = useState(false)
+    const [sortByPrice, setSortByPrice] = useState(true)
 
-    const [sortByPrice, setSortByPrice] = useState(true);
+    const getAssetsBySearch = () => {
+        const options = {
+            method: 'GET',
+            url: `http://127.0.0.1:8000/getAllAssets/search/${searchInput}`,
+            headers: { accept: 'application/json' }
+        }
 
-    const fetchApiData = () => {
+        axios
+            .request(options)
+            .then(response => {
+                // console.log(response.data)
+                setApiData(response.data)
+            })
+            .catch(error => {
+                console.error(error)
+            });
+
+    }
+
+    const getAllAssets = () => {
         // fetch data from the local server
         const options = {
             method: 'GET',
@@ -38,7 +55,7 @@ function Main(props) {
 
     try {
         useEffect(() => {
-            fetchApiData();
+            getAllAssets();
         }, [])
 
         const sortedData = [...apiData].sort((a, b) => {
@@ -51,11 +68,11 @@ function Main(props) {
 
         return (
             <div className="container-fluid">
-                <Header className="container-fluid" isSearching={isSearching} setIsSearching={setIsSearching} searchInput={searchInput} setSearchInput={setSearchInput} numberOfItems={props.cartItems.length} />
+                <Header className="container-fluid" getAssetsBySearch={getAssetsBySearch} getAllAssets={getAllAssets} searchInput={searchInput} setSearchInput={setSearchInput} numberOfItems={props.cartItems.length} />
                 <NavBar className="container" chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} changeSortOrder={changeSortOrder} sortByPrice={sortByPrice} cartItems={props.cartItems} />
                 <div className="assets_area container">
                     {
-                        sortedData.map((asset) => {
+                        apiData.map((asset) => {
                             return <Asset
                                 cartItems={props.cartItems}
                                 addItemToCart={props.addItemToCart}
