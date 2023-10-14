@@ -35,12 +35,7 @@ function Main(props) {
     }
 
 
-    const getAllAssets = () => {
-
-    const[loggedIn, setLoggedIn] = useState({
-        state: false,
-        currentLoggedIn: ""
-    })
+    const getAllAssets = () => {fetchApiData()}
     
     const fetchApiData = () => {
         // fetch data from the local server
@@ -76,8 +71,7 @@ function Main(props) {
 
         return (
             <div className="container-fluid">
-
-                <Header className="container-fluid" getAssetsBySearch={getAssetsBySearch} getAllAssets={getAllAssets} searchInput={searchInput} setSearchInput={setSearchInput} numberOfItems={props.cartItems.length} />
+                <Header isLoggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} className="container-fluid" getAssetsBySearch={getAssetsBySearch} getAllAssets={getAllAssets} searchInput={searchInput} setSearchInput={setSearchInput} numberOfItems={props.cartItems.length} />
                 <NavBar className="container" chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} changeSortOrder={changeSortOrder} sortByPrice={sortByPrice} cartItems={props.cartItems} />
                 <div className="assets_area container">
                     {

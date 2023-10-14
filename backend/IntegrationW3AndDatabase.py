@@ -110,8 +110,8 @@ def generateSampleData():
         asset = Asset(None, name, category, price, description, owner, None, img_url)
         assets.append(asset)
 
-    dtb = Database("localhost", "root", "root", "COS30049")
-    w3 = Web3Instance(Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545")))
+    dtb = Database("localhost", "root", "root", "COS30049") #config
+    w3 = Web3Instance(Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545"))) # turn on a ganache server
 
     backend_controller = BackendController(w3, dtb)
     backend_controller.addMultipleAssetsToPlatform(assets)

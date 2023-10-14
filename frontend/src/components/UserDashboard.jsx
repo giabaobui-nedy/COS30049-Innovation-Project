@@ -1,17 +1,56 @@
-import { Link, Outlet } from "react-router-dom";
-import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Logo from "./Logo";
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SignIn from "./SignIn";
 import AccountDetails from "./AccountDetails";
+import axios from "axios";
 
 function UserDashBoard(props) {
-    const { loggedIn, setLoggedIn } = props;
-    const [currentView, setCurrentView] = useState('SignIn');
+    const [requestsToBuyAssets, setRequestsToBuyAssets] = useState([])
+
+    const approve = (address, tokenId) => {
+        console.log(address)
+        console.log(tokenId)
+        const options = {
+            method: 'GET',
+            url: `http://127.0.0.1:8000/approve/${props.loggedIn.currentLoggedIn}/${address}/${tokenId}`,
+            headers: { accept: 'application/json' }
+        }
+
+        axios
+            .request(options)
+            .then(response => {
+                console.log(response.data.result)
+            })
+            .catch(error => {
+                console.error(error)
+            });
+    }
+
+    const getAllRequests = () => {
+        // fetch data from the local server
+        const options = {
+            method: 'GET',
+            url: `http://127.0.0.1:8000/getRequestsToBuyAssets/${props.loggedIn.currentLoggedIn}`,
+            headers: { accept: 'application/json' }
+        }
+
+        axios
+            .request(options)
+            .then(response => {
+                // console.log(response.data)
+                setRequestsToBuyAssets(response.data)
+            })
+            .catch(error => {
+                console.error(error)
+            });
+    }
+
 
     const switchView = () => {
-        if (loggedIn.state) {
+        if (props.loggedIn.state) {
             return (
                 <>
                     <div className="sidebar">
@@ -30,21 +69,48 @@ function UserDashBoard(props) {
                             <Link to="transaction-history">
                                 <button className="btn btn-outline-dark sidebar_opt">Transaction History</button>
                             </Link>
-                            <button className="btn btn-outline-dark sidebar_opt">Log out</button>
+                            <button type="submit" onClick={() => { props.setLoggedIn({ loggedIn: false, currentLoggedIn: "" }) }} className="btn btn-outline-dark sidebar_opt">Log out</button>
                         </div>
                     </div>
-                    <AccountDetails />
+                    <AccountDetails user={props.loggedIn.currentLoggedIn} />
+                    <div>
+                        <h1>Request List</h1>
+                        <ul>
+                            {requestsToBuyAssets.map((request, index) => (
+                                <li key={index}>
+                                    <h3>Token ID: {request.tokenId}</h3>
+                                    <ul>
+                                        {request.participants.map(([address, amount]) => (
+                                            <li key={address}>
+                                                <p>Address: {address} | Amount: {amount} <button onClick={() => { approve(address, request.tokenId) }}>Approve</button></p>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </>
             );
         } else {
-            return <SignIn setLoggedIn={setLoggedIn} />;
+            return <SignIn loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} />;
         }
     };
 
-    return (
-        <div className="container">
-            {switchView()}
-        </div>
-    )
+    try {
+        useEffect(() => {
+            getAllRequests()
+        }, [])
+        return (
+            <div className="container">
+                {switchView()}
+            </div>
+        )
+    } catch {
+        return (
+            <div>Not available!</div>
+        )
+    }
 }
+
 export default UserDashBoard
