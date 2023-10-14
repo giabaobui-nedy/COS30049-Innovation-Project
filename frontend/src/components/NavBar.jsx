@@ -20,8 +20,7 @@ function NavBar(props) {
                 )}</button>
             <button
                 className="h-3 p-2 btn btn-outline-dark price_btn"
-                onClick={() => { props.changeSortOrder() }}
-            >
+                onClick={() => { props.changeSortOrder() }}>
                 Price{' '}
                 {props.sortByPrice ? (
                     <ArrowUpwardIcon />

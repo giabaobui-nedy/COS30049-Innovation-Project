@@ -6,7 +6,7 @@ import SignIn from "./SignIn";
 
 function UserDashBoard(props) {
     const { loggedIn } = props;
-    
+
     return (
         <div className="container">
             {loggedIn.state ? (
@@ -32,11 +32,10 @@ function UserDashBoard(props) {
                     </div>
                 </>
             ) : (
-                <SignIn setLoggedIn = {props.setLoggedIn} />
+                <SignIn setLoggedIn={props.setLoggedIn} />
             )}
             <Outlet />
         </div>
     )
 }
-
 export default UserDashBoard

@@ -6,8 +6,6 @@ import axios from 'axios';
 import Footer from "./Footer";
 
 function Main(props) {
-    //categories for assets
-    const categories = ["Art", "Gaming", "Membership", "PFPs", "Photography", "Music"]
 
     const [chosenCategory, setChosenCategory] = useState("All")
 
@@ -19,13 +17,14 @@ function Main(props) {
 
     const [sortByPrice, setSortByPrice] = useState(true);
 
+
     const[loggedIn, setLoggedIn] = useState({
         state: false,
         currentLoggedIn: ""
     })
     
     const fetchApiData = () => {
-        //fetch data from alchemy
+        // fetch data from the local server
         const options = {
             method: 'GET',
             url: 'http://127.0.0.1:8000/getAllAssets',
@@ -35,7 +34,7 @@ function Main(props) {
         axios
             .request(options)
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 setApiData(response.data)
             })
             .catch(error => {
@@ -49,7 +48,7 @@ function Main(props) {
         }, [])
 
         const sortedData = [...apiData].sort((a, b) => {
-            return sortByPrice ? a.price - b.price : b.price - a.price;
+            return sortByPrice ? a.price - b.price : b.price - a.price
         });
 
         const changeSortOrder = () => {
@@ -61,8 +60,8 @@ function Main(props) {
                 <Header className="container-fluid" loggedIn = {loggedIn} setLoggedIn={setLoggedIn} isSearching={isSearching} setIsSearching={setIsSearching} searchInput={searchInput} setSearchInput={setSearchInput} numberOfItems={props.cartItems.length} />
                 <NavBar className="container" loggedIn = {loggedIn} setLoggedIn={setLoggedIn} chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} changeSortOrder={changeSortOrder} sortByPrice={sortByPrice} cartItems={props.cartItems} />
                 <div className="assets_area container">
-                    { 
-                        apiData.map((asset) => {
+                    {
+                        sortedData.map((asset) => {
                             return <Asset
                                 cartItems={props.cartItems}
                                 addItemToCart={props.addItemToCart}
@@ -71,11 +70,11 @@ function Main(props) {
                                 assetTokenId={asset.tokenID}
                                 assetName={asset.name}
                                 assetCategory={asset.category}
-                                assetPrice={asset.price} 
+                                assetPrice={asset.price}
                                 assetDescription={asset.description}
                                 assetOwner={asset.currentOwner}
                                 assetAddress={asset.contractAddress}
-                                assetUrl={asset.imgUrl}/>
+                                assetUrl={asset.imgUrl} />
                         })
                     }
                 </div>

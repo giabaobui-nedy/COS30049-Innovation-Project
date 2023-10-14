@@ -40,17 +40,17 @@ function TransactionHistory() {
                             <th scope="col" className="bg-secondary text-white">Txn Hash</th>
                             {/* <th scope="col" className="bg-secondary text-white">Method</th> */}
                             <th scope="col" className="bg-secondary text-white">Block</th>
-                            <th scope="col" className="bg-secondary text-white">Time</th>
-                            {/* <th scope="col" className="bg-secondary text-white">From</th> */}
+                            {/* <th scope="col" className="bg-secondary text-white">Time</th> */}
+                            <th scope="col" className="bg-secondary text-white">From</th>
                             <th scope="col" className="bg-secondary text-white">To</th>
                         </tr>
                         {apiData.map((transaction) => {
-                            return <Transaction 
-                            transactionHash={transaction.TxHash}
-                            transactionFrom={transaction.From}
-                            transactionTo={transaction.To}
-                            transactionValue={transaction.Value}
-                            transactionBlockNumber={transaction.BlockNumber}>
+                            return <Transaction
+                                transactionHash={transaction.TxHash}
+                                transactionFrom={transaction.From}
+                                transactionTo={transaction.To}
+                                transactionValue={transaction.Value}
+                                transactionBlockNumber={transaction.BlockNumber}>
                             </Transaction>
                         }
                         )}

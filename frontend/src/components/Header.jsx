@@ -21,7 +21,7 @@ function Header(props) {
                     <div className="container-fluid mt-2 mb-2">
                         <span className="container-fluid bg-white ava_pill rounded-pill">
                             <Link to="cart">
-                                <IconButton className="float-end">
+                                <IconButton className="float-end border">
                                     <ShoppingCartIcon />
                                     <div className="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill small-badge">
                                         {props.numberOfItems}
@@ -30,7 +30,7 @@ function Header(props) {
                                 </IconButton>
                             </Link>
                             <Link to="user-dashboard">
-                                <IconButton className="float-end bg-secondary">
+                                <IconButton className="float-end border">
                                     <AccountCircleIcon />
                                 </IconButton>
                             </Link>

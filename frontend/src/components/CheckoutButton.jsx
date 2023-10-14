@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-//not used in assignment 2
+// not used in assignment 2
 function CheckoutButton(props) {
     const [checkoutSuccess, setCheckoutSuccess] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
