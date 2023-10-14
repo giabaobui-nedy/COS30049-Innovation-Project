@@ -26,10 +26,10 @@ async def getAllAssets():
     return data
 
 # F3: The system should provide a search and filter functionality for users to discover specific assets of interest.
-@app.get("/getAllAssets/category/{category}")
-async def getAllAssetsByCategory(category: str):
-    data = dtb.getAssetByCategory(category)
-    return data
+# @app.get("/getAllAssets/category/{category}")
+# async def getAllAssetsByCategory(category: str):
+#     data = dtb.getAssetByCategory(category)
+#     return data
 
 # F3: The system should provide a search and filter functionality for users to discover specific assets of interest.
 @app.get("/getAllAssets/search/{keyword}")
@@ -40,7 +40,7 @@ async def getAllAssetsBySearch(keyword: str):
 
 @app.get("/getAllAssets/user/{username}")
 async def getAllAssetsOfUser(username: str):
-    data = dtb.getAssetBySearch(username)
+    data = dtb.getAssetOfAUser(username)
     return data
 
 # F5: Users should have access to a transaction history to view their past trades.
