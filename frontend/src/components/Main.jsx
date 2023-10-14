@@ -13,8 +13,6 @@ function Main(props) {
 
     const [searchInput, setSearchInput] = useState("")
 
-    const [sortByPrice, setSortByPrice] = useState(true)
-
     const getAssetsBySearch = () => {
         const options = {
             method: 'GET',
@@ -61,24 +59,33 @@ function Main(props) {
         getAllAssets();
     }, []);
 
-    useEffect(() => {
-        if (apiData.length > 0) {
-            const sortedData = [...apiData].sort((a, b) => {
-                return sortByPrice ? a.price - b.price : b.price - a.price
-            });
-            setApiData(sortedData);
+    const changeSortOrder = (sortOption) => {
+        let sortedData;
+        switch (sortOption) {
+            case 'priceUp':
+                sortedData = [...apiData].sort((a, b) => a.price - b.price);
+                break;
+            case 'priceDown':
+                sortedData = [...apiData].sort((a, b) => b.price - a.price);
+                break;
+            case 'name':
+                sortedData = [...apiData].sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            default:
+                sortedData = apiData
         }
-    }, [apiData, sortByPrice]);
 
-
-    const changeSortOrder = () => {
-        setSortByPrice(!sortByPrice);
+        setApiData(sortedData);
     };
+
+    useEffect(() => {
+        
+    }, [apiData]);
 
     return (
         <div className="container-fluid">
             <Header isLoggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} className="container-fluid" getAssetsBySearch={getAssetsBySearch} getAllAssets={getAllAssets} searchInput={searchInput} setSearchInput={setSearchInput} numberOfItems={props.cartItems.length} />
-            <NavBar className="container" chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} changeSortOrder={changeSortOrder} sortByPrice={sortByPrice} cartItems={props.cartItems} />
+            <NavBar className="container" chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} changeSortOrder={changeSortOrder} cartItems={props.cartItems} />
             <div className="assets_area container">
                 {
                     apiData.map((asset) => {
