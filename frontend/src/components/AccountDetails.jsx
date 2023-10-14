@@ -2,25 +2,24 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function AccountDetails(props) {
-    const { loggedInUser } = props;
-    const [userDetails, setUserDetails] = useState(null);
+    const [userDetails, setUserDetails] = useState({});
+
+    const fetchUserDetails = async () => {
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/getUserDetails/${props.user}`);
+            setUserDetails(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     useEffect(() => {
-        const fetchUserDetails = async () => {
-            try {
-                const response = await axios.get(`http://127.0.0.1:8000/getAllUserDetails/${loggedInUser}`);
-                setUserDetails(response.data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchUserDetails();
-    }, [loggedInUser]);
+        fetchUserDetails()
+    }, []);
 
     return (
         <div>
-            <h2>Account Details for {loggedInUser}</h2>
+            <h2>Account Details for {userDetails.username}</h2>
             {userDetails ? (
                 <ul>
                     <li>

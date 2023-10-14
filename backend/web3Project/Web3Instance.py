@@ -1,6 +1,6 @@
 import json
 
-from solc import compile_standard, install_solc
+from solcx import compile_standard, install_solc
 
 # static method to compile the smart contract
 def compileSmartContract():

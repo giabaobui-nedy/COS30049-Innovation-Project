@@ -24,8 +24,8 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" render={(props) => <Header {...props} />} element={<Main cartItems={cartItems} addItemToCart={setCartItems} />} />
-        <Route path="/user-dashboard" element={<UserDashBoard loggedIn={loggedIn} />}>
+        <Route path="/" element={<Main isLoggedIn={loggedIn} setLoggedIn={setLoggedIn} cartItems={cartItems} addItemToCart={setCartItems} />} />
+        <Route path="/user-dashboard" element={<UserDashBoard loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}>
           <Route path="transaction-history" element={<TransactionHistory />} />
         </Route>
         <Route path="/signup" element={<SignUp />} />

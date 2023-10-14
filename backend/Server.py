@@ -6,6 +6,7 @@ from web3Project.Web3Instance import Web3Instance
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+# config
 dtb = Database("localhost", "root", "root", "COS30049")
 w3 = Web3Instance(Web3(Web3.HTTPProvider("HTTP://127.0.0.1:7545")))
 backendController = BackendController(w3, dtb)
@@ -26,10 +27,10 @@ async def getAllAssets():
     return data
 
 # F3: The system should provide a search and filter functionality for users to discover specific assets of interest.
-@app.get("/getAllAssets/category/{category}")
-async def getAllAssetsByCategory(category: str):
-    data = dtb.getAssetByCategory(category)
-    return data
+# @app.get("/getAllAssets/category/{category}")
+# async def getAllAssetsByCategory(category: str):
+#     data = dtb.getAssetByCategory(category)
+#     return data
 
 # F3: The system should provide a search and filter functionality for users to discover specific assets of interest.
 @app.get("/getAllAssets/search/{keyword}")
@@ -40,18 +41,18 @@ async def getAllAssetsBySearch(keyword: str):
 
 @app.get("/getAllAssets/user/{username}")
 async def getAllAssetsOfUser(username: str):
-    data = dtb.getAssetBySearch(username)
+    data = dtb.getAssetOfAUser(username)
     return data
 
-@app.get("/getUserCredentials")
-async def getUserCredentials():
-        userCredentials = dtb.getUserCredentials()
-        return userCredentials
+# @app.get("/getUserCredentials")
+# async def getUserCredentials():
+#     userCredentials = dtb.getUserCredentials()
+#     return userCredentials
 
 @app.get("/getUserDetails/{username}")
 async def getUserDetails(username: str):
-        userCredentials = dtb.getUserDetails(username)
-        return userCredentials
+    userDetails = dtb.getUserInfo(username)
+    return userDetails
 
 # F5: Users should have access to a transaction history to view their past trades.
 @app.get("/getTransactions/{username}")
@@ -101,4 +102,9 @@ async def approve(currentOwnerUsername, newOwnerAddress, tokenId:int):
     data = backendController.approve(currentOwnerUsername, newOwnerAddress, tokenId)
     return {"result": data}
 
-
+@app.get("/authenticate/{username}/{password}")
+async def authenticate(username, password):
+    if (dtb.authenticate(username, password)):
+        return {"result" : "authenticated"}
+    else:
+        return {"result" : "invalid credential"}

@@ -190,6 +190,19 @@ class Database:
         self.disconnect()
         return username
 
+    def authenticate(self, username, password):
+        self.connect()
+        cur = self.con.cursor()
+        query = f'''SELECT password FROM User WHERE username = '{username}';'''
+        print("Query to be executed: " + query)
+        cur.execute(query)
+        result = cur.fetchone()
+        if result[0] is not None:
+            if result[0] == password:
+                return True
+        else:
+            return False
+
 def TestGetUsername():
     dtb = Database("localhost", "root", "root", "COS30049")
     print(dtb.getUsernameFromAddress("0x2db355e3cb258F9095e33e45CD7b8417C4108Ec5"))
@@ -197,11 +210,11 @@ def TestGetUsername():
 # TestGetUsername()
 
 
-def TestAddUsers():
+def generateSampleUsers():
     dtb = Database("localhost", "root", "root", "COS30049")
     user = User("admin", "admin",
-                "0x61D375982B3E7a216626E9FEE4fBeee05e32d30F",
-                "0xcce3d66776d94f8808406006815036e37212be2b6c88c496f605c563fdc7d024")
+                "0x61D375982B3E7a216626E9FEE4fBeee05e32d30F", #address
+                "0xcce3d66776d94f8808406006815036e37212be2b6c88c496f605c563fdc7d024") #private key
     user1 = User("admin1", "admin1",
                  "0xfcEFcd85dee8160E19EA72ED6c5fFC52A23D1941",
                  "0xeed18e75aa273032c2199f346174377ac8c20c179d5f8df55bc46a67b4c54165")
@@ -212,4 +225,4 @@ def TestAddUsers():
     dtb.addUser(user1)
     dtb.addUser(user2)
 
-# TestAddUsers()
+# generateSampleUsers()

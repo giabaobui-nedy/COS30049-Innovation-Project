@@ -53,7 +53,6 @@ function ShoppingItem(props) {
                     value={bidAmount}
                     onChange={(e) => setBidAmount(e.target.value)}
                     placeholder="Enter Bid Amount (WEI)"
-                    min="0"
                 />
             </td>
             {/* buy item */}
