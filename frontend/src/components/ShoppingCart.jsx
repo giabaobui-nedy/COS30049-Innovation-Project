@@ -1,5 +1,5 @@
 
-import CheckoutButton from './CheckoutButton';
+// import CheckoutButton from './CheckoutButton';
 import Logo from './Logo';
 import ShoppingItem from './ShoppingItem';
 

@@ -6,8 +6,6 @@ import axios from 'axios';
 import Footer from "./Footer";
 
 function Main(props) {
-    //categories for assets
-    const categories = ["Art", "Gaming", "Membership", "PFPs", "Photography", "Music"]
 
     const [chosenCategory, setChosenCategory] = useState("All")
 
@@ -20,7 +18,7 @@ function Main(props) {
     const [sortByPrice, setSortByPrice] = useState(true);
     
     const fetchApiData = () => {
-        //fetch data from alchemy
+        // fetch data from the local server
         const options = {
             method: 'GET',
             url: 'http://127.0.0.1:8000/getAllAssets',
@@ -30,7 +28,7 @@ function Main(props) {
         axios
             .request(options)
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 setApiData(response.data)
             })
             .catch(error => {
@@ -44,7 +42,7 @@ function Main(props) {
         }, [])
 
         const sortedData = [...apiData].sort((a, b) => {
-            return sortByPrice ? a.price - b.price : b.price - a.price;
+            return sortByPrice ? a.price - b.price : b.price - a.price
         });
 
         const changeSortOrder = () => {
@@ -57,7 +55,7 @@ function Main(props) {
                 <NavBar className="container" chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} changeSortOrder={changeSortOrder} sortByPrice={sortByPrice} cartItems={props.cartItems} />
                 <div className="assets_area container">
                     { 
-                        apiData.map((asset) => {
+                        sortedData.map((asset) => {
                             return <Asset
                                 cartItems={props.cartItems}
                                 addItemToCart={props.addItemToCart}

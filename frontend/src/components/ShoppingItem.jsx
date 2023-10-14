@@ -1,21 +1,29 @@
 
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { IconButton } from '@mui/material';
+import axios from 'axios';
 
 
 function ShoppingItem(props) {
     const [bidAmount, setBidAmount] = useState(0); // State to store the bid amount
 
-    const handleBidAmountChange = (event) => {
-        setBidAmount(event.target.value);
-    };
+    const registerToBuy = () => {
+        const options = {
+            method: 'GET',
+            url: `http://127.0.0.1:8000/registerToBuy/admin2/${props.item.itemId}/${bidAmount}`,
+            headers: { accept: 'application/json' }
+        }
 
-    const handleBidConfirmation = () => {
-        // You can perform an action here when the user confirms the bid.
-        // For example, you can call a function that handles the bidding process.
-        // Pass the `bidAmount` and `props.item.itemId` to your bidding function.
-    };
+        axios
+            .request(options)
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.log(error)
+            });
+    }
 
     return (
         <tr>
@@ -43,14 +51,14 @@ function ShoppingItem(props) {
                 <input
                     type="number"
                     value={bidAmount}
-                    onChange={handleBidAmountChange}
-                    placeholder="Enter Bid Amount (ETH)"
+                    onChange={(e) => setBidAmount(e.target.value)}
+                    placeholder="Enter Bid Amount (WEI)"
                     min="0"
                 />
             </td>
             {/* buy item */}
             <td>
-                <button onClick={handleBidConfirmation}>
+                <button onClick={registerToBuy}>
                     Request to buy this Item!
                 </button>
             </td>
