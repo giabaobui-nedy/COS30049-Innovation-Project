@@ -5,7 +5,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircleTwoTone';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import SearchBar from "./SearchBar";
 
-function Header(props) {
+function NavigationalBar(props) {
     return (
         // the start of the navbar
         <nav className="navbar navbar-expand-md container-fluid rounded-pill bg-dark mt-2 sticky-top">
@@ -17,10 +17,10 @@ function Header(props) {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse bg-dark rounded-4 text-center p-1" id="nav">
-                    <SearchBar className="mt-2 mb-1" getAssetsBySearch={props.getAssetsBySearch} getAllAssets={props.getAllAssets} searchInput={props.searchInput} setSearchInput={props.setSearchInput} />
+                    <SearchBar className="mt-2 mb-1" setApiData={props.setApiData} getAllAssets={props.getAllAssets} />
                     <div className="container-fluid mt-2 mb-2">
                         <span className="container-fluid bg-white ava_pill rounded-pill">
-                            <Link to="cart">
+                            <Link to="user-dashboard/cart">
                                 <IconButton className="float-end border">
                                     <ShoppingCartIcon />
                                     <div className="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill small-badge">
@@ -42,6 +42,6 @@ function Header(props) {
     )
 }
 
-export default Header;
+export default NavigationalBar;
 
 

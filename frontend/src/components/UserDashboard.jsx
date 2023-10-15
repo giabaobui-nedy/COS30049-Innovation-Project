@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Logo from "./Logo";
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -8,11 +8,10 @@ import AccountDetails from "./AccountDetails";
 import axios from "axios";
 
 function UserDashBoard(props) {
+    const [serverResponse, setServerResponse] = useState("")
     const [requestsToBuyAssets, setRequestsToBuyAssets] = useState([])
 
     const approve = (address, tokenId) => {
-        console.log(address)
-        console.log(tokenId)
         const options = {
             method: 'GET',
             url: `http://127.0.0.1:8000/approve/${props.loggedIn.currentLoggedIn}/${address}/${tokenId}`,
@@ -22,25 +21,27 @@ function UserDashBoard(props) {
         axios
             .request(options)
             .then(response => {
-                console.log(response.data.result)
+                setServerResponse(response.data.result)
             })
             .catch(error => {
                 console.error(error)
             });
+
+        // get all the requests AGAIN
+        getAllRequests(props.loggedIn.currentLoggedIn)
     }
 
-    const getAllRequests = () => {
-        // fetch data from the local server
+    const getAllRequests = async (username) => {
+        console.log("Get All Requests From UserDashboard()")
         const options = {
             method: 'GET',
-            url: `http://127.0.0.1:8000/getRequestsToBuyAssets/${props.loggedIn.currentLoggedIn}`,
+            url: `http://127.0.0.1:8000/getRequestsToBuyAssets/${username}`,
             headers: { accept: 'application/json' }
         }
 
         axios
             .request(options)
             .then(response => {
-                // console.log(response.data)
                 setRequestsToBuyAssets(response.data)
             })
             .catch(error => {
@@ -48,23 +49,24 @@ function UserDashBoard(props) {
             });
     }
 
-
     const switchView = () => {
         if (props.loggedIn.state) {
             return (
-                <>
+                <div>
                     <div className="sidebar">
                         <IconButton data-bs-toggle="offcanvas" data-bs-target="#dashboard">
                             <MenuIcon />
                         </IconButton>
                     </div>
-                    <div class="offcanvas offcanvas-start" id="dashboard">
-                        <div class="offcanvas-header">
+                    <div className="offcanvas offcanvas-start" id="dashboard">
+                        <div className="offcanvas-header">
                             <Logo size="70vw" />
                         </div>
-                        <div class="offcanvas-body">
+                        <div className="offcanvas-body">
                             <h3 className="">Menu</h3>
-                            <button className="btn btn-outline-dark sidebar_opt">Account Details</button>
+                            <Link to="">
+                                <button className="btn btn-outline-dark sidebar_opt">Account Details</button>
+                            </Link>
                             <button className="btn btn-outline-dark sidebar_opt">My Assets</button>
                             <Link to="transaction-history">
                                 <button className="btn btn-outline-dark sidebar_opt">Transaction History</button>
@@ -74,15 +76,16 @@ function UserDashBoard(props) {
                     </div>
                     <AccountDetails user={props.loggedIn.currentLoggedIn} />
                     <div>
-                        <h1>Request List</h1>
-                        <ul>
+                        {serverResponse !== "" ? <div class="alert alert-success" role="alert">{serverResponse}</div> : <div />}
+                        <h1>Requests List</h1>
+                        <ul className="request-list">
                             {requestsToBuyAssets.map((request, index) => (
-                                <li key={index}>
-                                    <h3>Token ID: {request.tokenId}</h3>
-                                    <ul>
-                                        {request.participants.map(([address, amount]) => (
-                                            <li key={address}>
-                                                <p>Address: {address} | Amount: {amount} <button onClick={() => { approve(address, request.tokenId) }}>Approve</button></p>
+                                <li className="request-item" key={request.tokenId}>
+                                    <h3 className="request-header">Token ID: {request.tokenId}</h3>
+                                    <ul className="participants-list">
+                                        {request.participants.map(([address, amount], index) => (
+                                            <li className="participant-item" key={index}>
+                                                <p className="participant-info">Address: {address} suggests an amount of: {amount} <button className="approve-button" onClick={() => { approve(address, request.tokenId) }}>Approve</button></p>
                                             </li>
                                         ))}
                                     </ul>
@@ -90,17 +93,14 @@ function UserDashBoard(props) {
                             ))}
                         </ul>
                     </div>
-                </>
+                </div>
             );
         } else {
-            return <SignIn loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} />;
+            return <SignIn notif={props.notif} getAllRequests={getAllRequests} loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} />
         }
     };
 
     try {
-        useEffect(() => {
-            getAllRequests()
-        }, [])
         return (
             <div className="container">
                 {switchView()}
@@ -108,7 +108,7 @@ function UserDashBoard(props) {
         )
     } catch {
         return (
-            <div>Not available!</div>
+            <div>Fail to fetch server data!</div>
         )
     }
 }

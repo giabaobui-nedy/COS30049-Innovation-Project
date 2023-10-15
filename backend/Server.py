@@ -44,15 +44,11 @@ async def getAllAssetsOfUser(username: str):
     data = dtb.getAssetOfAUser(username)
     return data
 
-# @app.get("/getUserCredentials")
-# async def getUserCredentials():
-#     userCredentials = dtb.getUserCredentials()
-#     return userCredentials
-
 @app.get("/getUserDetails/{username}")
 async def getUserDetails(username: str):
     userDetails = dtb.getUserInfo(username)
-    return userDetails
+    balance = w3.getBalanceOf(userDetails.address)
+    return {"userDetails" : userDetails, "balance": balance}
 
 # F5: Users should have access to a transaction history to view their past trades.
 @app.get("/getTransactions/{username}")
@@ -67,13 +63,6 @@ async def getBidders(tokenID):
     contractAddress = dtb.getContractAddress(tokenID)
     data = w3.getParticipants(contractAddress)
     return data
-
-
-# @app.get("/getOwnerAddress/{tokenID}")
-# async def getOwnerAddress(tokenID):
-#     contractAddress = dtb.getContractAddress(tokenID)
-#     data = w3.getOwnerAddress(contractAddress)
-#     return data
 
 # F4:
 @app.get("/registerToBuy/{username}/{tokenID}/{amount}")
@@ -107,4 +96,4 @@ async def authenticate(username, password):
     if (dtb.authenticate(username, password)):
         return {"result" : "authenticated"}
     else:
-        return {"result" : "invalid credential"}
+        return {"result" : "Invalid credentials!"}

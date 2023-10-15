@@ -11,14 +11,15 @@ function ShoppingItem(props) {
     const registerToBuy = () => {
         const options = {
             method: 'GET',
-            url: `http://127.0.0.1:8000/registerToBuy/admin2/${props.item.itemId}/${bidAmount}`,
+            url: `http://127.0.0.1:8000/registerToBuy/${props.loggedIn.currentLoggedIn}/${props.item.itemId}/${bidAmount}`,
             headers: { accept: 'application/json' }
         }
 
         axios
             .request(options)
             .then(response => {
-                console.log(response.data)
+                props.setResponse(response.data.result)
+                props.deleteItem()
             })
             .catch(error => {
                 console.log(error)
@@ -57,7 +58,7 @@ function ShoppingItem(props) {
             </td>
             {/* buy item */}
             <td>
-                <button onClick={registerToBuy}>
+                <button className="btn btn-primary" onClick={registerToBuy}>
                     Request to buy this Item!
                 </button>
             </td>
