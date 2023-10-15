@@ -1,56 +1,11 @@
 import { Link, Outlet } from "react-router-dom";
-import { useState } from "react";
 import Logo from "./Logo";
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SignIn from "./SignIn";
 import AccountDetails from "./AccountDetails";
-import axios from "axios";
 
 function UserDashBoard(props) {
-    // const [serverResponse, setServerResponse] = useState("")
-    // const [requestsToBuyAssets, setRequestsToBuyAssets] = useState([])
-
-    // const approve = (address, amount, tokenId) => {
-    //     console.log("Approving...")
-
-    //     const options = {
-    //         method: 'GET',
-    //         url: `http://127.0.0.1:8000/approve/${props.loggedIn.currentLoggedIn}/${address}/${amount}/${tokenId}`,
-    //         headers: { accept: 'application/json' }
-    //     }
-
-    //     axios
-    //         .request(options)
-    //         .then(response => {
-    //             setServerResponse(response.data.result)
-    //         })
-    //         .catch(error => {
-    //             console.error(error)
-    //         });
-
-    //     // get all the requests AGAIN
-    //     getAllRequests(props.loggedIn.currentLoggedIn)
-    // }
-
-    // const getAllRequests = async (username) => {
-    //     setServerResponse("")
-    //     console.log("Get All Requests From UserDashboard()")
-    //     const options = {
-    //         method: 'GET',
-    //         url: `http://127.0.0.1:8000/getRequestsToBuyAssets/${username}`,
-    //         headers: { accept: 'application/json' }
-    //     }
-
-    //     axios
-    //         .request(options)
-    //         .then(response => {
-    //             setRequestsToBuyAssets(response.data)
-    //         })
-    //         .catch(error => {
-    //             console.error(error)
-    //         });
-    // }
 
     const switchView = () => {
         if (props.loggedIn.state) {
