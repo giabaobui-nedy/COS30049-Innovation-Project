@@ -1,5 +1,4 @@
 /* styles.css */
-
 .searchBar {
     color: white;
     padding: 0.5rem;
@@ -49,7 +48,7 @@ nav {
     padding: 5px 5px;
     justify-content: space-between;
     display: flex;
-    width: 95px;
+    width: 100px;
 }
 
 .nav_head {
@@ -139,4 +138,61 @@ th,td{
     max-width: 3em;
     max-height: 3em;
     font-size: x-small;
+}
+
+.link_hover{
+	color:white;
+	border-radius: 5px;
+}
+.link_hover:hover{
+	background-color: white;
+	color: #343642;
+	border-radius: 5px;
+	font-weight: bold;
+} 
+
+.request-list {
+    list-style: none;
+    padding: 0;
+}
+
+.request-item {
+    border: 1px solid #ccc;
+    margin: 10px;
+    padding: 10px;
+}
+
+.request-header {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.participants-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.participant-item {
+    border: 1px solid #eee;
+    margin: 5px;
+    padding: 5px;
+}
+
+.participant-info {
+    font-size: 14px;
+    margin: 0;
+}
+
+.approve-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.approve-button:hover {
+    background-color: #0056b3;
 }

@@ -5,7 +5,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircleTwoTone';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import SearchBar from "./SearchBar";
 
-function Header(props) {
+function NavigationalBar(props) {
     return (
         // the start of the navbar
         <nav className="navbar navbar-expand-md container-fluid rounded-pill bg-dark mt-2 sticky-top">
@@ -16,12 +16,12 @@ function Header(props) {
                 <button className="navbar-toggler bg-white rounded-pill" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className="collapse navbar-collapse bg-dark rounded-4" id="nav">
-                    <SearchBar isSearching={props.isSearching} setIsSearching={props.setIsSearching} searchInput={props.searchInput} setSearchInput={props.setSearchInput} />
-                    <div className="container-fluid">
+                <div className="collapse navbar-collapse bg-dark rounded-4 text-center p-1" id="nav">
+                    <SearchBar className="mt-2 mb-1" setApiData={props.setApiData} getAllAssets={props.getAllAssets} />
+                    <div className="container-fluid mt-2 mb-2">
                         <span className="container-fluid bg-white ava_pill rounded-pill">
-                            <Link to="cart">
-                                <IconButton className="float-end">
+                            <Link to="user-dashboard/cart">
+                                <IconButton className="float-end border">
                                     <ShoppingCartIcon />
                                     <div className="position-absolute top-0 start-100 translate-middle badge bg-danger rounded-pill small-badge">
                                         {props.numberOfItems}
@@ -30,7 +30,7 @@ function Header(props) {
                                 </IconButton>
                             </Link>
                             <Link to="user-dashboard">
-                                <IconButton className="float-end bg-secondary">
+                                <IconButton className="float-end border">
                                     <AccountCircleIcon />
                                 </IconButton>
                             </Link>
@@ -42,6 +42,6 @@ function Header(props) {
     )
 }
 
-export default Header;
+export default NavigationalBar;
 
 
