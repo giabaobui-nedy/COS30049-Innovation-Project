@@ -28,32 +28,24 @@ async def getAllAssets():
     data = dtb.getAllAssets()
     return data
 
-
-# F3: The system should provide a search and filter functionality for users to discover specific assets of interest.
-# @app.get("/getAllAssets/category/{category}")
-# async def getAllAssetsByCategory(category: str):
-#     data = dtb.getAssetByCategory(category)
-#     return data
-
 # F3: The system should provide a search and filter functionality for users to discover specific assets of interest.
 @app.get("/getAllAssets/search/{keyword}")
 async def getAllAssetsBySearch(keyword: str):
     data = dtb.getAssetBySearch(keyword)
     return data
 
-
-@app.get("/getAllAssets/user/{username}")
-async def getAllAssetsOfUser(username: str):
-    data = dtb.getAssetOfAUser(username)
+# F3: The system should provide a search and filter functionality for users to discover specific assets of interest.
+@app.get("/getAllAssets/category/{category}")
+async def getAllAssetsBySearch(category: str):
+    data = dtb.getAssetByCategory(category)
     return data
 
-
+# F5:
 @app.get("/getUserDetails/{username}")
 async def getUserDetails(username: str):
     userDetails = dtb.getUserInfo(username)
     balance = w3.getBalanceOf(userDetails.address)
     return {"userDetails": userDetails, "balance": balance}
-
 
 # F5: Users should have access to a transaction history to view their past trades.
 @app.get("/getTransactions/{username}")
@@ -62,14 +54,12 @@ async def getUserTransactions(username):
     data = w3.get_transactions(blockchainAddress)
     return data
 
-
 # F4: Trading
 @app.get("/getAllRequestsOfAnAsset/{tokenID}")
 async def getBidders(tokenID):
     contractAddress = dtb.getContractAddress(tokenID)
     data = w3.getParticipants(contractAddress)
     return data
-
 
 # F4:
 @app.get("/registerToBuy/{username}/{tokenID}/{amount}")
@@ -81,20 +71,11 @@ async def registerToBuy(username, tokenID, amount: int):
         data = w3.registerToBuy(userInfo.address, userInfo.privateKey, contractAddress, amount)
     return {"result": data}
 
-
-@app.get("/getBalanceOf/{username}")
-async def getBalanceOf(username):
-    userInfo = dtb.getUserInfo(username)
-    data = w3.getBalanceOf(userInfo.address)
-    return data
-
-
 # F4:
 @app.get("/getRequestsToBuyAssets/{username}")
 async def getRequestsToBuyAssets(username):
     data = backendController.getAllCurrentRequestsForAUser(username)
     return data
-
 
 # F4:
 @app.get("/approve/{currentOwnerUsername}/{newOwnerAddress}/{value}/{tokenId}")
@@ -102,7 +83,7 @@ async def approve(currentOwnerUsername, newOwnerAddress, value: int, tokenId: in
     data = backendController.approve(currentOwnerUsername, newOwnerAddress, tokenId, value)
     return {"result": data}
 
-
+# testing
 @app.get("/authenticate/{username}/{password}")
 async def authenticate(username, password):
     if dtb.authenticate(username, password):

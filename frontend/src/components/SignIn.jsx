@@ -23,7 +23,6 @@ function SignIn(props) {
             .then(response => {
                 if (response.data.result === 'authenticated') {
                     props.setLoggedIn({ state: true, currentLoggedIn: username })
-                    props.getAllRequests(username)
                 } else {
                     setResponse(response.data.result + " Please try again!")
                     setUsername("")

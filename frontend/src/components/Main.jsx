@@ -37,7 +37,7 @@ function Main(props) {
     return (
         <div className="container-fluid">
             <NavigationalBar className="container-fluid" getAllAssets={getAllAssets} setApiData={setApiData} numberOfItems={props.cartItems.length} />
-            <FilterComponent className="container" apiData={apiData} setApiData={setApiData} chosenCategory={chosenCategory} setChosenCategory={setChosenCategory} />
+            <FilterComponent className="container" getAllAssets={getAllAssets} apiData={apiData} setApiData={setApiData}/>
             <div className="assets_area container">
                 {
                     apiData.map((asset) => {
