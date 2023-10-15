@@ -85,7 +85,7 @@ function UserDashBoard(props) {
                                     <ul className="participants-list">
                                         {request.participants.map(([address, amount], index) => (
                                             <li className="participant-item" key={index}>
-                                                <p className="participant-info">Address: {address} suggests an amount of: {amount} <button className="approve-button" onClick={() => { approve(address, request.tokenId) }}>Approve</button></p>
+                                                <p className="participant-info">Address {address} suggests an amount of: {amount} <button className="approve-button" onClick={() => { approve(address, request.tokenId) }}>Approve</button></p>
                                             </li>
                                         ))}
                                     </ul>

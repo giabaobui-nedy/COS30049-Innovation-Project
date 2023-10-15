@@ -5,15 +5,14 @@ import Logo from './Logo';
 import ShoppingItem from './ShoppingItem';
 
 function ShoppingCart(props) {
-  const [response, setResponse] = useState("")
-
+  const [response, setResponse] = useState(["", ""])
   return (
     <div className="container-fluid">
       <div className="logo_cont"><Logo size="50px" /></div>
       <div className="container">
-        {response !== "" 
+        {response[0] !== "" 
         ?
-        <div className="alert alert-info" role="alert">{response}</div> 
+        <div className={"alert alert-" + response[1]} role="alert">{response[0]}</div> 
         : <div/> }
         {
           props.cartItems.length === 0

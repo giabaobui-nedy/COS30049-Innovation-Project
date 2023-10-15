@@ -9,6 +9,7 @@ function ShoppingItem(props) {
     const [bidAmount, setBidAmount] = useState(0); // State to store the bid amount
 
     const registerToBuy = () => {
+        if (props.loggedIn.currentLoggedIn !== props.item.itemOwner) {
         const options = {
             method: 'GET',
             url: `http://127.0.0.1:8000/registerToBuy/${props.loggedIn.currentLoggedIn}/${props.item.itemId}/${bidAmount}`,
@@ -18,12 +19,16 @@ function ShoppingItem(props) {
         axios
             .request(options)
             .then(response => {
-                props.setResponse(response.data.result)
+                props.setResponse([response.data.result, "success"])
                 props.deleteItem()
             })
             .catch(error => {
                 console.log(error)
             });
+        } else {
+            props.setResponse(["You cannot buy your own item", "danger"])
+            props.deleteItem()
+        }
     }
 
     return (
