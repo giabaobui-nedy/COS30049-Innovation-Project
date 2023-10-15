@@ -54,13 +54,6 @@ async def getUserTransactions(username):
     data = w3.get_transactions(blockchainAddress)
     return data
 
-# F4: Trading
-@app.get("/getAllRequestsOfAnAsset/{tokenID}")
-async def getBidders(tokenID):
-    contractAddress = dtb.getContractAddress(tokenID)
-    data = w3.getParticipants(contractAddress)
-    return data
-
 # F4:
 @app.get("/registerToBuy/{username}/{tokenID}/{amount}")
 async def registerToBuy(username, tokenID, amount: int):
