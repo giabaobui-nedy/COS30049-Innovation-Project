@@ -9,11 +9,11 @@ function ShoppingItem(props) {
     const [bidAmount, setBidAmount] = useState(0); // State to store the bid amount
 
     const registerToBuy = () => {
-        if (props.loggedIn.currentLoggedIn !== props.item.itemOwner) {
+        if (props.username !== props.item.itemOwner) {
             if (bidAmount > props.item.itemPrice) {
                 const options = {
                     method: 'GET',
-                    url: `http://127.0.0.1:8000/registerToBuy/${props.loggedIn.currentLoggedIn}/${props.item.itemId}/${bidAmount}`,
+                    url: `http://127.0.0.1:8000/registerToBuy/${props.username}/${props.item.itemId}/${bidAmount}`,
                     headers: { accept: 'application/json' }
                 }
     

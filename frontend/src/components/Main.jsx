@@ -12,7 +12,7 @@ function Main(props) {
     // get all assets
     const getAllAssets = async () => {
         console.log("Get All Assets From Main()")
-        
+
         const options = {
             method: 'GET',
             url: 'http://127.0.0.1:8000/getAllAssets',

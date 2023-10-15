@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useState } from "react";
 import Logo from "./Logo";
 import IconButton from '@mui/material/IconButton';
@@ -8,49 +8,49 @@ import AccountDetails from "./AccountDetails";
 import axios from "axios";
 
 function UserDashBoard(props) {
-    const [serverResponse, setServerResponse] = useState("")
-    const [requestsToBuyAssets, setRequestsToBuyAssets] = useState([])
+    // const [serverResponse, setServerResponse] = useState("")
+    // const [requestsToBuyAssets, setRequestsToBuyAssets] = useState([])
 
-    const approve = (address, amount, tokenId) => {
-        console.log("Approving...")
+    // const approve = (address, amount, tokenId) => {
+    //     console.log("Approving...")
 
-        const options = {
-            method: 'GET',
-            url: `http://127.0.0.1:8000/approve/${props.loggedIn.currentLoggedIn}/${address}/${amount}/${tokenId}`,
-            headers: { accept: 'application/json' }
-        }
+    //     const options = {
+    //         method: 'GET',
+    //         url: `http://127.0.0.1:8000/approve/${props.loggedIn.currentLoggedIn}/${address}/${amount}/${tokenId}`,
+    //         headers: { accept: 'application/json' }
+    //     }
 
-        axios
-            .request(options)
-            .then(response => {
-                setServerResponse(response.data.result)
-            })
-            .catch(error => {
-                console.error(error)
-            });
+    //     axios
+    //         .request(options)
+    //         .then(response => {
+    //             setServerResponse(response.data.result)
+    //         })
+    //         .catch(error => {
+    //             console.error(error)
+    //         });
 
-        // get all the requests AGAIN
-        getAllRequests(props.loggedIn.currentLoggedIn)
-    }
+    //     // get all the requests AGAIN
+    //     getAllRequests(props.loggedIn.currentLoggedIn)
+    // }
 
-    const getAllRequests = async (username) => {
-        setServerResponse("")
-        console.log("Get All Requests From UserDashboard()")
-        const options = {
-            method: 'GET',
-            url: `http://127.0.0.1:8000/getRequestsToBuyAssets/${username}`,
-            headers: { accept: 'application/json' }
-        }
+    // const getAllRequests = async (username) => {
+    //     setServerResponse("")
+    //     console.log("Get All Requests From UserDashboard()")
+    //     const options = {
+    //         method: 'GET',
+    //         url: `http://127.0.0.1:8000/getRequestsToBuyAssets/${username}`,
+    //         headers: { accept: 'application/json' }
+    //     }
 
-        axios
-            .request(options)
-            .then(response => {
-                setRequestsToBuyAssets(response.data)
-            })
-            .catch(error => {
-                console.error(error)
-            });
-    }
+    //     axios
+    //         .request(options)
+    //         .then(response => {
+    //             setRequestsToBuyAssets(response.data)
+    //         })
+    //         .catch(error => {
+    //             console.error(error)
+    //         });
+    // }
 
     const switchView = () => {
         if (props.loggedIn.state) {
@@ -70,7 +70,9 @@ function UserDashBoard(props) {
                             <Link to="">
                                 <button className="btn btn-outline-dark sidebar_opt">Account Details</button>
                             </Link>
-                            <button className="btn btn-outline-dark sidebar_opt">My Assets</button>
+                            <Link to="requests">
+                                <button className="btn btn-outline-dark sidebar_opt">My Assets</button>
+                            </Link>
                             <Link to="transaction-history">
                                 <button className="btn btn-outline-dark sidebar_opt">Transaction History</button>
                             </Link>
@@ -78,28 +80,11 @@ function UserDashBoard(props) {
                         </div>
                     </div>
                     <AccountDetails user={props.loggedIn.currentLoggedIn} />
-                    <div>
-                        {serverResponse !== "" ? <div class="alert alert-success" role="alert">{serverResponse}</div> : <div />}
-                        <h1>Requests List</h1>
-                        <ul className="request-list">
-                            {requestsToBuyAssets.map((request, index) => (
-                                <li className="request-item" key={request.tokenId}>
-                                    <h3 className="request-header">Token ID: {request.tokenId}</h3>
-                                    <ul className="participants-list">
-                                        {request.participants.map(([address, amount], index) => (
-                                            <li className="participant-item" key={index}>
-                                                <p className="participant-info">Address <strong>{address}</strong> suggests an amount of <strong>{amount}</strong> for the asset <button className="approve-button" onClick={() => { approve(address, amount, request.tokenId) }}>Approve</button></p>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                    <Outlet />
                 </div>
             );
         } else {
-            return <SignIn notif={props.notif} getAllRequests={getAllRequests} loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} />
+            return <SignIn notif={props.notif} loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} />
         }
     };
 

@@ -36,7 +36,7 @@ function ShoppingCart(props) {
                     <ShoppingItem
                       key={item.itemId}
                       item={item}
-                      loggedIn={props.loggedIn}
+                      username={props.username}
                       setResponse={setResponse}
                       deleteItem={() => {
                         props.setCartItems(

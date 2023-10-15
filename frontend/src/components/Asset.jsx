@@ -22,7 +22,7 @@ function Asset(props) {
                             itemPrice: props.assetPrice
                         }]
                         // if it is true, update the array to the old one
-                    : [...props.cartItems])
+                        : [...props.cartItems])
                     // else if the number of items is 0, add it directly
                     : [{
                         itemId: props.assetTokenId,
@@ -49,7 +49,7 @@ function Asset(props) {
                 <div className="card-text"><PersonIcon />{props.assetOwner}</div>
                 <div>{props.assetPrice} WEI</div>
                 <div className="badge text-bg-dark rounded-pill">{props.assetCategory}</div>
-                <IconButton onClick={() => {addItem()}}>
+                <IconButton onClick={() => { addItem() }}>
                     <AddShoppingCartIcon />
                 </IconButton>
             </div>
