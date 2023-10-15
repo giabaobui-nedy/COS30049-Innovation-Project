@@ -56,7 +56,7 @@ class Database:
     def getAssetBySearch(self, keyword):
         self.connect()
         cur = self.con.cursor()
-        query = f''' SELECT * FROM Asset WHERE name LIKE '%{keyword}%' OR description LIKE '%{keyword}%';'''
+        query = f''' SELECT * FROM Asset WHERE name LIKE '%{keyword}%';'''
         # execute the query
         print("Query to be executed: " + query)
         cur.execute(query)

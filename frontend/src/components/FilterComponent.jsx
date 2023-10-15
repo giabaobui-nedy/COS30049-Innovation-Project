@@ -5,9 +5,29 @@ import { useState } from "react";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
-function NavBar(props) {
+function FilterComponent(props) {
     const categories = ["All", "Art", "Gaming", "Membership", "PFPs", "Photography", "Music"]
+
     const [display, setDisplay] = useState(false);
+
+    //sorting based on options
+    const changeSortOrder = (sortOption) => {
+        let sortedData;
+        switch (sortOption) {
+            case 'priceUp':
+                sortedData = [...(props.apiData)].sort((a, b) => a.price - b.price);
+                break;
+            case 'priceDown':
+                sortedData = [...(props.apiData)].sort((a, b) => b.price - a.price);
+                break;
+            case 'name':
+                sortedData = [...(props.apiData)].sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            default:
+                sortedData = (props.apiData)
+        }
+        props.setApiData(sortedData);
+    };
 
     return (
         <div className="container">
@@ -30,14 +50,14 @@ function NavBar(props) {
                         Sort By
                     </button>
                     <ul className="dropdown-menu">
-                        <li className="dropdown-item btn" onClick={() => props.changeSortOrder("priceUp")}>
+                        <li className="dropdown-item btn" onClick={() => changeSortOrder("priceUp")}>
                             Price <ArrowUpwardIcon />
                         </li>
-                        <li className="dropdown-item btn" onClick={() => props.changeSortOrder("priceDown")}>
+                        <li className="dropdown-item btn" onClick={() => changeSortOrder("priceDown")}>
                             Price <ArrowDownwardIcon />
                         </li>
-                        <li className="dropdown-item btn" onClick={() => props.changeSortOrder("name")}>
-                            Alphabetical order
+                        <li className="dropdown-item btn" onClick={() => changeSortOrder("name")}>
+                            Alphabetical
                         </li>
                     </ul>
                 </div>
@@ -52,4 +72,4 @@ function NavBar(props) {
     )
 }
 
-export default NavBar;
+export default FilterComponent;

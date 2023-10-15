@@ -1,22 +1,46 @@
 import { IconButton } from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search';
+import axios from "axios";
+import { useState } from "react";
 
 function SearchBar(props) {
+    const [searchInput, setSearchInput] = useState("")
+
+    // get all assets by search
+    const getAssetsBySearch = () => {
+        console.log("hello")
+        const options = {
+            method: 'GET',
+            url: `http://127.0.0.1:8000/getAllAssets/search/${searchInput}`,
+            headers: { accept: 'application/json' }
+        }
+
+        axios
+            .request(options)
+            .then(response => {
+                // console.log(response.data)
+                props.setApiData(response.data)
+            })
+            .catch(error => {
+                console.error(error)
+            });
+
+    }
+
     return (
         <form className="d-inline-flex container-fluid rounded-pill bg-white p-2 col-10">
             <input
                 className="form-control me-2 border-0"
                 onChange={(e) => {
-                    props.setSearchInput(e.target.value);
+                    setSearchInput(e.target.value);
                     (e.target.value === "") && props.getAllAssets();
                 }}
-                value={props.searchInput}
+                value={searchInput}
                 type="text"
                 placeholder="Search by name..."
             />
-            {/* if search input is not empty => set isSearching to true */}
-            <IconButton className="rounded-pill bg-danger text-white"
-                onClick={() => { (props.searchInput !== "") && props.getAssetsBySearch() }}>
+            <IconButton type="button" className="rounded-pill bg-danger text-white"
+                onClick={() => { (searchInput !== "") && getAssetsBySearch() }}>
                 <SearchIcon />
             </IconButton>
         </form>

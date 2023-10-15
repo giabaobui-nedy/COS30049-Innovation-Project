@@ -1,8 +1,11 @@
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import PersonIcon from '@mui/icons-material/Person'
 import IconButton from '@mui/material/IconButton'
+import { useNavigate } from 'react-router-dom';
 
 function Asset(props) {
+
+    const navigate = useNavigate()
 
     function addItem() {
         if (props.loggedIn.state) {
@@ -10,7 +13,7 @@ function Asset(props) {
                 // if number of items is not 0
                 (props.cartItems.length !== 0) ?
                     // check whether the item is yet in the cart and add if that is false
-                    (props.cartItems.every(item => item.itemId !== props.id) ?
+                    (props.cartItems.every(item => item.itemId !== props.assetTokenId) ?
                         [...props.cartItems, {
                             itemId: props.assetTokenId,
                             itemName: props.assetName,
@@ -30,7 +33,8 @@ function Asset(props) {
                     }]
             );
         } else {
-            alert("Please sign in first to add the item to your cart!");
+            props.setNotif("Please sign-in before buying assets!")
+            navigate("/user-dashboard")
         }
     }
 
@@ -44,7 +48,7 @@ function Asset(props) {
                 <div className="card-text"><PersonIcon />{props.assetOwner}</div>
                 <div>{props.assetPrice} WEI</div>
                 <div className="badge text-bg-dark rounded-pill">{props.assetCategory}</div>
-                <IconButton onClick={addItem}>
+                <IconButton onClick={() => {addItem()}}>
                     <AddShoppingCartIcon />
                 </IconButton>
             </div>
