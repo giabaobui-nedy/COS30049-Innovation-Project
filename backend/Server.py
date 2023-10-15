@@ -86,7 +86,7 @@ async def getRequestsToBuyAssets(username):
     return data
 
 # F4:
-@app.get("/approve/{currentOwnerUsername}/{newOwnerAddress}/{tokenId}")
+@app.get("/approve/{currentOwnerUsername}/{newOwnerAddress}/{value}/{tokenId}")
 async def approve(currentOwnerUsername, newOwnerAddress, tokenId:int):
     data = backendController.approve(currentOwnerUsername, newOwnerAddress, tokenId)
     return {"result": data}

@@ -23,23 +23,28 @@ contract AssetSC {
         return msg.value;
     }
 
-    function approve(address newOwnerAddress) external {
+    function approve(address newOwnerAddress, uint value) external {
         require(msg.sender == currentOwnerAddress, "Must be approved by owner");
+
         uint index = 0;
         for (uint i = 0; i < participants.length; i++) {
-            if (participants[i]._address == newOwnerAddress) {
+            if (participants[i]._address == newOwnerAddress && participants[i]._value == value) {
                 index = i;
                 break;
             }
         }
         payable(msg.sender).transfer(participants[index]._value);
+
         //return money
         returnMoney(index);
+
         //update current owner
         currentOwnerAddress = participants[index]._address;
+
         //empty the array
         delete participants;
     }
+
 
     function getParticipants() view public returns (Participant[] memory) {
         Participant[] memory result = new Participant[](participants.length);

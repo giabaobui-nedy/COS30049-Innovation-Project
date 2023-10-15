@@ -123,10 +123,10 @@ class Web3Instance:
         result = simple_storage.functions.getCurrentOwner().call()
         return result
 
-    def approve(self, currentOwnerAddress, currentOwnerPrivateKey, contractAddressOfAsset, newOwnerAddress):
+    def approve(self, currentOwnerAddress, currentOwnerPrivateKey, contractAddressOfAsset, newOwnerAddress, value):
         simple_storage = self.w3.eth.contract(address=contractAddressOfAsset, abi=getAbi())
         nonce = self.w3.eth.get_transaction_count(currentOwnerAddress)
-        store_transaction = simple_storage.functions.approve(newOwnerAddress).build_transaction(
+        store_transaction = simple_storage.functions.approve(newOwnerAddress, value).build_transaction(
             {
                 "chainId": self.chainId,
                 "gasPrice": self.w3.eth.gas_price,

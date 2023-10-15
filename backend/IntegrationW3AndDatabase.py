@@ -41,10 +41,10 @@ class BackendController:
         return result
 
     # current owner approves a request of another owner to buy their asset
-    def approve(self, currentOwnerUsername, newOwnerAddress, tokenId):
+    def approve(self, currentOwnerUsername, newOwnerAddress, tokenId, value):
         assetAddress = self.dtb.getContractAddress(tokenId)
         currentOwner = self.dtb.getUserInfo(currentOwnerUsername)
-        if (self.w3.approve(currentOwner.address, currentOwner.privateKey, assetAddress, newOwnerAddress)):
+        if (self.w3.approve(currentOwner.address, currentOwner.privateKey, assetAddress, newOwnerAddress, value)):
             newOwnerUsername = self.dtb.getUsernameFromAddress(newOwnerAddress)
             self.dtb.updateOwnerOfAsset(tokenId, newOwnerUsername)
             return "Approved!"
