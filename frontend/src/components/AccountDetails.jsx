@@ -21,7 +21,7 @@ function AccountDetails(props) {
 
     return (
         <div>
-            <h2><span className="bg-dark text-white rounded-2">Account Details for {userDetails.username}</span></h2>
+            <h1>Account Details for {userDetails.username}</h1>
             {userDetails ? (
                 <ul className="list-group">
                     <li className="list-group-item m-2">

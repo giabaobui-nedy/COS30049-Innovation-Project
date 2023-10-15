@@ -37,12 +37,12 @@ function SignIn(props) {
 
     return (
         <div className="container text-center col-8">
-            {props.notif !== "" ? 
-            <div className="alert alert-info" role="alert">{props.notif}</div> 
-            : <div/> }
-            {response !== "" ? 
-            <div className="alert alert-danger" role="alert">{response}</div> 
-            : <div/> }
+            {props.notif !== "" ?
+                <div className="alert alert-info" role="alert">{props.notif}</div>
+                : <div />}
+            {response !== "" ?
+                <div className="alert alert-danger" role="alert">{response}</div>
+                : <div />}
             <h2 className="mt-2 text-center p-2 rounded-2 text-white bg-dark">Log in to your account <PersonIcon className="rounded-pill bg-white text-dark" /></h2>
             <form>
                 <div className="form-floating m-3">
@@ -54,7 +54,7 @@ function SignIn(props) {
                     <input onChange={(e) => { setPassword(e.target.value) }} value={password} type="password" className="form-control" placeholder="Password" name="pwd" id="pwd" />
                     <label htmlFor="pwd">Password</label>
                 </div>
-                <button onClick={() => {authenticate()}} type="button" className="btn btn-danger m-2">Submit</button>
+                <button onClick={() => { authenticate() }} type="button" className="btn btn-danger m-2">Submit</button>
                 {/* <Link to="/sign-up" className="btn btn-dark m-2">Signup</Link> */}
             </form>
         </div>

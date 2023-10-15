@@ -9,21 +9,30 @@ function ShoppingItem(props) {
     const [bidAmount, setBidAmount] = useState(0); // State to store the bid amount
 
     const registerToBuy = () => {
-        const options = {
-            method: 'GET',
-            url: `http://127.0.0.1:8000/registerToBuy/${props.loggedIn.currentLoggedIn}/${props.item.itemId}/${bidAmount}`,
-            headers: { accept: 'application/json' }
+        if (props.username !== props.item.itemOwner) {
+            if (bidAmount > props.item.itemPrice) {
+                const options = {
+                    method: 'GET',
+                    url: `http://127.0.0.1:8000/registerToBuy/${props.username}/${props.item.itemId}/${bidAmount}`,
+                    headers: { accept: 'application/json' }
+                }
+    
+                axios
+                    .request(options)
+                    .then(response => {
+                        props.setResponse([response.data.result, "success"])
+                        props.deleteItem()
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    });
+            } else {
+                props.setResponse(["You cannot bid lower than the current price", "warning"])
+            }
+        } else {
+            props.setResponse(["You cannot buy your own item", "danger"])
+            props.deleteItem()
         }
-
-        axios
-            .request(options)
-            .then(response => {
-                props.setResponse(response.data.result)
-                props.deleteItem()
-            })
-            .catch(error => {
-                console.log(error)
-            });
     }
 
     return (
@@ -45,7 +54,7 @@ function ShoppingItem(props) {
             </td>
             {/* item price */}
             <td>
-                <div>{props.price}</div>
+                <div>{props.item.itemPrice}</div>
             </td>
             {/* bidding item */}
             <td>

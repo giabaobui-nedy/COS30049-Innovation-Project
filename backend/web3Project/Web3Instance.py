@@ -48,9 +48,9 @@ def getBytecode():
     bytecode = compiled_sol["contracts"]["AssetSC.sol"]["AssetSC"]["evm"]["bytecode"]["object"]
     return bytecode
 
-# def Main():
-#     compileSmartContract()
-#
+def Main():
+    compileSmartContract()
+
 # Main()
 
 class Web3Instance:
@@ -123,10 +123,10 @@ class Web3Instance:
         result = simple_storage.functions.getCurrentOwner().call()
         return result
 
-    def approve(self, currentOwnerAddress, currentOwnerPrivateKey, contractAddressOfAsset, newOwnerAddress):
+    def approve(self, currentOwnerAddress, currentOwnerPrivateKey, contractAddressOfAsset, newOwnerAddress, value):
         simple_storage = self.w3.eth.contract(address=contractAddressOfAsset, abi=getAbi())
         nonce = self.w3.eth.get_transaction_count(currentOwnerAddress)
-        store_transaction = simple_storage.functions.approve(newOwnerAddress).build_transaction(
+        store_transaction = simple_storage.functions.approve(newOwnerAddress, value).build_transaction(
             {
                 "chainId": self.chainId,
                 "gasPrice": self.w3.eth.gas_price,
@@ -150,16 +150,22 @@ class Web3Instance:
 
             if block and "transactions" in block:
                 for tx in block["transactions"]:
-                    if tx['from'] == address:
+                    if tx["from"] == address or tx["to"] == address:
                         transaction_data = {
                             "TxHash": tx['hash'].hex(),
                             "From": tx['from'],
-                            "To": tx['to'],
-                            "Value": tx['value'] / 1000000000000000000,
+                            "To" : tx['to'],
+                            "Value": tx['value'],
                             "BlockNumber": tx["blockNumber"],
                         }
+                        if tx['to']:
+                            if tx['to'] == address:
+                                transaction_data["Method"] = "Receive"
+                            else:
+                                transaction_data["Method"] = "Transfer"
+                        else:
+                            transaction_data["Method"] = "Create Asset"
                         my_list.append(transaction_data)
-
         my_dict["Transactions"] = my_list
         return my_dict
 

@@ -12,6 +12,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import "./styles/styles.css"
 import TransactionHistory from "./components/TransactionHistory";
 import { useState } from "react";
+import RequestList from "./components/RequestList";
 
 
 function App() {
@@ -27,8 +28,9 @@ function App() {
         <Route path="/" element={<Main setNotif={setNotif} loggedIn={loggedIn} setLoggedIn={setLoggedIn} cartItems={cartItems} addItemToCart={setCartItems} />}/>
         <Route path="/user-dashboard">
           <Route path="" element={<UserDashBoard notif={notif} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
+          <Route path="requests" element={<RequestList username={loggedIn.currentLoggedIn}/>}/>
           <Route path="transaction-history" element={<TransactionHistory username={loggedIn.currentLoggedIn}/>} />
-          <Route path="cart" element={<ShoppingCart loggedIn={loggedIn} cartItems={cartItems} setCartItems={setCartItems} />} />
+          <Route path="cart" element={<ShoppingCart username={loggedIn.currentLoggedIn} cartItems={cartItems} setCartItems={setCartItems} />} />
         </Route>
       </Routes>
     </div>
