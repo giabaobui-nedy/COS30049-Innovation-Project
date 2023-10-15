@@ -39,9 +39,9 @@ function TransactionHistory(props) {
                         <thead>
                             <tr className="sticky-top">
                                 <th scope="col" className="bg-secondary text-white">Txn Hash</th>
-                                {/* <th scope="col" className="bg-secondary text-white">Method</th> */}
+                                <th scope="col" className="bg-secondary text-white">Method</th>
                                 <th scope="col" className="bg-secondary text-white">Block</th>
-                                {/* <th scope="col" className="bg-secondary text-white">Time</th> */}
+                                <th scope="col" className="bg-secondary text-white">Value (WEI)</th>
                                 <th scope="col" className="bg-secondary text-white">From</th>
                                 <th scope="col" className="bg-secondary text-white">To</th>
                             </tr>
@@ -51,6 +51,7 @@ function TransactionHistory(props) {
                                 return <Transaction
                                     key={transaction.TxHash}
                                     transactionHash={transaction.TxHash}
+                                    transactionMethod={transaction.Method}
                                     transactionFrom={transaction.From}
                                     transactionTo={transaction.To}
                                     transactionValue={transaction.Value}

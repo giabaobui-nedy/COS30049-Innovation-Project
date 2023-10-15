@@ -11,10 +11,12 @@ function UserDashBoard(props) {
     const [serverResponse, setServerResponse] = useState("")
     const [requestsToBuyAssets, setRequestsToBuyAssets] = useState([])
 
-    const approve = (address, tokenId) => {
+    const approve = (address, amount, tokenId) => {
+        console.log("Approving...")
+
         const options = {
             method: 'GET',
-            url: `http://127.0.0.1:8000/approve/${props.loggedIn.currentLoggedIn}/${address}/${tokenId}`,
+            url: `http://127.0.0.1:8000/approve/${props.loggedIn.currentLoggedIn}/${address}/${amount}/${tokenId}`,
             headers: { accept: 'application/json' }
         }
 
@@ -32,6 +34,7 @@ function UserDashBoard(props) {
     }
 
     const getAllRequests = async (username) => {
+        setServerResponse("")
         console.log("Get All Requests From UserDashboard()")
         const options = {
             method: 'GET',
@@ -85,7 +88,7 @@ function UserDashBoard(props) {
                                     <ul className="participants-list">
                                         {request.participants.map(([address, amount], index) => (
                                             <li className="participant-item" key={index}>
-                                                <p className="participant-info">Address {address} suggests an amount of: {amount} <button className="approve-button" onClick={() => { approve(address, request.tokenId) }}>Approve</button></p>
+                                                <p className="participant-info">Address <strong>{address}</strong> suggests an amount of <strong>{amount}</strong> for the asset <button className="approve-button" onClick={() => { approve(address, amount, request.tokenId) }}>Approve</button></p>
                                             </li>
                                         ))}
                                     </ul>

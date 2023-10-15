@@ -48,9 +48,9 @@ def getBytecode():
     bytecode = compiled_sol["contracts"]["AssetSC.sol"]["AssetSC"]["evm"]["bytecode"]["object"]
     return bytecode
 
-# def Main():
-#     compileSmartContract()
-#
+def Main():
+    compileSmartContract()
+
 # Main()
 
 class Web3Instance:
@@ -150,16 +150,22 @@ class Web3Instance:
 
             if block and "transactions" in block:
                 for tx in block["transactions"]:
-                    if tx['from'] == address:
+                    if tx["from"] == address or tx["to"] == address:
                         transaction_data = {
                             "TxHash": tx['hash'].hex(),
                             "From": tx['from'],
-                            "To": tx['to'],
-                            "Value": tx['value'] / 1000000000000000000,
+                            "To" : tx['to'],
+                            "Value": tx['value'],
                             "BlockNumber": tx["blockNumber"],
                         }
+                        if tx['to']:
+                            if tx['to'] == address:
+                                transaction_data["Method"] = "Receive"
+                            else:
+                                transaction_data["Method"] = "Transfer"
+                        else:
+                            transaction_data["Method"] = "Create Asset"
                         my_list.append(transaction_data)
-
         my_dict["Transactions"] = my_list
         return my_dict
 

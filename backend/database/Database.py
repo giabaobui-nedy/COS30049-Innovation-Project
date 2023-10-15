@@ -203,6 +203,22 @@ class Database:
         else:
             return False
 
+    def updatePrice(self, tokenId, amount):
+        self.connect()
+        cur = self.con.cursor()
+        query = f'''UPDATE ASSET SET price = '{amount}' WHERE tokenId = '{tokenId}';'''
+        print("Query to be executed: " + query)
+        cur.execute(query)
+        self.con.commit()
+        result = cur.rowcount
+        self.disconnect()
+        if result == 1:
+            print("Asset has been updated added successfully.")
+            return True
+        else:
+            print("Nothing was updated.")
+            return False
+
 def TestGetUsername():
     dtb = Database("localhost", "root", "root", "COS30049")
     print(dtb.getUsernameFromAddress("0x2db355e3cb258F9095e33e45CD7b8417C4108Ec5"))
@@ -213,14 +229,14 @@ def TestGetUsername():
 def generateSampleUsers():
     dtb = Database("localhost", "root", "root", "COS30049")
     user = User("admin", "admin",
-                "0x61D375982B3E7a216626E9FEE4fBeee05e32d30F", #address
-                "0xcce3d66776d94f8808406006815036e37212be2b6c88c496f605c563fdc7d024") #private key
+                "0x3446F14EE3628345eB5eB2FE2EABf6D26cC947D1", #address
+                "0x1d9e6d130d08f435bf3eda23bfefd8d47ca386a2dbaa49d4a5f05a58a956e788") #private key
     user1 = User("admin1", "admin1",
-                 "0xfcEFcd85dee8160E19EA72ED6c5fFC52A23D1941",
-                 "0xeed18e75aa273032c2199f346174377ac8c20c179d5f8df55bc46a67b4c54165")
+                 "0xcAC3D4DeB1B462C1D8873cc09Fd7648339A68371",
+                 "0x3f5067fc8daefe53ee65c80329e2459ae5b504b28c8e210c68f04d247262ab68")
     user2 = User("admin2", "admin2",
-                 "0xE1aBe120d1e83502986aC7eB34709D5258D68A3f",
-                 "0xcaca6b1d70c7a1f96c6c82458d2c8feef6d66b6011b41cace75927e7123cbf67")
+                 "0xd88e1bA3fAF4DEd6dAC99EaCf9b203F801c13291",
+                 "0x5565aa59492f3603c4fb22abcf0eb6895f09acbad328a258fcd738ca71780b30")
     dtb.addUser(user)
     dtb.addUser(user1)
     dtb.addUser(user2)

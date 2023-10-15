@@ -5,9 +5,9 @@ function Transaction(props) {
     return (
         <tr>
             <td>{props.transactionHash}</td>
-            {/* <td><span className="badge text-bg-light">{props.transaction.type}</span></td> */}
+            <td><span className="badge text-bg-light">{props.transactionMethod}</span></td>
             <td>{props.transactionBlockNumber}</td>
-            {/* <td>N/A</td> */}
+            <td>{props.transactionValue}</td>
             <td>{props.transactionFrom}</td>
             <td>{props.transactionTo}</td>
         </tr>

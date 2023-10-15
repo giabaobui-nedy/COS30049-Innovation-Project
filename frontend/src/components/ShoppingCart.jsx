@@ -36,7 +36,6 @@ function ShoppingCart(props) {
                     <ShoppingItem
                       key={item.itemId}
                       item={item}
-                      price={item.itemPrice}
                       loggedIn={props.loggedIn}
                       setResponse={setResponse}
                       deleteItem={() => {

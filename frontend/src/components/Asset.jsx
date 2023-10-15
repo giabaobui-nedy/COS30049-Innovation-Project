@@ -45,6 +45,7 @@ function Asset(props) {
             <div className="card-body">
                 <img src={props.assetUrl} className="card-img-top" alt="Not Available" />
                 <h5 className="card-title"><i>{props.assetName}</i></h5>
+                <h6 className="card-subtitle">Token ID: {props.assetTokenId}</h6>
                 <div className="card-text"><PersonIcon />{props.assetOwner}</div>
                 <div>{props.assetPrice} WEI</div>
                 <div className="badge text-bg-dark rounded-pill">{props.assetCategory}</div>
