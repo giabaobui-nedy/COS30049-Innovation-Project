@@ -53,8 +53,7 @@ function SignIn(props) {
                     <input onChange={(e) => { setPassword(e.target.value) }} value={password} type="password" className="form-control" placeholder="Password" name="pwd" id="pwd" />
                     <label htmlFor="pwd">Password</label>
                 </div>
-                <button onClick={() => { authenticate() }} type="button" className="btn btn-danger m-2">Submit</button>
-                {/* <Link to="/sign-up" className="btn btn-dark m-2">Signup</Link> */}
+                <button onClick={authenticate} type="button" className="btn btn-danger m-2">Sign in</button>
             </form>
         </div>
     )
