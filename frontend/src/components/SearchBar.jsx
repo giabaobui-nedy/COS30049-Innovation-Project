@@ -8,7 +8,6 @@ function SearchBar(props) {
 
     // get all assets by search
     const getAssetsBySearch = () => {
-        console.log("hello")
         const options = {
             method: 'GET',
             url: `http://127.0.0.1:8000/getAllAssets/search/${searchInput}`,

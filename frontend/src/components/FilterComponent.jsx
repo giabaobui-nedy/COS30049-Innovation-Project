@@ -4,9 +4,35 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { useState } from "react";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import axios from "axios";
 
 function FilterComponent(props) {
     const categories = ["All", "Art", "Gaming", "Membership", "PFPs", "Photography", "Music"]
+    const [chosenCategory, setChosenCategory] = useState("All")
+
+    const getAssetsByCategory = (category) => {
+        setChosenCategory(category)
+        if (category !== "All") {
+            console.log(`http://127.0.0.1:8000/getAllAssets/category/${category}`)
+            const options = {
+                method: 'GET',
+                url: `http://127.0.0.1:8000/getAllAssets/category/${category}`,
+                headers: { accept: 'application/json' }
+            }
+            axios
+                .request(options)
+                .then(response => {
+                    // console.log(response.data)
+                    props.setApiData(response.data)
+                })
+                .catch(error => {
+                    console.error(error)
+                });
+        } else {
+            props.getAllAssets()
+        }
+
+    }
 
     const [display, setDisplay] = useState(false);
 
@@ -65,7 +91,11 @@ function FilterComponent(props) {
             <center className="collapse" id="cate">
                 <hr></hr>
                 {categories.map(category => {
-                    return <Tab setChosenCategory={props.setChosenCategory} isChosen={props.chosenCategory === category} key={category} category={category} />
+                    return <Tab 
+                        getAssetsByCategory={getAssetsByCategory}
+                        isChosen={chosenCategory === category}
+                        key={category}
+                        category={category} />
                 })}
             </center>
         </div>
